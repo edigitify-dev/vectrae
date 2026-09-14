@@ -70,7 +70,7 @@ function FAQItem({ item, index, isOpen, onToggle }: FAQItemProps) {
         >
           <span className="flex items-center gap-4 sm:gap-5">
             <span
-              className={`text-xs font-bold tracking-wider transition-colors duration-300 ${
+              className={`text-sm font-bold tracking-wider transition-colors duration-300 ${
                 isOpen ? "text-[#29B9F2]" : "text-white/25"
               }`}
             >

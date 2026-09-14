@@ -20,7 +20,10 @@ export default function BlogHero({ postCount, categories }: Props) {
       <Navbar />
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 pb-16 pt-8 text-center sm:pb-20 sm:pt-14">
-        <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]" data-aos="fade-up">
+        <p
+          className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+          data-aos="fade-up"
+        >
           Insights &amp; Perspectives
         </p>
         <motion.h1
@@ -30,19 +33,23 @@ export default function BlogHero({ postCount, categories }: Props) {
           className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-[1.15] tracking-tight text-white sm:text-6xl"
         >
           Ideas shaping{" "}
-          <span className="bg-clip-text text-transparent" style={{ backgroundImage: BRAND_GRADIENT }}>
+          <span
+            className="bg-clip-text text-transparent"
+            style={{ backgroundImage: BRAND_GRADIENT }}
+          >
             enterprise technology
           </span>
           .
         </motion.h1>
-        <motion.p
+        {/* <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg"
         >
-          Practical field notes from our AV, networking, data center, and managed services teams,
-          {" "}{postCount} articles across {categories.length} disciplines.
+          Practical field notes from our AV, networking, data center, and
+          managed services teams, {postCount} articles across{" "}
+          {categories.length} disciplines.
         </motion.p>
 
         <motion.div
@@ -64,7 +71,7 @@ export default function BlogHero({ postCount, categories }: Props) {
               </Link>
             );
           })}
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

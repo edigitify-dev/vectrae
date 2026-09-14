@@ -63,7 +63,7 @@ export const solutions: Solution[] = [
     title: "Audio Visual Solutions",
     tagline: "Immersive meeting experiences, engineered for the enterprise.",
     icon: MonitorPlay,
-    heroImage: siteImages.blog.avTech,
+    heroImage: "/video/hero.mp4",
     description:
       "From huddle rooms to command centres, we design and deploy audio-visual systems that make every meeting effortless, video conferencing, digital signage, and unified communications, integrated and supported end-to-end.",
     capabilities: [
@@ -304,7 +304,7 @@ export const solutions: Solution[] = [
     title: "Networking & Security",
     tagline: "Resilient connectivity for the always-on enterprise.",
     icon: Network,
-    heroImage: siteImages.products.router,
+    heroImage: "/images/products/router.png",
     description:
       "We design, deploy, and secure the network backbone your business runs on, structured cabling, enterprise Wi-Fi, and firewall infrastructure built for performance at scale.",
     capabilities: [
@@ -464,7 +464,7 @@ export const solutions: Solution[] = [
     title: "Data Center Solutions",
     tagline: "Infrastructure built for uptime, scale, and resilience.",
     icon: Server,
-    heroImage: siteImages.products.serverRam,
+    heroImage: "/images/products/ram.png",
     description:
       "We build and secure the infrastructure behind your business, from greenfield data centers to disaster recovery and physical security, engineered for enterprise-grade reliability.",
     capabilities: [
@@ -647,7 +647,7 @@ export const solutions: Solution[] = [
     title: "End Computing Solutions",
     tagline: "Equip every desk, every workstation, every employee.",
     icon: Laptop,
-    heroImage: siteImages.products.laptop,
+    heroImage: "/images/products/laptop.png",
     description:
       "From laptops to thin clients, we procure, configure, and manage the devices your workforce uses every day, with lifecycle support that keeps IT overhead low.",
     capabilities: [
@@ -810,7 +810,7 @@ export const solutions: Solution[] = [
     tagline:
       "Fast-turnaround components that keep your infrastructure running.",
     icon: PackageCheck,
-    heroImage: siteImages.products.motherboard,
+    heroImage: "/images/products/motherboard.png",
     description:
       "When hardware fails, downtime isn't an option. We stock and dispatch genuine OEM spare parts and accessories, so your IT and AV systems stay operational.",
     capabilities: [
@@ -936,7 +936,7 @@ export const solutions: Solution[] = [
     title: "Power Solutions",
     tagline: "Zero downtime starts with the right power strategy.",
     icon: Zap,
-    heroImage: siteImages.products.powerSupply,
+    heroImage: "/images/products/power.png",
     description:
       "From UPS systems to distribution infrastructure, Vectrae designs and deploys the power backbone that keeps enterprise operations running, critical infrastructure, engineered for zero downtime.",
     capabilities: [
@@ -1052,7 +1052,7 @@ export const solutions: Solution[] = [
     title: "Managed IT Services",
     tagline: "Focus on your business. We'll run your IT.",
     icon: LifeBuoy,
-    heroImage: siteImages.blog.managedIt,
+    heroImage: "/images/products/managedIt.png",
     description:
       "Proactive AMC, remote monitoring, and full-scope IT support, Vectrae's managed services keep enterprise technology running so your team can focus on the business, not the break-fix.",
     capabilities: [

@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { solutions, type Solution } from "@/data/solutions";
 
@@ -81,7 +82,6 @@ function ServiceHoloCard({
     if (!el) return;
 
     const rect = el.getBoundingClientRect();
-
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
 
@@ -90,20 +90,28 @@ function ServiceHoloCard({
   };
 
   return (
-    <Link
-      ref={cardRef}
-      href={`/solutions/${service.slug}`}
-      data-aos="fade-up"
-      data-aos-delay={index * 60}
-      onMouseMove={handleMove}
-      style={
-        {
-          "--mx": "50%",
-          "--my": "50%",
-          "--glow": palette.glow,
-        } as React.CSSProperties
-      }
-      className={`
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.55,
+        delay: 0.08 * (index % 4),
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className="h-full w-full"
+    >
+      <Link
+        ref={cardRef}
+        href={`/solutions/${service.slug}`}
+        onMouseMove={handleMove}
+        style={
+          {
+            "--mx": "50%",
+            "--my": "50%",
+            "--glow": palette.glow,
+          } as React.CSSProperties
+        }
+        className={`
   group
   relative
   isolate
@@ -123,15 +131,15 @@ function ServiceHoloCard({
   hover:shadow-[0_22px_50px_rgba(0,0,0,0.18)]
   will-change-transform
 `}
-    >
-      {/* =====================================================
+      >
+        {/* =====================================================
           BACKGROUND IMAGE
 
           Hidden normally.
           Covers the ENTIRE card on hover.
       ===================================================== */}
-      <div
-        className="
+        <div
+          className="
           pointer-events-none
           absolute
           inset-0
@@ -142,9 +150,9 @@ function ServiceHoloCard({
           duration-500
           group-hover:opacity-100
         "
-      >
-        <div
-          className="
+        >
+          <div
+            className="
             absolute
             inset-0
             bg-cover
@@ -155,20 +163,20 @@ function ServiceHoloCard({
             ease-out
             group-hover:scale-105
           "
-          style={{
-            backgroundImage: `url(${service.heroImage})`,
-          }}
-        />
-      </div>
+            style={{
+              backgroundImage: `url(${service.heroImage})`,
+            }}
+          />
+        </div>
 
-      {/* =====================================================
+        {/* =====================================================
           DARK GRADIENT
 
           Dark on the LEFT for text readability.
           Gradually fades towards the right.
       ===================================================== */}
-      <div
-        className="
+        <div
+          className="
           pointer-events-none
           absolute
           inset-0
@@ -178,13 +186,13 @@ function ServiceHoloCard({
           duration-500
           group-hover:opacity-100
         "
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.68) 30%, rgba(0,0,0,0.38) 55%, rgba(0,0,0,0.08) 78%, transparent 100%)",
-        }}
-      />
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.68) 30%, rgba(0,0,0,0.38) 55%, rgba(0,0,0,0.08) 78%, transparent 100%)",
+          }}
+        />
 
-      {/* =====================================================
+        {/* =====================================================
           NORMAL CARD BACKGROUND
 
           No polygon.
@@ -193,8 +201,8 @@ function ServiceHoloCard({
 
           Just a normal full rectangular background.
       ===================================================== */}
-      <div
-        className={`
+        <div
+          className={`
           pointer-events-none
           absolute
           inset-0
@@ -206,15 +214,15 @@ function ServiceHoloCard({
           duration-500
           group-hover:opacity-0
         `}
-      />
+        />
 
-      {/* =====================================================
+        {/* =====================================================
           MOUSE GLOW
 
           Subtle glow while the card is in its normal state.
       ===================================================== */}
-      <div
-        className="
+        <div
+          className="
           pointer-events-none
           absolute
           inset-0
@@ -224,8 +232,8 @@ function ServiceHoloCard({
           duration-500
           group-hover:opacity-0
         "
-        style={{
-          background: `
+          style={{
+            background: `
             radial-gradient(
               circle 170px at var(--mx) var(--my),
               rgba(${palette.glow}, 0.18),
@@ -233,17 +241,17 @@ function ServiceHoloCard({
               transparent 72%
             )
           `,
-        }}
-      />
+          }}
+        />
 
-      {/* =====================================================
+        {/* =====================================================
           CONTENT
 
           Full width now.
           No diagonal panel.
       ===================================================== */}
-      <div
-        className="
+        <div
+          className="
           relative
           z-10
           flex
@@ -253,14 +261,14 @@ function ServiceHoloCard({
           p-7
           lg:p-8
         "
-      >
-        {/* ===================================================
+        >
+          {/* ===================================================
             TOP
         =================================================== */}
-        <div className="flex items-start justify-between">
-          {/* Number */}
-          <span
-            className={`
+          <div className="flex items-start justify-between">
+            {/* Number */}
+            <span
+              className={`
               font-mono
               text-[42px]
               font-bold
@@ -272,13 +280,13 @@ function ServiceHoloCard({
               duration-500
               group-hover:text-white
             `}
-          >
-            {String(index + 1).padStart(2, "0")}
-          </span>
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
 
-          {/* Icon */}
-          <span
-            className={`
+            {/* Icon */}
+            <span
+              className={`
               flex
               h-11
               w-11
@@ -298,27 +306,27 @@ function ServiceHoloCard({
               group-hover:bg-white/15
               group-hover:shadow-lg
             `}
-          >
-            <Icon
-              size={19}
-              strokeWidth={1.7}
-              className={`
+            >
+              <Icon
+                size={19}
+                strokeWidth={1.7}
+                className={`
                 ${palette.accent}
                 transition-colors
                 duration-500
                 group-hover:text-white
               `}
-            />
-          </span>
-        </div>
+              />
+            </span>
+          </div>
 
-        {/* ===================================================
+          {/* ===================================================
             MAIN CONTENT
         =================================================== */}
-        <div className="mt-auto max-w-[320px]">
-          {/* Accent line */}
-          <div
-            className={`
+          <div className="mt-auto max-w-[320px]">
+            {/* Accent line */}
+            <div
+              className={`
               mb-4
               h-[3px]
               w-7
@@ -329,11 +337,11 @@ function ServiceHoloCard({
               group-hover:w-11
               group-hover:bg-white
             `}
-          />
+            />
 
-          {/* Title */}
-          <h3
-            className="
+            {/* Title */}
+            <h3
+              className="
               text-[26px]
               font-semibold
               leading-[0.98]
@@ -343,13 +351,13 @@ function ServiceHoloCard({
               duration-500
               group-hover:text-white
             "
-          >
-            {service.title}
-          </h3>
+            >
+              {service.title}
+            </h3>
 
-          {/* Description */}
-          <p
-            className="
+            {/* Description */}
+            <p
+              className="
               mt-4
               text-[14px]
               leading-[1.6]
@@ -358,16 +366,16 @@ function ServiceHoloCard({
               duration-500
               group-hover:text-white/80
             "
-          >
-            {service.tagline}
-          </p>
+            >
+              {service.tagline}
+            </p>
 
-          {/* Capabilities */}
-          <ul className="mt-4 space-y-2.5">
-            {service.capabilities.slice(0, 3).map((cap) => (
-              <li
-                key={cap.title}
-                className="
+            {/* Capabilities */}
+            <ul className="mt-4 space-y-2.5">
+              {service.capabilities.slice(0, 3).map((cap) => (
+                <li
+                  key={cap.title}
+                  className="
                   flex
                   items-center
                   gap-2.5
@@ -378,9 +386,9 @@ function ServiceHoloCard({
                   duration-500
                   group-hover:text-white/90
                 "
-              >
-                <span
-                  className={`
+                >
+                  <span
+                    className={`
                     flex
                     h-[19px]
                     w-[19px]
@@ -393,9 +401,9 @@ function ServiceHoloCard({
                     duration-500
                     group-hover:bg-white
                   `}
-                >
-                  <CheckCircle2
-                    className="
+                  >
+                    <CheckCircle2
+                      className="
                       h-[13px]
                       w-[13px]
                       text-white
@@ -403,18 +411,18 @@ function ServiceHoloCard({
                       duration-500
                       group-hover:text-black
                     "
-                    strokeWidth={2.2}
-                  />
-                </span>
+                      strokeWidth={2.2}
+                    />
+                  </span>
 
-                <span>{cap.title}</span>
-              </li>
-            ))}
-          </ul>
+                  <span>{cap.title}</span>
+                </li>
+              ))}
+            </ul>
 
-          {/* Explore */}
-          <span
-            className={`
+            {/* Explore */}
+            <span
+              className={`
               mt-6
               inline-flex
               items-center
@@ -427,10 +435,10 @@ function ServiceHoloCard({
               group-hover:translate-x-1
               group-hover:text-white
             `}
-          >
-            Explore
-            <ArrowUpRight
-              className="
+            >
+              Explore
+              <ArrowUpRight
+                className="
                 h-[17px]
                 w-[17px]
                 transition-transform
@@ -438,16 +446,16 @@ function ServiceHoloCard({
                 group-hover:translate-x-0.5
                 group-hover:-translate-y-0.5
               "
-            />
-          </span>
+              />
+            </span>
+          </div>
         </div>
-      </div>
 
-      {/* =====================================================
+        {/* =====================================================
           HOVER BORDER
       ===================================================== */}
-      <div
-        className="
+        <div
+          className="
           pointer-events-none
           absolute
           inset-0
@@ -458,11 +466,12 @@ function ServiceHoloCard({
           duration-500
           group-hover:opacity-100
         "
-        style={{
-          boxShadow: `inset 0 0 0 1px rgba(var(--glow), 0.45)`,
-        }}
-      />
-    </Link>
+          style={{
+            boxShadow: `inset 0 0 0 1px rgba(var(--glow), 0.45)`,
+          }}
+        />
+      </Link>
+    </motion.div>
   );
 }
 
@@ -506,7 +515,7 @@ export default function SolutionsCards() {
       {/* =====================================================
           DESKTOP / TABLET GRID
       ===================================================== */}
-      <div className="mt-14 hidden md:block">
+      <div className="mt-6 hidden md:block">
         {/* First row — 4 cards */}
         <div className="grid grid-cols-2 gap-7 lg:grid-cols-4">
           {solutions.slice(0, 4).map((service, i) => (
@@ -527,7 +536,7 @@ export default function SolutionsCards() {
       {/* =====================================================
           MOBILE CAROUSEL
       ===================================================== */}
-      <div className="mt-10 md:hidden">
+      <div className="mt-5 md:hidden">
         <div
           ref={mobileScrollRef}
           onScroll={handleMobileScroll}

@@ -197,7 +197,7 @@ export default function FootprintMap() {
           {/* Left: text + stats */}
           <div>
             <div data-aos="fade-right">
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#25D9C7]">
+              <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#25D9C7]">
                 National Coverage
               </p>
               <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
@@ -245,7 +245,9 @@ export default function FootprintMap() {
                 }}
               />
 
-              <div className="relative mx-auto w-full max-w-2xl px-14 pb-8 pt-12">
+              {/* Reduced padding (was px-14 pb-8 pt-12) and widened max-w
+                  (was max-w-2xl) so the map fills more of the card */}
+              <div className="relative mx-auto w-full max-w-3xl px-4 pb-4 pt-6">
                 <div
                   className="relative mx-auto w-full"
                   style={{ aspectRatio: `${SVG_W} / ${SVG_H}` }}

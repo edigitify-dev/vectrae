@@ -16,14 +16,14 @@ function Dot({ delay }: { delay: number }) {
   );
 }
 
-function Value({ value, delay }: { value: string; delay: number }) {
+function Value({ title, delay }: { title: string; delay: number }) {
   return (
     <span
       className="cursor-default text-xl font-semibold tracking-tight text-neutral-900 transition-colors duration-300 hover:text-[#0f9ac9] sm:text-2xl md:text-4xl"
       data-aos="fade-up"
       data-aos-delay={delay}
     >
-      {value}
+      {title}
     </span>
   );
 }
@@ -33,7 +33,7 @@ export default function CoreValues() {
     <section className="relative border-t border-black/5 bg-white py-16 sm:py-20 md:py-28">
       <div className="mx-auto max-w-5xl px-6 text-center">
         <p
-          className="text-xs font-semibold uppercase tracking-widest text-[#0f9ac9]"
+          className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]"
           data-aos="fade-up"
         >
           Our Core Values
@@ -43,7 +43,7 @@ export default function CoreValues() {
             sense between items sharing a line, which isn't guaranteed here. */}
         <div className="mt-6 flex flex-col items-center gap-y-4 sm:hidden">
           {coreValues.map((value, i) => (
-            <Value key={value} value={value} delay={i * 80} />
+            <Value key={value.title} title={value.title} delay={i * 80} />
           ))}
         </div>
 
@@ -58,10 +58,10 @@ export default function CoreValues() {
                 const delay = (rowIndex * 3 + i) * 80;
                 return (
                   <div
-                    key={value}
+                    key={value.title}
                     className="flex items-center gap-x-4 sm:gap-x-6"
                   >
-                    <Value value={value} delay={delay} />
+                    <Value title={value.title} delay={delay} />
                     {i < row.length - 1 && <Dot delay={delay} />}
                   </div>
                 );

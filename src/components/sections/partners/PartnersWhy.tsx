@@ -8,22 +8,26 @@ const reasons = [
   {
     icon: Globe,
     title: "PAN-India Reach",
-    description: "A single distribution and delivery network spanning every major enterprise market in India.",
+    description:
+      "A single distribution and delivery network spanning every major enterprise market in India.",
   },
   {
     icon: Users,
     title: "2,300+ Enterprise Relationships",
-    description: "Direct access to a large, established base of enterprise decision-makers.",
+    description:
+      "Direct access to a large, established base of enterprise decision-makers.",
   },
   {
     icon: ShieldCheck,
     title: "Certified Technical Bench",
-    description: "250+ trained and OEM-certified engineers ready to design, deploy, and support.",
+    description:
+      "250+ trained and OEM-certified engineers ready to design, deploy, and support.",
   },
   {
     icon: Building2,
     title: "Single-Window Fulfillment",
-    description: "Presales, procurement, deployment, and AMC support, handled end-to-end under one roof.",
+    description:
+      "Presales, procurement, deployment, and AMC support, handled end-to-end under one roof.",
   },
 ];
 
@@ -35,7 +39,7 @@ export default function PartnersWhy() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
             Why OEMs Choose Vectrae
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
@@ -52,7 +56,11 @@ export default function PartnersWhy() {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.55,
+                  delay: i * 0.1,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 className="flex flex-col items-start"
               >
                 <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-[#29B9F2]">
@@ -64,8 +72,12 @@ export default function PartnersWhy() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <h3 className="mt-6 text-lg font-semibold text-white">{reason.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/50">{reason.description}</p>
+                <h3 className="mt-6 text-lg font-semibold text-white">
+                  {reason.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/50">
+                  {reason.description}
+                </p>
               </motion.div>
             );
           })}

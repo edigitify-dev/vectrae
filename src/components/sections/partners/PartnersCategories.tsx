@@ -5,17 +5,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { BRAND_GRADIENT } from "@/lib/brand";
 import { partnersByCategory } from "@/data/partners";
 
-const CATEGORIES = Object.keys(partnersByCategory) as (keyof typeof partnersByCategory)[];
+const CATEGORIES = Object.keys(
+  partnersByCategory,
+) as (keyof typeof partnersByCategory)[];
 
 export default function PartnersCategories() {
-  const [activeCategory, setActiveCategory] = useState<keyof typeof partnersByCategory>(CATEGORIES[0]);
+  const [activeCategory, setActiveCategory] = useState<
+    keyof typeof partnersByCategory
+  >(CATEGORIES[0]);
   const activePartners = partnersByCategory[activeCategory];
 
   return (
-    <section id="partners" className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28">
+    <section
+      id="partners"
+      className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28"
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
             Partner Directory
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -39,7 +46,9 @@ export default function PartnersCategories() {
                     ? "border-transparent text-black shadow-sm"
                     : "border-black/10 bg-white text-neutral-600 hover:border-black/20"
                 }`}
-                style={isActive ? { backgroundImage: BRAND_GRADIENT } : undefined}
+                style={
+                  isActive ? { backgroundImage: BRAND_GRADIENT } : undefined
+                }
               >
                 {category}
                 <span
@@ -52,7 +61,11 @@ export default function PartnersCategories() {
           })}
         </div>
 
-        <div className="mt-12 rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10" data-aos="fade-up" data-aos-delay="150">
+        <div
+          className="mt-12 rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10"
+          data-aos="fade-up"
+          data-aos-delay="150"
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}

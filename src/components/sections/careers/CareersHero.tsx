@@ -43,7 +43,7 @@ export default function CareersHero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 pb-16">
         <p
-          className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+          className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
           data-aos="fade-up"
         >
           Careers at Vectrae

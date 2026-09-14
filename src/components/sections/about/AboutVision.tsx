@@ -62,7 +62,7 @@ export default function AboutVision() {
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-[#29B9F2]" />
 
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Our Vision
               </span>
             </div>
@@ -98,13 +98,12 @@ export default function AboutVision() {
             {/* Supporting text */}
             <p className="mt-8 max-w-xl text-base leading-7 text-white/45 sm:text-lg">
               We believe we can be the most reliable partner for Indian
-              businesses who want to focus on what they do best, without
-              having to worry about the IT infrastructure that enables them to
-              do so. As these organizations continue to digitalize and
-              transform, and as they leverage emerging disruptive
-              technologies such as artificial intelligence, we want to
-              continue being there for them, not as a transactional vendor,
-              but as a true partner in growth.
+              businesses who want to focus on what they do best, without having
+              to worry about the IT infrastructure that enables them to do so.
+              As these organizations continue to digitalize and transform, and
+              as they leverage emerging disruptive technologies such as
+              artificial intelligence, we want to continue being there for them,
+              not as a transactional vendor, but as a true partner in growth.
             </p>
           </motion.div>
 
@@ -152,7 +151,7 @@ export default function AboutVision() {
                     }}
                     className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-md"
                   >
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    <span className="text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
                       Trust
                     </span>
                   </motion.div>
@@ -170,7 +169,7 @@ export default function AboutVision() {
                     }}
                     className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-md"
                   >
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    <span className="text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
                       Innovation
                     </span>
                   </motion.div>
@@ -178,7 +177,7 @@ export default function AboutVision() {
 
                 {/* ================= EXCELLENCE ================= */}
 
-                <div className="absolute bottom-[14%] right-[4%]">
+                <div className="absolute bottom-[10%] -right-[10%]">
                   <motion.div
                     animate={{ rotate: -360 }}
                     transition={{
@@ -188,7 +187,7 @@ export default function AboutVision() {
                     }}
                     className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-md"
                   >
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    <span className="text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
                       Excellence
                     </span>
                   </motion.div>

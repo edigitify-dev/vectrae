@@ -72,7 +72,7 @@ export default function WhyChooseUs() {
 
       <div className="relative mx-auto max-w-5xl px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#0f9ac9]">
+          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
             Why Choose Us
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">

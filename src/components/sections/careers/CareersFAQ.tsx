@@ -15,7 +15,7 @@ const faqs = [
   {
     question: "Do you offer internships?",
     answer:
-      "Yes, we periodically open internships across engineering and business development. Select \"General Application\" on the form and mention your availability in the message.",
+      'Yes, we periodically open internships across engineering and business development. Select "General Application" on the form and mention your availability in the message.',
   },
   {
     question: "Is relocation required for PAN-India roles?",
@@ -44,7 +44,9 @@ export default function CareersFAQ() {
 
       <div className="relative mx-auto max-w-3xl px-6">
         <div className="text-center" data-aos="fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">FAQ</p>
+          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            FAQ
+          </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
             Hiring, Answered
           </h2>
@@ -59,11 +61,17 @@ export default function CareersFAQ() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.5,
+                  delay: i * 0.06,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
               >
                 <SpotlightCard
                   className={`rounded-2xl border bg-white/[0.03] backdrop-blur-sm transition-colors duration-300 ${
-                    isOpen ? "border-white/20" : "border-white/10 hover:border-white/15"
+                    isOpen
+                      ? "border-white/20"
+                      : "border-white/10 hover:border-white/15"
                   }`}
                 >
                   <button
@@ -73,7 +81,7 @@ export default function CareersFAQ() {
                   >
                     <span className="flex items-center gap-4 sm:gap-5">
                       <span
-                        className={`text-xs font-bold tracking-wider transition-colors duration-300 ${
+                        className={`text-sm font-bold tracking-wider transition-colors duration-300 ${
                           isOpen ? "text-[#29B9F2]" : "text-white/25"
                         }`}
                       >
@@ -84,7 +92,9 @@ export default function CareersFAQ() {
                       </span>
                     </span>
                     <span
-                      style={isOpen ? { backgroundImage: BRAND_GRADIENT } : undefined}
+                      style={
+                        isOpen ? { backgroundImage: BRAND_GRADIENT } : undefined
+                      }
                       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                         isOpen
                           ? "rotate-180 border-transparent text-black"
@@ -122,7 +132,9 @@ export default function CareersFAQ() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-12 flex flex-col items-center gap-4 text-center"
         >
-          <p className="text-sm text-white/40">Have a question we didn&apos;t cover?</p>
+          <p className="text-sm text-white/40">
+            Have a question we didn&apos;t cover?
+          </p>
           <a
             href="mailto:enquiry@vectrae.com"
             className="group inline-flex items-center gap-4 rounded-full border border-white/10 bg-white/5 py-1.5 pl-6 pr-1.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/20 hover:bg-white/10"

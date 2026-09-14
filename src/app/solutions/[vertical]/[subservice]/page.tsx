@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, CheckCircle2, ChevronRight, PhoneCall } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  ChevronRight,
+  PhoneCall,
+} from "lucide-react";
 import Navbar from "@/components/sections/Navbar";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
@@ -16,7 +22,10 @@ type Props = {
 
 export function generateStaticParams() {
   return solutions.flatMap((solution) =>
-    solution.subServices.map((sub) => ({ vertical: solution.slug, subservice: sub.slug })),
+    solution.subServices.map((sub) => ({
+      vertical: solution.slug,
+      subservice: sub.slug,
+    })),
   );
 }
 
@@ -50,7 +59,10 @@ export default async function SubServicePage({ params }: Props) {
         <Navbar />
 
         <div className="relative mx-auto max-w-3xl px-6 pb-20 pt-6 text-center sm:pb-28">
-          <div className="flex flex-wrap items-center justify-center gap-1.5 text-sm text-white/40" data-aos="fade-up">
+          <div
+            className="flex flex-wrap items-center justify-center gap-1.5 text-sm text-white/40"
+            data-aos="fade-up"
+          >
             <Link href="/" className="transition hover:text-white/70">
               Home
             </Link>
@@ -59,7 +71,10 @@ export default async function SubServicePage({ params }: Props) {
               Solutions
             </Link>
             <ChevronRight className="h-3.5 w-3.5" />
-            <Link href={`/solutions/${solution.slug}`} className="transition hover:text-white/70">
+            <Link
+              href={`/solutions/${solution.slug}`}
+              className="transition hover:text-white/70"
+            >
               {solution.title}
             </Link>
             <ChevronRight className="h-3.5 w-3.5" />
@@ -80,7 +95,11 @@ export default async function SubServicePage({ params }: Props) {
           >
             {sub.title}
           </h1>
-          <p className="mt-4 text-lg text-white/60" data-aos="fade-up" data-aos-delay="150">
+          <p
+            className="mt-4 text-lg text-white/60"
+            data-aos="fade-up"
+            data-aos-delay="150"
+          >
             {sub.tagline}
           </p>
           <p
@@ -121,7 +140,7 @@ export default async function SubServicePage({ params }: Props) {
 
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               What&apos;s Included
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -146,8 +165,12 @@ export default async function SubServicePage({ params }: Props) {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-black/10 bg-black/3 text-[#0f9ac9] transition-all duration-500 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-hover:border-[#25D9C7]/40 group-hover:bg-[#25D9C7]/10 group-hover:shadow-[0_0_18px_rgba(37,217,199,0.4)]">
                     <CapIcon className="h-5 w-5" />
                   </span>
-                  <h3 className="mt-5 text-lg font-semibold text-neutral-900">{cap.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-neutral-500">{cap.description}</p>
+                  <h3 className="mt-5 text-lg font-semibold text-neutral-900">
+                    {cap.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-500">
+                    {cap.description}
+                  </p>
                 </div>
               );
             })}
@@ -160,7 +183,10 @@ export default async function SubServicePage({ params }: Props) {
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-125 w-225 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#25D9C7]/10 blur-[140px]" />
 
         <div className="relative mx-auto max-w-4xl px-6 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]" data-aos="fade-up">
+          <p
+            className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+            data-aos="fade-up"
+          >
             Why Vectrae
           </p>
           <h2
@@ -190,7 +216,10 @@ export default async function SubServicePage({ params }: Props) {
       {/* More within this vertical */}
       <section className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]" data-aos="fade-up">
+          <p
+            className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+            data-aos="fade-up"
+          >
             Explore More
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">

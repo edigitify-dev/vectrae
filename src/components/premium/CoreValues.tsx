@@ -12,7 +12,10 @@ export default function CoreValues() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setIndex((v) => (v + 1) % coreValues.length), INTERVAL);
+    const id = setInterval(
+      () => setIndex((v) => (v + 1) % coreValues.length),
+      INTERVAL,
+    );
     return () => clearInterval(id);
   }, []);
 
@@ -20,7 +23,7 @@ export default function CoreValues() {
     <section className="relative border-t border-black/5 bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-3xl px-6 text-center">
         <Reveal>
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#0f9ac9]">
+          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
             Our Core Values
           </p>
         </Reveal>
@@ -28,7 +31,7 @@ export default function CoreValues() {
         <div className="relative mt-10 flex h-24 items-center justify-center sm:h-28">
           <AnimatePresence mode="wait">
             <motion.span
-              key={coreValues[index]}
+              key={coreValues[index].title}
               initial={{ opacity: 0, y: 16, scale: 0.94 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -16, scale: 0.94 }}
@@ -36,7 +39,7 @@ export default function CoreValues() {
               className="absolute bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-6xl"
               style={{ backgroundImage: BRAND_GRADIENT }}
             >
-              {coreValues[index]}
+              {coreValues[index].title}
             </motion.span>
           </AnimatePresence>
         </div>
@@ -44,10 +47,10 @@ export default function CoreValues() {
         <div className="mx-auto mt-8 flex max-w-xs items-center gap-1.5">
           {coreValues.map((value, i) => (
             <button
-              key={value}
+              key={value.title}
               type="button"
               onClick={() => setIndex(i)}
-              aria-label={`Show ${value}`}
+              aria-label={`Show ${value.title}`}
               className="relative h-1 flex-1 overflow-hidden rounded-full bg-neutral-200"
             >
               {i === index && (
@@ -61,7 +64,10 @@ export default function CoreValues() {
                 />
               )}
               {i < index && (
-                <span className="absolute inset-0 rounded-full" style={{ backgroundImage: BRAND_GRADIENT }} />
+                <span
+                  className="absolute inset-0 rounded-full"
+                  style={{ backgroundImage: BRAND_GRADIENT }}
+                />
               )}
             </button>
           ))}

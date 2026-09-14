@@ -105,7 +105,7 @@ export default function AboutCertifications() {
                 style={{ backgroundImage: BRAND_GRADIENT }}
               />
 
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Certifications & Awards
               </span>
             </div>

@@ -80,8 +80,11 @@ export default function AboutPresence() {
         >
           <div>
             <div className="flex items-center gap-3">
-              <span className="h-px w-10" style={{ backgroundImage: BRAND_GRADIENT }} />
-              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <span
+                className="h-px w-10"
+                style={{ backgroundImage: BRAND_GRADIENT }}
+              />
+              <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Our Presence
               </span>
             </div>
@@ -100,8 +103,8 @@ export default function AboutPresence() {
 
           <p className="max-w-md text-sm leading-7 text-white/40 sm:text-base lg:mb-2">
             While we may have been founded in Delhi, where we continue to
-            maintain our head office, our reach extends to several other
-            cities across the country.
+            maintain our head office, our reach extends to several other cities
+            across the country.
           </p>
         </motion.div>
 
@@ -163,10 +166,10 @@ export default function AboutPresence() {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="mt-10 max-w-3xl text-sm leading-7 text-white/40 sm:text-base"
         >
-          Our nationwide network of sales and service channels spans 7+
-          offices and covers more than 10,000 pin-codes across the country,
-          including Kolkata as well as several tier-2 and tier-3 towns that
-          most competitors tend to avoid.
+          Our nationwide network of sales and service channels spans 7+ offices
+          and covers more than 10,000 pin-codes across the country, including
+          Kolkata as well as several tier-2 and tier-3 towns that most
+          competitors tend to avoid.
         </motion.p>
 
         {/* Reach strip */}

@@ -1,10 +1,24 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Monitor, Server, ShieldCheck, Zap, Laptop, Cpu, Wifi } from "lucide-react";
+import {
+  ArrowRight,
+  Monitor,
+  Server,
+  ShieldCheck,
+  Zap,
+  Laptop,
+  Cpu,
+  Wifi,
+} from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 import { siteImages } from "@/lib/site-images";
 
@@ -109,7 +123,13 @@ const products: ProductPoint[] = [
   },
 ];
 
-const categories = ["All Products", "End Computing", "Data Center", "Power", "Networking"];
+const categories = [
+  "All Products",
+  "End Computing",
+  "Data Center",
+  "Power",
+  "Networking",
+];
 
 export default function ProductShowcase() {
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -154,15 +174,19 @@ export default function ProductShowcase() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         {/* Section Header matching theme styling */}
-        <div className="mx-auto w-full max-w-5xl text-center" data-aos="fade-up">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#29B9F2]">
+        <div
+          className="mx-auto w-full max-w-5xl text-center"
+          data-aos="fade-up"
+        >
+          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]">
             Interactive Showcase
           </p>
           <h2 className="mx-auto mt-4 w-full text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:whitespace-nowrap">
             Explore Hardware &amp; Enterprise Solutions
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-            Hover or tap any product hotspot on the video frame to inspect specifications, key features, and enterprise deployment options.
+            Hover or tap any product hotspot on the video frame to inspect
+            specifications, key features, and enterprise deployment options.
           </p>
         </div>
 
@@ -220,7 +244,7 @@ export default function ProductShowcase() {
                   isFiltered={isFiltered}
                   onClick={() =>
                     setActiveId((prev) =>
-                      prev === product.id ? null : product.id
+                      prev === product.id ? null : product.id,
                     )
                   }
                   onMouseEnter={() => {
@@ -235,7 +259,6 @@ export default function ProductShowcase() {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
@@ -334,7 +357,7 @@ function MagneticPin({
             exit={{ opacity: 0, scale: 0.95, y: 4 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className={`absolute ${getPopoverClasses(
-              product.popoverPosition
+              product.popoverPosition,
             )} pointer-events-auto w-72 overflow-hidden rounded-2xl border border-white/15 bg-black/95 shadow-2xl backdrop-blur-xl sm:w-80`}
             style={{ zIndex: 9999 }}
           >
@@ -354,26 +377,26 @@ function MagneticPin({
                 {product.category}
               </span>
 
-            <h3 className="mt-2.5 text-base font-semibold text-white sm:text-lg">
-              {product.name}
-            </h3>
+              <h3 className="mt-2.5 text-base font-semibold text-white sm:text-lg">
+                {product.name}
+              </h3>
 
-            <p className="mt-1.5 text-xs leading-relaxed text-white/60 sm:text-sm">
-              {product.description}
-            </p>
+              <p className="mt-1.5 text-xs leading-relaxed text-white/60 sm:text-sm">
+                {product.description}
+              </p>
 
-            <div className="mt-3 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-mono font-medium text-white/70">
-              {product.specs}
-            </div>
+              <div className="mt-3 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-mono font-medium text-white/70">
+                {product.specs}
+              </div>
 
-            <Link
-              href={product.href}
-              style={{ backgroundImage: BRAND_GRADIENT }}
-              className="group/btn mt-4 inline-flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-xs font-semibold text-black transition duration-300 hover:opacity-90"
-            >
-              <span>View Product Details</span>
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-            </Link>
+              <Link
+                href={product.href}
+                style={{ backgroundImage: BRAND_GRADIENT }}
+                className="group/btn mt-4 inline-flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-xs font-semibold text-black transition duration-300 hover:opacity-90"
+              >
+                <span>View Product Details</span>
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+              </Link>
             </div>
           </motion.div>
         )}

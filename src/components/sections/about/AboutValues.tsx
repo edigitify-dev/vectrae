@@ -1,13 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Handshake,
-  Users,
-  Move3D,
-  Scale,
-  Sparkles,
-} from "lucide-react";
+import { Handshake, Users, Move3D, Scale, Sparkles } from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
 const values = [
@@ -72,8 +66,11 @@ export default function AboutValues() {
           className="max-w-4xl"
         >
           <div className="flex items-center gap-3">
-            <span className="h-px w-10" style={{ backgroundImage: BRAND_GRADIENT }} />
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <span
+              className="h-px w-10"
+              style={{ backgroundImage: BRAND_GRADIENT }}
+            />
+            <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               Core Values
             </span>
           </div>

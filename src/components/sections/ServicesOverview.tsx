@@ -11,7 +11,7 @@ export default function ServicesOverview() {
             SECTION HEADER
         ===================================================== */}
         <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#25D9C7]">
+          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#25D9C7]">
             What We Do
           </p>
 

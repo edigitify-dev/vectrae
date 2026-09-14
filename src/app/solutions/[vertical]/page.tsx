@@ -16,6 +16,7 @@ import Odometer from "@/components/ui/Odometer";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
 import PremiumHeroBackdrop from "@/components/ui/PremiumHeroBackdrop";
+import SolutionMedia from "@/components/ui/SolutionMedia";
 import ReadingProgress from "@/components/sections/blog/ReadingProgress";
 import { BRAND_GRADIENT, NOISE_BG_URL } from "@/lib/brand";
 import { solutions, getSolution } from "@/data/solutions";
@@ -139,13 +140,11 @@ export default async function SolutionOverviewPage({ params }: Props) {
               data-aos="fade-left"
               data-aos-delay="150"
             >
-              <Image
+              <SolutionMedia
                 src={solution.heroImage}
                 alt={solution.title}
-                fill
                 priority
-                unoptimized
-                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                className="transition-transform duration-1000 ease-out group-hover:scale-105"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
 
@@ -208,7 +207,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
 
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               What&apos;s Included
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -223,7 +222,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
               return (
                 <div
                   key={cap.title}
-                  className="group relative overflow-hidden rounded-2xl border border-black/10 bg-white px-6 py-14 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
+                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
                   data-aos="fade-up"
                   data-aos-delay={i * 60}
                 >
@@ -273,7 +272,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
         <section className="relative overflow-hidden bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Go Deeper
               </p>
               <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -288,7 +287,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
                   <Link
                     key={sub.slug}
                     href={`/solutions/${solution.slug}/${sub.slug}`}
-                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
+                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
                     data-aos="fade-up"
                     data-aos-delay={i * 60}
                   >
@@ -330,7 +329,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
 
         <div className="relative mx-auto max-w-4xl px-6 text-center">
           <p
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+            className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
             data-aos="fade-up"
           >
             Why Vectrae
@@ -382,7 +381,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
       <section className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-10 text-center" data-aos="fade-up">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               Explore More
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
@@ -401,12 +400,10 @@ export default async function SolutionOverviewPage({ params }: Props) {
                   data-aos="fade-up"
                   data-aos-delay={i * 100}
                 >
-                  <Image
+                  <SolutionMedia
                     src={r.heroImage}
                     alt={r.title}
-                    fill
-                    unoptimized
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/80" />
                   <div className="pointer-events-none absolute inset-0 -translate-x-[120%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-[120%]" />

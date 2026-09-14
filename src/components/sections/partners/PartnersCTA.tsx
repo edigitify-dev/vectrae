@@ -9,16 +9,22 @@ export default function PartnersCTA() {
       <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#29B9F2]/10 blur-[100px]" />
 
       <div className="relative mx-auto max-w-3xl px-6 text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#0f9ac9]" data-aos="fade-up">
+        <p
+          className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]"
+          data-aos="fade-up"
+        >
           For OEMs & Technology Brands
         </p>
         <h2
-          className="mt-4 text-2xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl"
+          className="mt-4 text-2xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl"
           data-aos="fade-up"
           data-aos-delay="100"
         >
           Want to become a{" "}
-          <span className="bg-clip-text text-transparent" style={{ backgroundImage: BRAND_GRADIENT }}>
+          <span
+            className="bg-clip-text text-transparent"
+            style={{ backgroundImage: BRAND_GRADIENT }}
+          >
             Vectrae partner?
           </span>
         </h2>
@@ -27,8 +33,9 @@ export default function PartnersCTA() {
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          Reach 2,300+ enterprise clients PAN-India through Vectrae&apos;s distribution and
-          delivery network. We&apos;re always evaluating new technology partnerships.
+          Reach 2,300+ enterprise clients PAN-India through Vectrae&apos;s
+          distribution and delivery network. We&apos;re always evaluating new
+          technology partnerships.
         </p>
 
         <div

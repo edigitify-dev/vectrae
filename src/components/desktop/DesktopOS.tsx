@@ -86,7 +86,10 @@ const ICONS: Record<string, LucideIcon> = {
 
 /** Flat list of every folder including nested sub-folders, used for window ID lookups. */
 function flattenFolders(folders: OSFolder[]): OSFolder[] {
-  return folders.flatMap((f) => [f, ...(f.subFolders ? flattenFolders(f.subFolders) : [])]);
+  return folders.flatMap((f) => [
+    f,
+    ...(f.subFolders ? flattenFolders(f.subFolders) : []),
+  ]);
 }
 const allFolders = flattenFolders(desktopFolders);
 
@@ -107,7 +110,9 @@ export default function DesktopOS() {
   const [openIds, setOpenIds] = useState<string[]>([]);
   const [minimizedIds, setMinimizedIds] = useState<Set<string>>(new Set());
   const [maximizedIds, setMaximizedIds] = useState<Set<string>>(new Set());
-  const [activeFile, setActiveFile] = useState<Record<string, string | null>>({});
+  const [activeFile, setActiveFile] = useState<Record<string, string | null>>(
+    {},
+  );
   const [now, setNow] = useState(() => new Date());
   const [booted, setBooted] = useState(false);
   const [brightness, setBrightness] = useState(80);
@@ -130,10 +135,10 @@ export default function DesktopOS() {
           setBatteryLevel(Math.round(battery.level * 100));
           setBatteryCharging(battery.charging);
           battery.addEventListener("levelchange", () =>
-            setBatteryLevel(Math.round(battery.level * 100))
+            setBatteryLevel(Math.round(battery.level * 100)),
           );
           battery.addEventListener("chargingchange", () =>
-            setBatteryCharging(battery.charging)
+            setBatteryCharging(battery.charging),
           );
         })
         .catch(() => {}); // silently ignore if not supported
@@ -141,7 +146,9 @@ export default function DesktopOS() {
   }, []);
 
   const screenRef = useRef<HTMLDivElement>(null);
-  const clickTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const clickTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(
+    new Map(),
+  );
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000 * 30);
@@ -164,7 +171,9 @@ export default function DesktopOS() {
       next.delete(id);
       return next;
     });
-    setOpenIds((prev) => (prev.includes(id) ? [...prev.filter((x) => x !== id), id] : [...prev, id]));
+    setOpenIds((prev) =>
+      prev.includes(id) ? [...prev.filter((x) => x !== id), id] : [...prev, id],
+    );
     setMaximizedIds((prev) => {
       const next = new Set(prev);
       next.add(id);
@@ -241,7 +250,8 @@ export default function DesktopOS() {
   const openFile = (folderId: string, fileId: string) =>
     setActiveFile((prev) => ({ ...prev, [folderId]: fileId }));
 
-  const closeFile = (folderId: string) => setActiveFile((prev) => ({ ...prev, [folderId]: null }));
+  const closeFile = (folderId: string) =>
+    setActiveFile((prev) => ({ ...prev, [folderId]: null }));
 
   const formattedNow = `${now.toLocaleDateString(undefined, {
     weekday: "short",
@@ -284,7 +294,14 @@ export default function DesktopOS() {
       >
         {/* Left, Logo */}
         <div className="flex items-center">
-          <Image src="/logo.png" alt="Vectrae" width={140} height={29} className="h-6 w-auto" priority />
+          <Image
+            src="/logo.png"
+            alt="Vectrae"
+            width={140}
+            height={29}
+            className="h-6 w-auto"
+            priority
+          />
         </div>
 
         {/* Right, system icons + clock */}
@@ -308,8 +325,8 @@ export default function DesktopOS() {
                 batteryCharging
                   ? "text-green-400"
                   : batteryLevel <= 20
-                  ? "text-red-400"
-                  : "text-white/50"
+                    ? "text-red-400"
+                    : "text-white/50"
               }`}
             >
               {batteryLevel}%
@@ -322,7 +339,9 @@ export default function DesktopOS() {
               type="button"
               onClick={() => setControlsOpen((v) => !v)}
               className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-xs transition ${
-                controlsOpen ? "bg-white/15 text-white" : "text-white/60 hover:text-white hover:bg-white/10"
+                controlsOpen
+                  ? "bg-white/15 text-white"
+                  : "text-white/60 hover:text-white hover:bg-white/10"
               }`}
             >
               <Sun className="h-3.5 w-3.5" />
@@ -345,7 +364,9 @@ export default function DesktopOS() {
                         <Sun className="h-3.5 w-3.5 text-yellow-400" />
                         <span>Brightness</span>
                       </div>
-                      <span className="text-xs text-white/40">{brightness}%</span>
+                      <span className="text-xs text-white/40">
+                        {brightness}%
+                      </span>
                     </div>
                     <input
                       type="range"
@@ -362,7 +383,10 @@ export default function DesktopOS() {
           </div>
 
           {/* Clock */}
-          <span className="hidden text-sm text-white/50 sm:inline" suppressHydrationWarning>
+          <span
+            className="hidden text-sm text-white/50 sm:inline"
+            suppressHydrationWarning
+          >
             {formattedNow}
           </span>
         </div>
@@ -401,7 +425,9 @@ export default function DesktopOS() {
                   isSelected={isSelected}
                   icon={Icon}
                 />
-                <span className={`text-xs sm:text-sm ${isSelected ? "text-white" : "text-white/75"}`}>
+                <span
+                  className={`text-xs sm:text-sm ${isSelected ? "text-white" : "text-white/75"}`}
+                >
                   {folder.label}
                 </span>
               </button>
@@ -444,17 +470,23 @@ export default function DesktopOS() {
               const folder = allFolders.find((f) => f.id === id);
               if (!folder) return null;
               const Icon = ICONS[folder.icon];
-              const focused = openIds[openIds.length - 1] === id && !minimizedIds.has(id);
+              const focused =
+                openIds[openIds.length - 1] === id && !minimizedIds.has(id);
               return (
                 <button
                   key={id}
                   type="button"
                   onClick={() => handleTaskbarClick(id)}
                   className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[11px] font-medium transition ${
-                    focused ? "bg-white/10 text-white" : "text-white/50 hover:bg-white/5 hover:text-white/80"
+                    focused
+                      ? "bg-white/10 text-white"
+                      : "text-white/50 hover:bg-white/5 hover:text-white/80"
                   }`}
                 >
-                  <Icon className="h-3.5 w-3.5" style={{ color: folder.accent }} />
+                  <Icon
+                    className="h-3.5 w-3.5"
+                    style={{ color: folder.accent }}
+                  />
                   <span className="hidden sm:inline">{folder.label}</span>
                 </button>
               );
@@ -475,10 +507,21 @@ export default function DesktopOS() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: [0.75, 1, 0.75], scale: [0.97, 1, 0.97] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 1.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
               className="relative"
             >
-              <Image src="/logo.png" alt="Vectrae" width={280} height={58} className="h-9 w-auto sm:h-11" priority />
+              <Image
+                src="/logo.png"
+                alt="Vectrae"
+                width={280}
+                height={58}
+                className="h-9 w-auto sm:h-11"
+                priority
+              />
             </motion.div>
             <div className="relative h-1 w-40 overflow-hidden rounded-full bg-white/10 sm:w-48">
               <motion.div
@@ -489,7 +532,9 @@ export default function DesktopOS() {
                 style={{ backgroundImage: BRAND_GRADIENT }}
               />
             </div>
-            <p className="text-[10px] uppercase tracking-widest text-white/40">Starting Vectrae OS…</p>
+            <p className="text-[10px] uppercase tracking-widest text-white/40">
+              Starting Vectrae OS…
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -549,7 +594,14 @@ function OSWindow({
   };
 
   const style: React.CSSProperties = isMaximized
-    ? { position: "absolute", top: -MENUBAR_HEIGHT, left: 0, right: 0, bottom: TASKBAR_HEIGHT, zIndex: 60 }
+    ? {
+        position: "absolute",
+        top: -MENUBAR_HEIGHT,
+        left: 0,
+        right: 0,
+        bottom: TASKBAR_HEIGHT,
+        zIndex: 60,
+      }
     : {
         position: "absolute",
         top: 0,
@@ -604,7 +656,10 @@ function OSWindow({
             }}
             className="group/dot flex h-3 w-3 cursor-pointer items-center justify-center rounded-full bg-[#ff5f57] transition hover:brightness-110"
           >
-            <X className="h-2 w-2 text-[#4d0000] opacity-0 transition-opacity group-hover/dot:opacity-100" strokeWidth={3} />
+            <X
+              className="h-2 w-2 text-[#4d0000] opacity-0 transition-opacity group-hover/dot:opacity-100"
+              strokeWidth={3}
+            />
           </button>
           <button
             type="button"
@@ -616,7 +671,10 @@ function OSWindow({
             }}
             className="group/dot flex h-3 w-3 cursor-pointer items-center justify-center rounded-full bg-[#febc2e] transition hover:brightness-110"
           >
-            <Minus className="h-2 w-2 text-[#7a4b00] opacity-0 transition-opacity group-hover/dot:opacity-100" strokeWidth={4} />
+            <Minus
+              className="h-2 w-2 text-[#7a4b00] opacity-0 transition-opacity group-hover/dot:opacity-100"
+              strokeWidth={4}
+            />
           </button>
           <button
             type="button"
@@ -629,21 +687,33 @@ function OSWindow({
             className="group/dot flex h-3 w-3 cursor-pointer items-center justify-center rounded-full bg-[#28c840] transition hover:brightness-110"
           >
             {isMaximized ? (
-              <Minimize2 className="h-1.5 w-1.5 text-[#0a4d16] opacity-0 transition-opacity group-hover/dot:opacity-100" strokeWidth={4} />
+              <Minimize2
+                className="h-1.5 w-1.5 text-[#0a4d16] opacity-0 transition-opacity group-hover/dot:opacity-100"
+                strokeWidth={4}
+              />
             ) : (
-              <Maximize2 className="h-1.5 w-1.5 text-[#0a4d16] opacity-0 transition-opacity group-hover/dot:opacity-100" strokeWidth={4} />
+              <Maximize2
+                className="h-1.5 w-1.5 text-[#0a4d16] opacity-0 transition-opacity group-hover/dot:opacity-100"
+                strokeWidth={4}
+              />
             )}
           </button>
         </div>
         <Icon className="ml-1.5 h-3.5 w-3.5" style={{ color: folder.accent }} />
-        <span className="text-xs font-medium text-white/80">{folder.label}</span>
+        <span className="text-xs font-medium text-white/80">
+          {folder.label}
+        </span>
       </div>
 
       <div className="flex items-center gap-1.5 border-b border-white/5 bg-black/20 px-4 py-2 text-[11px]">
         <button
           type="button"
           onClick={onCloseFile}
-          className={!file ? "font-semibold text-white" : "text-white/40 transition hover:text-white/70"}
+          className={
+            !file
+              ? "font-semibold text-white"
+              : "text-white/40 transition hover:text-white/70"
+          }
         >
           {folder.label}
         </button>
@@ -655,8 +725,9 @@ function OSWindow({
         )}
       </div>
 
-
-      <div className={`flex-1 overflow-y-auto ${LIVE_PREVIEW_ROUTES[folder.id] ? "" : "p-4 sm:p-5"}`}>
+      <div
+        className={`flex-1 overflow-y-auto ${LIVE_PREVIEW_ROUTES[folder.id] ? "" : "p-4 sm:p-5"}`}
+      >
         {LIVE_PREVIEW_ROUTES[folder.id] ? (
           <iframe
             src={LIVE_PREVIEW_ROUTES[folder.id]}
@@ -683,7 +754,10 @@ function OSWindow({
                         boxShadow: undefined,
                       }}
                     >
-                      <SFIcon className="h-6 w-6 translate-y-1" style={{ color: sf.accent }} />
+                      <SFIcon
+                        className="h-6 w-6 translate-y-1"
+                        style={{ color: sf.accent }}
+                      />
                     </span>
                     <span className="line-clamp-2 text-center text-[11px] leading-snug text-white/70">
                       {sf.label}
@@ -708,7 +782,10 @@ function OSWindow({
                       className="relative flex h-14 w-16 items-center justify-center border border-white/10 bg-black/50 transition duration-200 group-hover:border-white/20"
                       style={{ clipPath: FOLDER_CLIP }}
                     >
-                      <FIcon className="h-6 w-6 translate-y-1" style={{ color: folder.accent }} />
+                      <FIcon
+                        className="h-6 w-6 translate-y-1"
+                        style={{ color: folder.accent }}
+                      />
                     </span>
                     <span className="line-clamp-2 text-center text-[11px] leading-snug text-white/70">
                       {f.title}
@@ -742,9 +819,13 @@ function FileDetail({ file, accent }: { file: OSFile; accent: string }) {
         </span>
         <div className="min-w-0 flex-1">
           {file.tag && (
-            <span className="text-[10px] font-semibold uppercase tracking-wide text-white/40">{file.tag}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wide text-white/40">
+              {file.tag}
+            </span>
           )}
-          <h3 className="mt-0.5 text-lg font-semibold text-white">{file.title}</h3>
+          <h3 className="mt-0.5 text-lg font-semibold text-white">
+            {file.title}
+          </h3>
         </div>
         {hasToggle && (
           <button
@@ -763,14 +844,18 @@ function FileDetail({ file, accent }: { file: OSFile; accent: string }) {
         )}
       </div>
 
-      <p className="mt-4 text-sm leading-relaxed text-white/60">{file.summary}</p>
+      <p className="mt-4 text-sm leading-relaxed text-white/60">
+        {file.summary}
+      </p>
       <p className="mt-3 text-sm leading-relaxed text-white/40">{file.body}</p>
 
       {file.meta && (
         <div className="mt-5 grid grid-cols-2 gap-4 border-t border-white/10 pt-4 sm:grid-cols-3">
           {file.meta.map((m) => (
             <div key={m.label}>
-              <p className="text-[10px] font-semibold uppercase tracking-wide text-white/30">{m.label}</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-white/30">
+                {m.label}
+              </p>
               <p className="mt-0.5 text-sm text-white">{m.value}</p>
             </div>
           ))}
@@ -820,7 +905,11 @@ function FolderShape({
           : `drop-shadow(0 2px 8px rgba(0,0,0,0.6))`,
       }}
     >
-      <svg viewBox="0 0 100 84" className="absolute inset-0 w-full h-full" fill="none">
+      <svg
+        viewBox="0 0 100 84"
+        className="absolute inset-0 w-full h-full"
+        fill="none"
+      >
         <defs>
           <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#0d2d47" />
@@ -838,7 +927,11 @@ function FolderShape({
           stroke="white"
           strokeOpacity={isSelected ? 0.6 : 0.25}
           strokeWidth="1.5"
-          style={{ filter: isSelected ? "drop-shadow(0 0 4px rgba(255,255,255,0.8))" : "drop-shadow(0 0 3px rgba(255,255,255,0.15))" }}
+          style={{
+            filter: isSelected
+              ? "drop-shadow(0 0 4px rgba(255,255,255,0.8))"
+              : "drop-shadow(0 0 3px rgba(255,255,255,0.15))",
+          }}
         />
         {/* Glossy top highlight */}
         <path d={glossPath} fill={`url(#${glossId})`} />

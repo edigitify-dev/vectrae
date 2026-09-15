@@ -8,7 +8,6 @@ import {
   CheckCircle2,
   ChevronRight,
   PhoneCall,
-  ShieldCheck,
   Sparkles,
 } from "lucide-react";
 import Navbar from "@/components/sections/Navbar";
@@ -39,6 +38,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${solution.title} | Vectrae Enterprise Technology`,
     description: solution.description,
   };
+}
+
+function getOemInitials(name: string) {
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return words
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 }
 
 export default async function SolutionOverviewPage({ params }: Props) {
@@ -357,28 +366,54 @@ export default async function SolutionOverviewPage({ params }: Props) {
           </div>
 
           {solution.oems.length > 0 && (
-            <div className="mx-auto mt-16 max-w-3xl" data-aos="fade-up">
-              <p className="text-xs font-semibold uppercase tracking-widest text-white/30">
+            <div className="mx-auto mt-16 max-w-5xl" data-aos="fade-up">
+              <p className="text-center text-xs font-semibold uppercase tracking-widest text-white/30">
                 Technology Partners for {solution.title}
               </p>
-              <div className="mt-5 flex flex-wrap justify-center gap-2">
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
                 {solution.oems.map((oem) => (
                   <span
-                    key={oem}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-white/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#25D9C7]/40 hover:text-white/90"
+                    key={oem.name}
+                    className="inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.03] py-1.5 pl-1.5 pr-5 text-sm font-medium text-white/70 shadow-[inset_0_0_20px_rgba(37,217,199,0.12)] backdrop-blur-sm transition-all duration-300 hover:border-[#25D9C7]/30 hover:bg-white/[0.06]"
                   >
-                    <ShieldCheck className="h-3 w-3 text-[#25D9C7]" />
-                    {oem}
+                    {oem.logo ? (
+                      <span className="relative flex h-9 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
+                        <Image
+                          src={oem.logo}
+                          alt={oem.name}
+                          width={28}
+                          height={28}
+                          unoptimized
+                          className="h-full w-full object-contain p-1.5"
+                        />
+                      </span>
+                    ) : (
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/60 shadow-[inset_0_0_12px_rgba(37,217,199,0.35)]">
+                        {getOemInitials(oem.name)}
+                      </span>
+                    )}
+                    <span className="whitespace-nowrap">{oem.name}</span>
                   </span>
                 ))}
               </div>
+              <Link
+                href="#more"
+                style={{ backgroundImage: BRAND_GRADIENT }}
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90 mt-8"
+              >
+                View More Solutions
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           )}
         </div>
       </section>
 
       {/* Related solutions */}
-      <section className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28">
+      <section
+        className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28"
+        id="more"
+      >
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-10 text-center" data-aos="fade-up">
             <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">

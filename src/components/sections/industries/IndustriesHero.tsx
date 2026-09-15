@@ -55,13 +55,14 @@ export default function IndustriesHero() {
               }}
               className="relative aspect-square w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
             >
-              <Image
-                src={"/images/industry/industry_hero.png"}
-                alt="Vectrae enterprise AV boardroom deployment"
-                fill
-                priority
-                unoptimized
-                className="object-cover"
+              <video
+                src="/video/industries_hero_vid.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 h-full w-full object-cover"
+                aria-label="Vectrae enterprise AV boardroom deployment"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
             </motion.div>

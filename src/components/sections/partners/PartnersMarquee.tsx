@@ -1,14 +1,25 @@
-import { priorityPartnerLogos } from "@/data/partners";
+import Image from "next/image";
+import { priorityPartnerLogos, type PartnerLogo } from "@/data/partners";
 
 const firstRow = priorityPartnerLogos.filter((_, i) => i % 2 === 0);
 const secondRow = priorityPartnerLogos.filter((_, i) => i % 2 === 1);
 
+function getInitials(name: string) {
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return words
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
 function MarqueeRow({
-  names,
+  partners,
   reverse,
   durationSeconds,
 }: {
-  names: readonly string[];
+  partners: readonly PartnerLogo[];
   reverse?: boolean;
   durationSeconds: number;
 }) {
@@ -22,12 +33,30 @@ function MarqueeRow({
         } group-hover:[animation-play-state:paused]`}
         style={{ animationDuration: `${durationSeconds}s` }}
       >
-        {[...names, ...names].map((name, i) => (
+        {[...partners, ...partners].map((partner, i) => (
           <span
-            key={`${name}-${i}`}
-            className="shrink-0 text-2xl font-semibold tracking-tight text-white/25 transition-colors duration-300 hover:text-white/70 sm:text-3xl"
+            key={`${partner.name}-${i}`}
+            className="flex shrink-0 items-center gap-3"
           >
-            {name}
+            {partner.logo ? (
+              <span className="relative flex h-9 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
+                <Image
+                  src={partner.logo}
+                  alt={partner.name}
+                  width={28}
+                  height={28}
+                  unoptimized
+                  className="h-full w-full object-contain p-1.5"
+                />
+              </span>
+            ) : (
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/50">
+                {getInitials(partner.name)}
+              </span>
+            )}
+            <span className="text-2xl font-semibold tracking-tight text-white/25 transition-colors duration-300 hover:text-white/70 sm:text-3xl">
+              {partner.name}
+            </span>
           </span>
         ))}
       </div>
@@ -45,8 +74,8 @@ export default function PartnersMarquee() {
       </div>
 
       <div className="mt-12 flex flex-col gap-8">
-        <MarqueeRow names={firstRow} durationSeconds={34} />
-        <MarqueeRow names={secondRow} reverse durationSeconds={38} />
+        <MarqueeRow partners={firstRow} durationSeconds={34} />
+        <MarqueeRow partners={secondRow} reverse durationSeconds={38} />
       </div>
     </section>
   );

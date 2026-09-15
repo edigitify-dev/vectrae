@@ -7,7 +7,15 @@ import { motion } from "framer-motion";
 import { BRAND_GRADIENT } from "@/lib/brand";
 import Navbar from "@/components/sections/Navbar";
 
-export default function ServicesHero() {
+interface ServicesHeroProps {
+  heroImage?: string;
+  heroAlt?: string;
+}
+
+export default function ServicesHero({
+  heroImage = "/video/av_hero_vid.mp4",
+  heroAlt = "Vectrae enterprise technology solutions",
+}: ServicesHeroProps) {
   return (
     <section className="relative isolate overflow-hidden bg-black">
       <div className="pointer-events-none absolute left-1/2 top-0 h-130 w-225 -translate-x-1/2 -translate-y-1/3 rounded-full bg-[#29B9F2]/15 blur-[140px]" />
@@ -70,14 +78,24 @@ export default function ServicesHero() {
               }}
               className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:aspect-[16/10]"
             >
-              <Image
-                src="/images/solutions/boardroom.png"
-                alt="Vectrae enterprise AV boardroom deployment"
-                fill
-                priority
-                unoptimized
-                className="object-cover"
-              />
+              {heroImage.endsWith(".mp4") ? (
+                <video
+                  src={heroImage}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : (
+                <Image
+                  src={heroImage}
+                  alt={heroAlt}
+                  fill
+                  unoptimized
+                  className="object-cover"
+                />
+              )}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
             </motion.div>
 

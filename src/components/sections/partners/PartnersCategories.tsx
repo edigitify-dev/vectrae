@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { BRAND_GRADIENT } from "@/lib/brand";
 import { partnersByCategory } from "@/data/partners";
@@ -8,6 +9,16 @@ import { partnersByCategory } from "@/data/partners";
 const CATEGORIES = Object.keys(
   partnersByCategory,
 ) as (keyof typeof partnersByCategory)[];
+
+function getInitials(name: string) {
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return words
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
 
 export default function PartnersCategories() {
   const [activeCategory, setActiveCategory] = useState<
@@ -73,20 +84,33 @@ export default function PartnersCategories() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap gap-2.5"
+              className="flex flex-wrap justify-center gap-3"
             >
-              {activePartners.map((name) => (
+              {activePartners.map((partner) => (
                 <span
-                  key={name}
-                  className="group inline-flex items-center gap-2.5 rounded-xl border border-black/10 bg-neutral-50 px-4 py-3 text-sm font-semibold text-neutral-700 transition hover:border-black/20 hover:bg-white hover:shadow-md"
+                  key={partner.name}
+                  className="group inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-black/10 bg-neutral-50 py-1.5 pl-1.5 pr-5 text-sm font-semibold text-neutral-700 shadow-sm transition hover:border-black/20 hover:bg-white hover:shadow-md"
                 >
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-black"
-                    style={{ backgroundImage: BRAND_GRADIENT }}
-                  >
-                    {name.charAt(0)}
-                  </span>
-                  {name}
+                  {partner.logo ? (
+                    <span className="relative flex h-9 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black/10 bg-white">
+                      <Image
+                        src={partner.logo}
+                        alt={partner.name}
+                        width={28}
+                        height={28}
+                        unoptimized
+                        className="h-full w-full object-contain p-1.5"
+                      />
+                    </span>
+                  ) : (
+                    <span
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-black"
+                      style={{ backgroundImage: BRAND_GRADIENT }}
+                    >
+                      {getInitials(partner.name)}
+                    </span>
+                  )}
+                  <span className="whitespace-nowrap">{partner.name}</span>
                 </span>
               ))}
             </motion.div>

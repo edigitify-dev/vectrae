@@ -164,7 +164,7 @@ function ServiceHoloCard({
             group-hover:scale-105
           "
             style={{
-              backgroundImage: `url(${service.heroImage})`,
+              backgroundImage: `url(${service.cardImage})`,
             }}
           />
         </div>

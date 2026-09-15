@@ -15,17 +15,17 @@ export default function AboutTrust() {
         color: "transparent",
       }}
     >
-      {value}
+      {value.title}
     </span>
   ));
 
-  const certItems = priorityPartnerLogos.slice(0, 10).map((name) => (
+  const certItems = priorityPartnerLogos.slice(0, 10).map((partner) => (
     <span
-      key={name}
+      key={partner.name}
       className="flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.03] px-4 py-2 text-sm font-medium text-neutral-700"
     >
       <ShieldCheck className="h-4 w-4 text-[#25D9C7]" />
-      {name}
+      {partner.name}
     </span>
   ));
 

@@ -23,7 +23,7 @@ export default function CoreValues() {
     <section className="relative border-t border-black/5 bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-3xl px-6 text-center">
         <Reveal>
-          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
+          <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
             Our Core Values
           </p>
         </Reveal>

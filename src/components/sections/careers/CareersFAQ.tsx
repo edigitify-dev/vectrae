@@ -44,7 +44,7 @@ export default function CareersFAQ() {
 
       <div className="relative mx-auto max-w-3xl px-6">
         <div className="text-center" data-aos="fade-up">
-          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+          <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
             FAQ
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">

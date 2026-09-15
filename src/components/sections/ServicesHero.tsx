@@ -13,7 +13,7 @@ interface ServicesHeroProps {
 }
 
 export default function ServicesHero({
-  heroImage = "/video/av_hero_vid.mp4",
+  heroImage = "/video/solutions_hero_vid.mp4",
   heroAlt = "Vectrae enterprise technology solutions",
 }: ServicesHeroProps) {
   return (

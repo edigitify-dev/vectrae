@@ -63,12 +63,6 @@ function ChapterCard({
     >
       <div className="flex items-start justify-between">
         <span
-          className="text-5xl font-bold leading-none tracking-tight sm:text-6xl"
-          style={{ color: chapter.accent }}
-        >
-          {chapter.n}
-        </span>
-        <span
           className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border"
           style={{ borderColor: `${chapter.accent}33`, color: chapter.accent }}
         >
@@ -120,7 +114,10 @@ export default function AboutStory() {
       <div className="mx-auto max-w-5xl px-6 sm:px-10">
         <div className="mb-12 flex items-end justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">
+            <p
+              className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]"
+              data-aos="fade-up"
+            >
               Our Story
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">

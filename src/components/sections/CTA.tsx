@@ -15,7 +15,7 @@ export default function CTA() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left">
             <p
-              className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]"
+              className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]"
               data-aos="fade-up"
             >
               Let's Get Started

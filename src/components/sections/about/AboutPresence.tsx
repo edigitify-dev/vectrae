@@ -84,7 +84,7 @@ export default function AboutPresence() {
                 className="h-px w-10"
                 style={{ backgroundImage: BRAND_GRADIENT }}
               />
-              <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <span className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Our Presence
               </span>
             </div>

@@ -178,7 +178,7 @@ export default function ProductShowcase() {
           className="mx-auto w-full max-w-5xl text-center"
           data-aos="fade-up"
         >
-          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]">
+          <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]">
             Interactive Showcase
           </p>
           <h2 className="mx-auto mt-4 w-full text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl lg:whitespace-nowrap">

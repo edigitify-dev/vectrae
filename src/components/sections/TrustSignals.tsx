@@ -322,7 +322,7 @@ export default function TrustSignals() {
             "
             data-aos="fade-right"
           >
-            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#25D9C7] sm:tracking-[0.13em]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.2em] text-[#25D9C7] sm:tracking-[0.13em]">
               Client Portfolio
             </p>
 

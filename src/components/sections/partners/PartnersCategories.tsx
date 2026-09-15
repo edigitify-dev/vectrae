@@ -33,7 +33,7 @@ export default function PartnersCategories() {
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+          <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
             Partner Directory
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -89,17 +89,17 @@ export default function PartnersCategories() {
               {activePartners.map((partner) => (
                 <span
                   key={partner.name}
-                  className="group inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-black/10 bg-neutral-50 py-1.5 pl-1.5 pr-5 text-sm font-semibold text-neutral-700 shadow-sm transition hover:border-black/20 hover:bg-white hover:shadow-md"
+                  className="group inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-black/10 bg-neutral-50 py-1 px-1 text-sm font-semibold text-neutral-700 shadow-sm transition hover:border-black/20 hover:bg-white hover:shadow-md"
                 >
                   {partner.logo ? (
-                    <span className="relative flex h-9 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black/10 bg-white">
+                    <span className="relative flex h-10 w-26 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black/10 bg-white">
                       <Image
                         src={partner.logo}
                         alt={partner.name}
                         width={28}
                         height={28}
                         unoptimized
-                        className="h-full w-full object-contain p-1.5"
+                        className="h-full w-full object-contain p-2.5"
                       />
                     </span>
                   ) : (
@@ -110,7 +110,7 @@ export default function PartnersCategories() {
                       {getInitials(partner.name)}
                     </span>
                   )}
-                  <span className="whitespace-nowrap">{partner.name}</span>
+                  {/* <span className="whitespace-nowrap">{partner.name}</span> */}
                 </span>
               ))}
             </motion.div>

@@ -197,7 +197,7 @@ export default function FootprintMap() {
           {/* Left: text + stats */}
           <div>
             <div data-aos="fade-right">
-              <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#25D9C7]">
+              <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#25D9C7]">
                 National Coverage
               </p>
               <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">

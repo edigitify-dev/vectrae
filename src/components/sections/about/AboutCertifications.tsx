@@ -1,53 +1,58 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ArrowUpRight, BadgeCheck } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
 /* ============================================================
-   CERTIFICATION / AWARD DATA
+   CERTIFICATION IMAGES
 
-   Replace these placeholder entries with the actual
-   certifications, OEM certifications and awards provided
-   by Vectrae HR / Marketing.
-
-   Example:
-
-   {
-     name: "ISO 9001:2015",
-     category: "Management System",
-     image: "/images/certifications/iso-9001.webp",
-   }
-
+   Update the `image` path for each entry to match wherever you
+   place these files (e.g. /public/images/certificates/...).
 ============================================================ */
 
-type Certification = {
-  name: string;
-  category: string;
-  image?: string;
-};
-
-const certifications: Certification[] = [
-  {
-    name: "ISO Certification",
-    category: "Quality Management",
-  },
-  {
-    name: "OEM Certification",
-    category: "Technology Partner",
-  },
-  {
-    name: "Industry Certification",
-    category: "Enterprise Technology",
-  },
-  {
-    name: "Industry Recognition",
-    category: "Excellence & Innovation",
-  },
+const certifications: { image: string }[] = [
+  { image: "/images/certificates/img.webp" },
+  { image: "/images/certificates/img1.webp" },
+  { image: "/images/certificates/img2.webp" },
+  { image: "/images/certificates/img3.webp" },
+  { image: "/images/certificates/img4.webp" },
+  { image: "/images/certificates/img5.webp" },
+  { image: "/images/certificates/img6.webp" },
+  { image: "/images/certificates/img7.webp" },
+  { image: "/images/certificates/img8.webp" },
+  { image: "/images/certificates/img9.webp" },
+  { image: "/images/certificates/img10.webp" },
+  { image: "/images/certificates/img11.webp" },
+  { image: "/images/certificates/img12.webp" },
+  { image: "/images/certificates/img13.webp" },
+  { image: "/images/certificates/img14.webp" },
+  { image: "/images/certificates/img15.webp" },
+  { image: "/images/certificates/img16.webp" },
 ];
 
 export default function AboutCertifications() {
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
+  // Lock body scroll + allow Escape to close while dialog is open
+  useEffect(() => {
+    if (!activeImage) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveImage(null);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [activeImage]);
+
   return (
     <section
       id="certifications"
@@ -105,7 +110,7 @@ export default function AboutCertifications() {
                 style={{ backgroundImage: BRAND_GRADIENT }}
               />
 
-              <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <span className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Certifications & Awards
               </span>
             </div>
@@ -145,135 +150,47 @@ export default function AboutCertifications() {
             </span>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Mobile: horizontal snap carousel. sm+: grid */}
+          <div
+            className="
+              flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4
+              [-ms-overflow-style:none] [scrollbar-width:none]
+              [&::-webkit-scrollbar]:hidden
+              sm:grid sm:snap-none sm:gap-4 sm:overflow-visible sm:pb-0
+              sm:grid-cols-3 lg:grid-cols-4
+            "
+          >
             {certifications.map((certification, index) => (
-              <motion.article
-                key={certification.name}
+              <motion.button
+                key={certification.image}
+                type="button"
+                onClick={() => setActiveImage(certification.image)}
                 initial={{ opacity: 0, y: 35 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{
                   duration: 0.7,
-                  delay: index * 0.1,
+                  delay: index * 0.06,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 transition-all duration-500 hover:border-white/[0.16] hover:bg-white/[0.045] sm:p-7"
+                className="group relative aspect-[4/3] w-[78%] shrink-0 snap-center cursor-pointer overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.025] text-left transition-all duration-500 hover:border-white/[0.16] hover:bg-white/[0.045] sm:w-auto sm:shrink"
               >
-                {/* Hover glow */}
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-[#29B9F2]/10 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                <Image
+                  src={certification.image}
+                  alt="Certification"
+                  fill
+                  className="object-contain p-4 opacity-100 transition-transform duration-500 group-hover:scale-[1.03]"
                 />
-
-                {/* Number */}
-                <div className="relative flex items-start justify-between">
-                  <span className="font-mono text-[10px] tracking-[0.2em] text-white/20">
-                    0{index + 1}
-                  </span>
-
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/25 transition-colors duration-300 group-hover:border-[#29B9F2]/30 group-hover:text-[#29B9F2]">
-                    <ArrowUpRight className="h-4 w-4" />
-                  </span>
-                </div>
-
-                {/* ==================================================
-                    LOGO / PLACEHOLDER
-                ================================================== */}
-
-                <div className="relative mt-8 flex h-36 items-center justify-center overflow-hidden rounded-xl border border-white/[0.06] bg-black/30">
-                  {certification.image ? (
-                    <Image
-                      src={certification.image}
-                      alt={certification.name}
-                      width={150}
-                      height={100}
-                      className="max-h-20 w-auto object-contain opacity-70 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center">
-                      <div className="relative flex h-14 w-14 items-center justify-center rounded-full border border-white/[0.08]">
-                        <BadgeCheck className="h-6 w-6 text-white/15" />
-
-                        <span className="absolute inset-[-5px] rounded-full border border-dashed border-white/[0.05]" />
-                      </div>
-
-                      <span className="mt-4 text-[8px] font-semibold uppercase tracking-[0.25em] text-white/15">
-                        Logo Pending
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Name */}
-                <h3 className="relative mt-6 text-lg font-semibold tracking-tight text-white">
-                  {certification.name}
-                </h3>
-
-                {/* Category */}
-                <p
-                  className="relative mt-2 bg-clip-text text-xs font-semibold uppercase tracking-[0.14em] text-transparent"
-                  style={{ backgroundImage: BRAND_GRADIENT }}
-                >
-                  {certification.category}
-                </p>
 
                 {/* Bottom accent */}
                 <div
                   className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
                   style={{ backgroundImage: BRAND_GRADIENT }}
                 />
-              </motion.article>
+              </motion.button>
             ))}
           </div>
         </div>
-
-        {/* ======================================================
-            PARTNER / AWARD STRIP
-        ====================================================== */}
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-20 overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.02]"
-        >
-          <div className="flex flex-col border-b border-white/[0.06] px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30">
-                Technology Ecosystem
-              </p>
-
-              <p className="mt-1 text-sm text-white/25">
-                Trusted relationships across the enterprise technology stack.
-              </p>
-            </div>
-
-            <div className="mt-4 font-mono text-[9px] tracking-[0.2em] text-white/15 sm:mt-0">
-              VECTRAE / PARTNERS
-            </div>
-          </div>
-
-          {/* Logo placeholders */}
-          <div className="grid grid-cols-2 divide-x divide-y divide-white/[0.06] sm:grid-cols-3 lg:grid-cols-6 lg:divide-y-0">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div
-                key={index}
-                className="group flex h-28 items-center justify-center transition-colors duration-300 hover:bg-white/[0.025]"
-              >
-                <div className="text-center">
-                  <span className="block font-mono text-xs tracking-[0.2em] text-white/10 transition-colors duration-300 group-hover:text-white/25">
-                    OEM
-                  </span>
-
-                  <span className="mt-1 block text-[8px] uppercase tracking-[0.2em] text-white/[0.08]">
-                    Partner {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
       </div>
 
       {/* ========================================================
@@ -281,6 +198,54 @@ export default function AboutCertifications() {
       ======================================================== */}
 
       <div className="absolute bottom-0 left-1/2 h-px w-[calc(100%-3rem)] max-w-6xl -translate-x-1/2 bg-white/[0.06]" />
+
+      {/* ========================================================
+          CERTIFICATE DIALOG
+      ======================================================== */}
+
+      <AnimatePresence>
+        {activeImage && (
+          <motion.div
+            key="certificate-dialog"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 px-6 backdrop-blur-sm"
+            onClick={() => setActiveImage(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Certificate preview"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96, y: 8 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-2xl"
+            >
+              <button
+                type="button"
+                onClick={() => setActiveImage(null)}
+                aria-label="Close"
+                className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/60 text-white/70 backdrop-blur-md transition hover:border-white/30 hover:text-white"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src={activeImage}
+                  alt="Certificate"
+                  fill
+                  className="object-contain p-6"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -140,7 +140,7 @@ export default async function SubServicePage({ params }: Props) {
 
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               What&apos;s Included
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -184,7 +184,7 @@ export default async function SubServicePage({ params }: Props) {
 
         <div className="relative mx-auto max-w-4xl px-6 text-center">
           <p
-            className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+            className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
             data-aos="fade-up"
           >
             Why Vectrae
@@ -217,7 +217,7 @@ export default async function SubServicePage({ params }: Props) {
       <section className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <p
-            className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+            className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
             data-aos="fade-up"
           >
             Explore More

@@ -10,7 +10,7 @@ export default function PartnersCTA() {
 
       <div className="relative mx-auto max-w-3xl px-6 text-center">
         <p
-          className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]"
+          className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]"
           data-aos="fade-up"
         >
           For OEMs & Technology Brands

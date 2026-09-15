@@ -21,7 +21,7 @@ export default function BlogHero({ postCount, categories }: Props) {
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 pb-16 pt-8 text-center sm:pb-20 sm:pt-14">
         <p
-          className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+          className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
           data-aos="fade-up"
         >
           Insights &amp; Perspectives

@@ -13,7 +13,7 @@ export default function ContactHero() {
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 pb-20 pt-8 text-center sm:pb-28 sm:pt-14">
         <p
-          className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+          className="text-xl font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
           data-aos="fade-up"
         >
           Get In Touch
@@ -36,8 +36,9 @@ export default function ContactHero() {
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          Whether you need a quick quote or a complete technology transformation, our
-          experts are ready to help. We respond within 4 business hours.
+          Whether you need a quick quote or a complete technology
+          transformation, our experts are ready to help. We respond within 4
+          business hours.
         </p>
 
         <div

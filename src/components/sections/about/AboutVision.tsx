@@ -62,7 +62,7 @@ export default function AboutVision() {
             <div className="flex items-center gap-3">
               <span className="h-px w-10 bg-[#29B9F2]" />
 
-              <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <span className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Our Vision
               </span>
             </div>

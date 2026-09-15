@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { siteImages } from "@/lib/site-images";
+import Link from "next/link";
 
 export default function SampleAboutUs() {
   return (
@@ -42,7 +43,7 @@ export default function SampleAboutUs() {
             transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col justify-center"
           >
-            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               About Us
             </p>
             <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
@@ -62,12 +63,18 @@ export default function SampleAboutUs() {
             </p>
 
             <div className="mt-10 flex gap-4">
-              <button className="rounded-full bg-[#29B9F2] px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-[#25D9C7] hover:scale-105 shadow-md hover:shadow-lg">
+              <Link
+                href="/about#story"
+                className="rounded-full bg-[#29B9F2] px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-[#25D9C7] hover:scale-105 shadow-md hover:shadow-lg"
+              >
                 Our Story
-              </button>
-              <button className="rounded-full border border-black/10 bg-black/5 px-8 py-3 text-sm font-semibold text-neutral-800 transition-all hover:bg-black/10 hover:border-black/20">
+              </Link>
+              <Link
+                href="/about#leadership"
+                className="rounded-full border border-black/10 bg-black/5 px-8 py-3 text-sm font-semibold text-neutral-800 transition-all hover:bg-black/10 hover:border-black/20"
+              >
                 Meet the Team
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>

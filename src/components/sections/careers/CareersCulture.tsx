@@ -22,7 +22,7 @@ export default function CareersCulture() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="max-w-2xl" data-aos="fade-up">
-          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]">
+          <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]">
             Life at Vectrae
           </p>
           <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
@@ -96,7 +96,7 @@ export default function CareersCulture() {
 
         <div className="mt-20 border-t border-black/10 pt-20">
           <div className="max-w-2xl" data-aos="fade-up">
-            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
               Perks & Benefits
             </p>
             <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">

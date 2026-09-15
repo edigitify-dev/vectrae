@@ -228,9 +228,9 @@ export default function WhyChooseUs() {
       onTouchStart={pauseAutoplay}
     >
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-neutral-500 shadow-sm">
+        <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
           Why Choose Us
-        </div>
+        </p>
 
         <h2 className="mt-5 sm:mt-6 text-2xl font-bold tracking-tight text-neutral-900 sm:text-4xl lg:text-5xl">
           Five Reasons Enterprises Choose{" "}

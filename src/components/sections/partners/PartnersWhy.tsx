@@ -39,7 +39,7 @@ export default function PartnersWhy() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-          <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+          <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
             Why OEMs Choose Vectrae
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">

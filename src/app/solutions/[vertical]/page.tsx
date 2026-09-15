@@ -216,7 +216,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
 
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               What&apos;s Included
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -224,14 +224,14 @@ export default async function SolutionOverviewPage({ params }: Props) {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 flex flex-wrap justify-center gap-5">
             {solution.capabilities.map((cap, i) => {
               const CapIcon = cap.icon;
 
               return (
                 <div
                   key={cap.title}
-                  className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
+                  className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)] sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.833rem)]"
                   data-aos="fade-up"
                   data-aos-delay={i * 60}
                 >
@@ -281,7 +281,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
         <section className="relative overflow-hidden bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-              <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Go Deeper
               </p>
               <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -289,14 +289,14 @@ export default async function SolutionOverviewPage({ params }: Props) {
               </h2>
             </div>
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 flex flex-wrap justify-center gap-5">
               {solution.subServices.map((sub, i) => {
                 const SubIcon = sub.icon;
                 return (
                   <Link
                     key={sub.slug}
                     href={`/solutions/${solution.slug}/${sub.slug}`}
-                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
+                    className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)] sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.833rem)]"
                     data-aos="fade-up"
                     data-aos-delay={i * 60}
                   >
@@ -336,9 +336,9 @@ export default async function SolutionOverviewPage({ params }: Props) {
           style={{ backgroundImage: NOISE_BG_URL }}
         />
 
-        <div className="relative mx-auto max-w-4xl px-6 text-center">
+        <div className="relative mx-auto max-w-6xl px-6 text-center">
           <p
-            className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+            className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
             data-aos="fade-up"
           >
             Why Vectrae
@@ -374,10 +374,10 @@ export default async function SolutionOverviewPage({ params }: Props) {
                 {solution.oems.map((oem) => (
                   <span
                     key={oem.name}
-                    className="inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.03] py-1.5 pl-1.5 pr-5 text-sm font-medium text-white/70 shadow-[inset_0_0_20px_rgba(37,217,199,0.12)] backdrop-blur-sm transition-all duration-300 hover:border-[#25D9C7]/30 hover:bg-white/[0.06]"
+                    className="inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.03] py-1.5 px-1.5 text-sm font-medium text-white/70 shadow-[inset_0_0_20px_rgba(37,217,199,0.12)] backdrop-blur-sm transition-all duration-300 hover:border-[#25D9C7]/30 hover:bg-white/[0.06]"
                   >
                     {oem.logo ? (
-                      <span className="relative flex h-9 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
+                      <span className="relative flex h-10 w-26 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
                         <Image
                           src={oem.logo}
                           alt={oem.name}
@@ -392,7 +392,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
                         {getOemInitials(oem.name)}
                       </span>
                     )}
-                    <span className="whitespace-nowrap">{oem.name}</span>
+                    {/* <span className="whitespace-nowrap">{oem.name}</span> */}
                   </span>
                 ))}
               </div>
@@ -416,7 +416,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
       >
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-10 text-center" data-aos="fade-up">
-            <p className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               Explore More
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
@@ -424,14 +424,14 @@ export default async function SolutionOverviewPage({ params }: Props) {
             </h2>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-3">
+          <div className="flex flex-wrap justify-center gap-5">
             {related.map((r, i) => {
               const RelIcon = r.icon;
               return (
                 <Link
                   key={r.slug}
                   href={`/solutions/${r.slug}`}
-                  className="group relative h-64 overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 ease-out hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.5),0_25px_50px_-15px_rgba(0,0,0,0.5)]"
+                  className="group relative h-64 w-full overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 ease-out hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.5),0_25px_50px_-15px_rgba(0,0,0,0.5)] sm:w-[calc(33.333%-0.833rem)]"
                   data-aos="fade-up"
                   data-aos-delay={i * 100}
                 >

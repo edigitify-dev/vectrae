@@ -70,7 +70,7 @@ export default function AboutValues() {
               className="h-px w-10"
               style={{ backgroundImage: BRAND_GRADIENT }}
             />
-            <span className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <span className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               Core Values
             </span>
           </div>
@@ -82,7 +82,7 @@ export default function AboutValues() {
           </h2>
         </motion.div>
 
-        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
+        <div className="mt-16 flex flex-wrap justify-center gap-5 lg:mt-20">
           {values.map((value, index) => {
             const Icon = value.icon;
             return (
@@ -96,7 +96,7 @@ export default function AboutValues() {
                   delay: index * 0.1,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="group relative overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.02] p-7 transition-colors duration-500 hover:border-black/[0.15] hover:bg-black/[0.04] sm:p-8"
+                className="group relative w-full overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.02] p-7 transition-colors duration-500 hover:border-black/[0.15] hover:bg-black/[0.04] sm:w-[calc(50%-0.625rem)] sm:p-8 lg:w-[calc(33.333%-0.833rem)]"
               >
                 <div
                   aria-hidden

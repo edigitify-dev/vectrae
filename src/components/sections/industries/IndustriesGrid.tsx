@@ -96,7 +96,7 @@ export default function IndustriesGrid() {
           <div className="mb-4 flex items-center justify-center gap-2.5 sm:gap-3">
             <span className="h-px w-5 bg-cyan-400 sm:w-8" />
 
-            <p className="font-bold uppercase tracking-[0.3em] text-[#29B9F2] text-lg max-sm:text-sm sm:tracking-[0.35em]">
+            <p className="font-bold uppercase tracking-[0.3em] text-[#29B9F2] text-xl max-sm:text-sm sm:tracking-[0.35em]">
               Nine Verticals
             </p>
 

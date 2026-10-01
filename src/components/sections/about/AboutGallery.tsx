@@ -1,5 +1,6 @@
 "use client";
 
+import { r2Asset } from "@/lib/site-images";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
@@ -29,9 +30,8 @@ const CATEGORIES: { id: string; label: string; images: string[] }[] =
   CATEGORY_CONFIG.map(({ id, label, folder, count }) => ({
     id,
     label,
-    images: Array.from(
-      { length: count },
-      (_, i) => `/images/gallery/${folder}/img (${i + 1}).png`,
+    images: Array.from({ length: count }, (_, i) =>
+      r2Asset(encodeURI(`/images/gallery/${folder}/img (${i + 1}).png`)),
     ),
   }));
 

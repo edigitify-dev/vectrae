@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -35,7 +36,7 @@ export default function CareersCulture() {
             <TiltCard className="h-full">
               <div className="group relative h-full min-h-[360px] overflow-hidden rounded-3xl border border-black/10">
                 <Image
-                  src="/images/hero/about.png"
+                  src={r2Asset("/images/hero/about.png")}
                   alt="Team at Vectrae"
                   fill
                   unoptimized

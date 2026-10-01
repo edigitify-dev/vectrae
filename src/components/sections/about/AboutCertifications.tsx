@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -14,23 +15,23 @@ import { BRAND_GRADIENT } from "@/lib/brand";
 ============================================================ */
 
 const certifications: { image: string }[] = [
-  { image: "/images/certificates/img.webp" },
-  { image: "/images/certificates/img1.webp" },
-  { image: "/images/certificates/img2.webp" },
-  { image: "/images/certificates/img3.webp" },
-  { image: "/images/certificates/img4.webp" },
-  { image: "/images/certificates/img5.webp" },
-  { image: "/images/certificates/img6.webp" },
-  { image: "/images/certificates/img7.webp" },
-  { image: "/images/certificates/img8.webp" },
-  { image: "/images/certificates/img9.webp" },
-  { image: "/images/certificates/img10.webp" },
-  { image: "/images/certificates/img11.webp" },
-  { image: "/images/certificates/img12.webp" },
-  { image: "/images/certificates/img13.webp" },
-  { image: "/images/certificates/img14.webp" },
-  { image: "/images/certificates/img15.webp" },
-  { image: "/images/certificates/img16.webp" },
+  { image: r2Asset("/images/certificates/img.webp") },
+  { image: r2Asset("/images/certificates/img1.webp") },
+  { image: r2Asset("/images/certificates/img2.webp") },
+  { image: r2Asset("/images/certificates/img3.webp") },
+  { image: r2Asset("/images/certificates/img4.webp") },
+  { image: r2Asset("/images/certificates/img5.webp") },
+  { image: r2Asset("/images/certificates/img6.webp") },
+  { image: r2Asset("/images/certificates/img7.webp") },
+  { image: r2Asset("/images/certificates/img8.webp") },
+  { image: r2Asset("/images/certificates/img9.webp") },
+  { image: r2Asset("/images/certificates/img10.webp") },
+  { image: r2Asset("/images/certificates/img11.webp") },
+  { image: r2Asset("/images/certificates/img12.webp") },
+  { image: r2Asset("/images/certificates/img13.webp") },
+  { image: r2Asset("/images/certificates/img14.webp") },
+  { image: r2Asset("/images/certificates/img15.webp") },
+  { image: r2Asset("/images/certificates/img16.webp") },
 ];
 
 export default function AboutCertifications() {

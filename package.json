@@ -13,7 +13,9 @@
     "db:seed": "dotenv -e .env.local -- tsx scripts/seed-blog.ts",
     "admin:create": "dotenv -e .env.local -- tsx scripts/create-admin.ts",
     "db:seed-careers": "dotenv -e .env.local -- tsx scripts/seed-careers.ts",
-    "migrate:images": "dotenv -e .env.local -- tsx scripts/migrate-images-to-r2.ts"
+    "upload:public": "dotenv -e .env.local -- tsx scripts/upload-public-to-r2.ts",
+    "migrate:images": "dotenv -e .env.local -- tsx scripts/migrate-images-to-r2.ts",
+    "rewrite:images": "node scripts/rewrite-image-paths.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1125.0",

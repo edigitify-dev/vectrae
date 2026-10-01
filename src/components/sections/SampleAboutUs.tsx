@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -23,7 +24,7 @@ export default function SampleAboutUs() {
           >
             <div className="absolute inset-0">
               <Image
-                src="/images/hero/about.png"
+                src={r2Asset("/images/hero/about.png")}
                 alt="About Us Sample"
                 fill
                 unoptimized

@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -112,7 +113,7 @@ export default function ServicesHero({
             >
               <div className="relative h-16 w-16 overflow-hidden rounded-xl sm:h-24 sm:w-24 lg:h-28 lg:w-28">
                 <Image
-                  src="/images/solutions/laptop.png"
+                  src={r2Asset("/images/solutions/laptop.png")}
                   alt="Enterprise video collaboration setup"
                   fill
                   unoptimized
@@ -134,7 +135,7 @@ export default function ServicesHero({
             >
               <div className="relative h-16 w-16 overflow-hidden rounded-xl sm:h-24 sm:w-24 lg:h-28 lg:w-28">
                 <Image
-                  src="/images/products/managedIt.png"
+                  src={r2Asset("/images/products/managedIt.png")}
                   alt="24/7 managed IT monitoring"
                   fill
                   unoptimized

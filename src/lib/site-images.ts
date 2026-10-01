@@ -16,7 +16,7 @@ export const siteImages = {
   wcuSolutions: `${R2_BASE}/images/wcu/solutions.webp`,
   workspaceWallpaper: `${R2_BASE}/workspace-wallpaper.webp`,
   indiaMap: `${R2_BASE}/india-map.svg`,
-  indiaMapNetwork: "/map.png",
+  indiaMapNetwork: `${R2_BASE}/map.webp`,
   blog: {
     avTech: `${R2_BASE}/images/blog/av-tech.webp`,
     managedIt: `${R2_BASE}/images/blog/managed-it.webp`,
@@ -31,3 +31,6 @@ export const siteImages = {
     serverRam: `${R2_BASE}/images/products/server-ram.webp`,
   },
 } as const;
+
+export const r2Asset = (p: string) =>
+  `${R2_BASE}${(p.startsWith("/") ? p : `/${p}`).replace(/\.(png|jpe?g)$/i, ".webp")}`;

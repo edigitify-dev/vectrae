@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import Image from "next/image";
 import { BRAND_GRADIENT } from "@/lib/brand";
@@ -80,7 +81,7 @@ export default function IndustriesHero() {
             >
               <div className="relative h-20 w-20 overflow-hidden rounded-xl sm:h-24 sm:w-24 lg:h-28 lg:w-28">
                 <Image
-                  src={"/images/industry/industry_hero_sub_01.png"}
+                  src={r2Asset("/images/industry/industry_hero_sub_01.png")}
                   alt="Enterprise video collaboration setup"
                   fill
                   unoptimized
@@ -102,7 +103,7 @@ export default function IndustriesHero() {
             >
               <div className="relative h-20 w-20 overflow-hidden rounded-xl sm:h-24 sm:w-24 lg:h-28 lg:w-28">
                 <Image
-                  src={"/images/industry/industry_hero_sub_02.png"}
+                  src={r2Asset("/images/industry/industry_hero_sub_02.png")}
                   alt="24/7 managed IT monitoring"
                   fill
                   unoptimized

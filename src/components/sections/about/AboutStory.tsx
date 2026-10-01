@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,7 +23,7 @@ const chapters = [
     title: "A simple premise.",
     body: "Founded in 2014 on the belief that businesses don't want to think about their IT infrastructure, as long as it works, we're an IT infrastructure company based in Delhi, built to source, deploy, secure, and maintain the technology that forms the backbone of the enterprises we serve.",
     icon: Building2,
-    image: "/images/about/img_1.png",
+    image: r2Asset("/images/about/img_1.png"),
     accent: "#0F9D8A",
     wash: "rgba(15,157,138,0.10)",
   },
@@ -33,7 +34,7 @@ const chapters = [
     title: "From Nehru Place, outward.",
     body: "The start-up team has grown from a small unit based out of Nehru Place to a full-fledged organization, partnering with some of the world's most recognizable tech brands to get things done, while staying accessible and reactive to client demands.",
     icon: TrendingUp,
-    image: "/images/about/img_2.png",
+    image: r2Asset("/images/about/img_2.png"),
     accent: "#2563EB",
     wash: "rgba(37,99,235,0.10)",
   },
@@ -44,7 +45,7 @@ const chapters = [
     title: "One partner, every layer.",
     body: "From end-devices to data centers, our verticals are built around the full lifecycle of enterprise IT infrastructure, so our clients don't have to deal with the fragmented ecosystem that comes with working with multiple vendors.",
     icon: Globe2,
-    image: "/images/about/img_3.png",
+    image: r2Asset("/images/about/img_3.png"),
     accent: "#7C3AED",
     wash: "rgba(124,58,237,0.10)",
   },
@@ -55,7 +56,7 @@ const chapters = [
     title: "A full-spectrum partner.",
     body: "More than a decade later, the philosophy remains the same: a deep, hands-on, client-centric approach to infrastructure, backed by a team of 250+ professionals and an annual turnover of over ₹400 crores.",
     icon: Sparkles,
-    image: "/images/about/img_4.png",
+    image: r2Asset("/images/about/img_4.png"),
     accent: "#F59E0B",
     wash: "rgba(245,158,11,0.12)",
   },
@@ -68,7 +69,7 @@ const stats = [
     label: "Year of Foundation",
     accent: "#0F9D8A",
     art: "building",
-    image: "/images/about/stats/img_1.png",
+    image: r2Asset("/images/about/stats/img_1.png"),
   },
   {
     icon: Users,
@@ -76,7 +77,7 @@ const stats = [
     label: "Professionals",
     accent: "#2563EB",
     art: "people",
-    image: "/images/about/stats/img_2.png",
+    image: r2Asset("/images/about/stats/img_2.png"),
   },
   {
     icon: Building2,
@@ -84,7 +85,7 @@ const stats = [
     label: "Enterprise Clients",
     accent: "#7C3AED",
     art: "city",
-    image: "/images/about/stats/img_3.png",
+    image: r2Asset("/images/about/stats/img_3.png"),
   },
   {
     icon: Layers,
@@ -92,7 +93,7 @@ const stats = [
     label: "Annual Turnover",
     accent: "#F59E0B",
     art: "growth",
-    image: "/images/about/stats/img_4.png",
+    image: r2Asset("/images/about/stats/img_4.png"),
   },
 ] as const;
 

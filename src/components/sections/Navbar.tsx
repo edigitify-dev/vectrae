@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +16,7 @@ export default function Navbar() {
     <header className="relative z-20 grid grid-cols-2 items-center px-6 py-6 lg:grid-cols-3 lg:px-10">
       <div className="flex items-center" data-aos="fade-down" data-aos-duration="600" data-aos-once="true">
         <Link href="/">
-          <Image src="/logo.png" alt="Vectrae" width={154} height={32} className="h-8 w-auto" priority />
+          <Image src={r2Asset("/logo.png")} alt="Vectrae" width={154} height={32} className="h-8 w-auto" priority />
         </Link>
       </div>
 

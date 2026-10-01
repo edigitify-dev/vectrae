@@ -1,3 +1,4 @@
+import { r2Asset } from "@/lib/site-images";
 import {
   BatteryCharging,
   Boxes,
@@ -70,7 +71,7 @@ export const solutions: Solution[] = [
     tagline: "Immersive meeting experiences, engineered for the enterprise.",
     icon: MonitorPlay,
     heroImage: "/video/av_hero_vid.mp4",
-    cardImage: "/images/products/av.png",
+    cardImage: r2Asset("/images/products/av.png"),
     description:
       "From huddle rooms to command centres, we design and deploy audio-visual systems that make every meeting effortless, video conferencing, digital signage, and unified communications, integrated and supported end-to-end.",
     capabilities: [
@@ -118,30 +119,30 @@ export const solutions: Solution[] = [
       "Minimal-disruption deployment for live offices",
     ],
     oems: [
-      { name: "Crestron", logo: "/images/oem/AV/crestron.webp" },
-      { name: "Extron", logo: "/images/oem/AV/extron.webp" },
-      { name: "Cisco", logo: "/images/oem/AV/cisco.webp" },
-      { name: "Poly", logo: "/images/oem/AV/poly.webp" },
-      { name: "Jabra", logo: "/images/oem/AV/jabra.webp" },
-      { name: "Samsung", logo: "/images/oem/AV/samsung.webp" },
-      { name: "LG", logo: "/images/oem/AV/lg.webp" },
-      { name: "Sony", logo: "/images/oem/AV/sony.webp" },
-      { name: "Bosch", logo: "/images/oem/AV/bosch.webp" },
-      { name: "Sennheiser", logo: "/images/oem/AV/sennheiser.webp" },
-      { name: "Harman", logo: "/images/oem/AV/harman.webp" },
-      { name: "QSC", logo: "/images/oem/AV/qsc.webp" },
-      { name: "Biamp", logo: "/images/oem/AV/biamp.webp" },
-      { name: "Yealink", logo: "/images/oem/AV/yealink.webp" },
-      { name: "Huddly", logo: "/images/oem/AV/huddly.webp" },
-      { name: "Key Digital", logo: "/images/oem/AV/keyDigital.webp" },
-      { name: "Aurora", logo: "/images/oem/AV/aurora.webp" },
-      { name: "ATEN", logo: "/images/oem/AV/aten.webp" },
-      { name: "Lightware", logo: "/images/oem/AV/lightware.webp" },
-      { name: "AMX", logo: "/images/oem/AV/amx.webp" },
-      { name: "Atlona", logo: "/images/oem/AV/atlona.webp" },
-      { name: "Prysm", logo: "/images/oem/AV/prysm.webp" },
-      { name: "Audio-Technica", logo: "/images/oem/AV/audioTechnica.webp" },
-      { name: "Kramer", logo: "/images/oem/AV/kramer.webp" },
+      { name: "Crestron", logo: r2Asset("/images/oem/AV/crestron.webp") },
+      { name: "Extron", logo: r2Asset("/images/oem/AV/extron.webp") },
+      { name: "Cisco", logo: r2Asset("/images/oem/AV/cisco.webp") },
+      { name: "Poly", logo: r2Asset("/images/oem/AV/poly.webp") },
+      { name: "Jabra", logo: r2Asset("/images/oem/AV/jabra.webp") },
+      { name: "Samsung", logo: r2Asset("/images/oem/AV/samsung.webp") },
+      { name: "LG", logo: r2Asset("/images/oem/AV/lg.webp") },
+      { name: "Sony", logo: r2Asset("/images/oem/AV/sony.webp") },
+      { name: "Bosch", logo: r2Asset("/images/oem/AV/bosch.webp") },
+      { name: "Sennheiser", logo: r2Asset("/images/oem/AV/sennheiser.webp") },
+      { name: "Harman", logo: r2Asset("/images/oem/AV/harman.webp") },
+      { name: "QSC", logo: r2Asset("/images/oem/AV/qsc.webp") },
+      { name: "Biamp", logo: r2Asset("/images/oem/AV/biamp.webp") },
+      { name: "Yealink", logo: r2Asset("/images/oem/AV/yealink.webp") },
+      { name: "Huddly", logo: r2Asset("/images/oem/AV/huddly.webp") },
+      { name: "Key Digital", logo: r2Asset("/images/oem/AV/keyDigital.webp") },
+      { name: "Aurora", logo: r2Asset("/images/oem/AV/aurora.webp") },
+      { name: "ATEN", logo: r2Asset("/images/oem/AV/aten.webp") },
+      { name: "Lightware", logo: r2Asset("/images/oem/AV/lightware.webp") },
+      { name: "AMX", logo: r2Asset("/images/oem/AV/amx.webp") },
+      { name: "Atlona", logo: r2Asset("/images/oem/AV/atlona.webp") },
+      { name: "Prysm", logo: r2Asset("/images/oem/AV/prysm.webp") },
+      { name: "Audio-Technica", logo: r2Asset("/images/oem/AV/audioTechnica.webp") },
+      { name: "Kramer", logo: r2Asset("/images/oem/AV/kramer.webp") },
     ],
     subServices: [
       {
@@ -311,8 +312,8 @@ export const solutions: Solution[] = [
     title: "Networking & Security",
     tagline: "Resilient connectivity for the always-on enterprise.",
     icon: Network,
-    heroImage: "/images/products/router.png",
-    cardImage: "/images/products/router.png",
+    heroImage: r2Asset("/images/products/router.png"),
+    cardImage: r2Asset("/images/products/router.png"),
     description:
       "We design, deploy, and secure the network backbone your business runs on, structured cabling, enterprise Wi-Fi, and firewall infrastructure built for performance at scale.",
     capabilities: [
@@ -360,13 +361,13 @@ export const solutions: Solution[] = [
       "Rapid fault response with PAN-India field support",
     ],
     oems: [
-      { name: "Cisco", logo: "/images/oem/netSec/cisco.webp" },
-      { name: "Palo Alto Networks", logo: "/images/oem/netSec/paloalto.webp" },
-      { name: "Fortinet", logo: "/images/oem/netSec/fortinet.webp" },
-      { name: "Sophos", logo: "/images/oem/netSec/sophos.webp" },
-      { name: "McAfee", logo: "/images/oem/netSec/mcAfee.webp" },
-      { name: "D-Link", logo: "/images/oem/netSec/dLink.webp" },
-      { name: "CommScope", logo: "/images/oem/netSec/commscope.webp" },
+      { name: "Cisco", logo: r2Asset("/images/oem/netSec/cisco.webp") },
+      { name: "Palo Alto Networks", logo: r2Asset("/images/oem/netSec/paloalto.webp") },
+      { name: "Fortinet", logo: r2Asset("/images/oem/netSec/fortinet.webp") },
+      { name: "Sophos", logo: r2Asset("/images/oem/netSec/sophos.webp") },
+      { name: "McAfee", logo: r2Asset("/images/oem/netSec/mcAfee.webp") },
+      { name: "D-Link", logo: r2Asset("/images/oem/netSec/dLink.webp") },
+      { name: "CommScope", logo: r2Asset("/images/oem/netSec/commscope.webp") },
     ],
     subServices: [
       {
@@ -472,8 +473,8 @@ export const solutions: Solution[] = [
     title: "Data Center Solutions",
     tagline: "Infrastructure built for uptime, scale, and resilience.",
     icon: Server,
-    heroImage: "/images/products/ram.png",
-    cardImage: "/images/products/ram.png",
+    heroImage: r2Asset("/images/products/ram.png"),
+    cardImage: r2Asset("/images/products/ram.png"),
     description:
       "We build and secure the infrastructure behind your business, from greenfield data centers to disaster recovery and physical security, engineered for enterprise-grade reliability.",
     capabilities: [
@@ -521,14 +522,14 @@ export const solutions: Solution[] = [
       "Disaster recovery planning built into every deployment",
     ],
     oems: [
-      { name: "Dell", logo: "/images/oem/endCom/dell.webp" },
-      { name: "HP", logo: "/images/oem/endCom/hp.webp" },
-      { name: "Lenovo", logo: "/images/oem/endCom/lenovo.webp" },
+      { name: "Dell", logo: r2Asset("/images/oem/endCom/dell.webp") },
+      { name: "HP", logo: r2Asset("/images/oem/endCom/hp.webp") },
+      { name: "Lenovo", logo: r2Asset("/images/oem/endCom/lenovo.webp") },
       {
         name: "APC by Schneider Electric",
-        logo: "/images/oem/endCom/apc.webp",
+        logo: r2Asset("/images/oem/endCom/apc.webp"),
       },
-      { name: "CommScope", logo: "/images/oem/netSec/commscope.webp" },
+      { name: "CommScope", logo: r2Asset("/images/oem/netSec/commscope.webp") },
     ],
     subServices: [
       {
@@ -665,8 +666,8 @@ export const solutions: Solution[] = [
     title: "End Computing Solutions",
     tagline: "Equip every desk, every workstation, every employee.",
     icon: Laptop,
-    heroImage: "/images/products/laptop.png",
-    cardImage: "/images/products/laptop.png",
+    heroImage: r2Asset("/images/products/laptop.png"),
+    cardImage: r2Asset("/images/products/laptop.png"),
     description:
       "From laptops to thin clients, we procure, configure, and manage the devices your workforce uses every day, with lifecycle support that keeps IT overhead low.",
     capabilities: [
@@ -713,16 +714,16 @@ export const solutions: Solution[] = [
       "Full asset lifecycle tracking and reporting",
     ],
     oems: [
-      { name: "Lenovo", logo: "/images/oem/endCom/lenovo.webp" },
-      { name: "Dell", logo: "/images/oem/endCom/dell.webp" },
-      { name: "HP", logo: "/images/oem/endCom/hp.webp" },
-      { name: "Acer", logo: "/images/oem/endCom/acer.webp" },
-      { name: "Microsoft", logo: "/images/oem/endCom/microsoft.webp" },
-      { name: "Samsung", logo: "/images/oem/endCom/samsung.webp" },
-      { name: "LG", logo: "/images/oem/endCom/lg.webp" },
-      { name: "Targus", logo: "/images/oem/endCom/targus.webp" },
-      { name: "Kensington", logo: "/images/oem/endCom/kensington.webp" },
-      { name: "Logitech", logo: "/images/oem/endCom/logitech.webp" },
+      { name: "Lenovo", logo: r2Asset("/images/oem/endCom/lenovo.webp") },
+      { name: "Dell", logo: r2Asset("/images/oem/endCom/dell.webp") },
+      { name: "HP", logo: r2Asset("/images/oem/endCom/hp.webp") },
+      { name: "Acer", logo: r2Asset("/images/oem/endCom/acer.webp") },
+      { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
+      { name: "Samsung", logo: r2Asset("/images/oem/endCom/samsung.webp") },
+      { name: "LG", logo: r2Asset("/images/oem/endCom/lg.webp") },
+      { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
+      { name: "Kensington", logo: r2Asset("/images/oem/endCom/kensington.webp") },
+      { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
     ],
     subServices: [
       {
@@ -829,8 +830,8 @@ export const solutions: Solution[] = [
     tagline:
       "Fast-turnaround components that keep your infrastructure running.",
     icon: PackageCheck,
-    heroImage: "/images/products/motherboard.png",
-    cardImage: "/images/products/motherboard.png",
+    heroImage: r2Asset("/images/products/motherboard.png"),
+    cardImage: r2Asset("/images/products/motherboard.png"),
     description:
       "When hardware fails, downtime isn't an option. We stock and dispatch genuine OEM spare parts and accessories, so your IT and AV systems stay operational.",
     capabilities: [
@@ -877,13 +878,13 @@ export const solutions: Solution[] = [
       "Managed inventory for zero-downtime operations",
     ],
     oems: [
-      { name: "Jabra", logo: "/images/oem/AV/jabra.webp" },
-      { name: "Poly", logo: "/images/oem/AV/poly.webp" },
-      { name: "Logitech", logo: "/images/oem/endCom/logitech.webp" },
-      { name: "3M", logo: "/images/oem/endCom/3m.webp" },
-      { name: "Kensington", logo: "/images/oem/endCom/kensington.webp" },
-      { name: "Targus", logo: "/images/oem/endCom/targus.webp" },
-      { name: "Philips", logo: "/images/oem/endCom/philips.webp" },
+      { name: "Jabra", logo: r2Asset("/images/oem/AV/jabra.webp") },
+      { name: "Poly", logo: r2Asset("/images/oem/AV/poly.webp") },
+      { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
+      { name: "3M", logo: r2Asset("/images/oem/endCom/3m.webp") },
+      { name: "Kensington", logo: r2Asset("/images/oem/endCom/kensington.webp") },
+      { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
+      { name: "Philips", logo: r2Asset("/images/oem/endCom/philips.webp") },
     ],
     subServices: [
       {
@@ -956,8 +957,8 @@ export const solutions: Solution[] = [
     title: "Power Solutions",
     tagline: "Zero downtime starts with the right power strategy.",
     icon: Zap,
-    heroImage: "/images/products/power.png",
-    cardImage: "/images/products/power.png",
+    heroImage: r2Asset("/images/products/power.png"),
+    cardImage: r2Asset("/images/products/power.png"),
     description:
       "From UPS systems to distribution infrastructure, Vectrae designs and deploys the power backbone that keeps enterprise operations running, critical infrastructure, engineered for zero downtime.",
     capabilities: [
@@ -1006,9 +1007,9 @@ export const solutions: Solution[] = [
     oems: [
       {
         name: "APC by Schneider Electric",
-        logo: "/images/oem/endCom/apc.webp",
+        logo: r2Asset("/images/oem/endCom/apc.webp"),
       },
-      { name: "Schneider Electric", logo: "/images/oem/endCom/schneider.webp" },
+      { name: "Schneider Electric", logo: r2Asset("/images/oem/endCom/schneider.webp") },
     ],
     subServices: [
       {
@@ -1079,8 +1080,8 @@ export const solutions: Solution[] = [
     title: "Managed IT Services",
     tagline: "Focus on your business. We'll run your IT.",
     icon: LifeBuoy,
-    heroImage: "/images/products/managedIt.png",
-    cardImage: "/images/products/managedIt.png",
+    heroImage: r2Asset("/images/products/managedIt.png"),
+    cardImage: r2Asset("/images/products/managedIt.png"),
     description:
       "Proactive AMC, remote monitoring, and full-scope IT support, Vectrae's managed services keep enterprise technology running so your team can focus on the business, not the break-fix.",
     capabilities: [

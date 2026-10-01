@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -58,7 +59,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1" data-aos="fade-up">
             <Image
-              src="/logo.png"
+              src={r2Asset("/logo.png")}
               alt="Vectrae"
               width={120}
               height={26}

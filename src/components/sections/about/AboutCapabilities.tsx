@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -19,37 +20,37 @@ const whatWeDo = [
     title: "End-Computing & Device Lifecycle",
     description:
       "Servers, laptops, workstations, and mobile devices from premier global brands, ready to be deployed and configured to order.",
-    image: "/images/products/laptop.png",
+    image: r2Asset("/images/products/laptop.png"),
   },
   {
     title: "Data Centre & Security",
     description:
       "Everything from design and deployment to firewall design and 24x7 monitoring, ensuring data is available when it's needed and secure when it's not.",
-    image: "/images/products/ram.png",
+    image: r2Asset("/images/products/ram.png"),
   },
   {
     title: "Networking & Wi-Fi On-demand",
     description:
       "Managed-switch based wired and wireless network infrastructure, with analytical and monitoring capabilities to ensure uninterrupted uptime.",
-    image: "/images/products/router.png",
+    image: r2Asset("/images/products/router.png"),
   },
   {
     title: "Boardroom & AV",
     description:
       "Intuitive video-conferencing and AV infrastructure, spanning conferencing rooms and larger-than-life auditoriums.",
-    image: "/images/solutions/boardroom.png",
+    image: r2Asset("/images/solutions/boardroom.png"),
   },
   {
     title: "IT Spares & Accessories",
     description:
       "A wide-ranging, OEM-sourced spares and accessories portfolio that ensures infrastructure downtime is minimized even in the face of device failures.",
-    image: "/images/products/motherboard.png",
+    image: r2Asset("/images/products/motherboard.png"),
   },
   {
     title: "IT Services & Support",
     description:
       "Presales advisory and post-sales technical support, with certified engineers standing by to answer any given query.",
-    image: "/images/products/managedIt.png",
+    image: r2Asset("/images/products/managedIt.png"),
   },
 ] as const;
 

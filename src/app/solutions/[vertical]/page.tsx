@@ -1,3 +1,4 @@
+import { r2Asset } from "@/lib/site-images";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,12 +60,12 @@ export default async function SolutionOverviewPage({ params }: Props) {
   const related = solutions.filter((s) => s.slug !== vertical).slice(0, 3);
 
   const capabilityImages = [
-    "/images/audioCard/audioCardImg1.png",
-    "/images/audioCard/audioCardImg2.png",
-    "/images/audioCard/audioCardImg3.png",
-    "/images/audioCard/audioCardImg4.png",
-    "/images/audioCard/audioCardImg5.png",
-    "/images/audioCard/audioCardImg6.png",
+    r2Asset("/images/audioCard/audioCardImg1.png"),
+    r2Asset("/images/audioCard/audioCardImg2.png"),
+    r2Asset("/images/audioCard/audioCardImg3.png"),
+    r2Asset("/images/audioCard/audioCardImg4.png"),
+    r2Asset("/images/audioCard/audioCardImg5.png"),
+    r2Asset("/images/audioCard/audioCardImg6.png"),
   ];
 
   return (

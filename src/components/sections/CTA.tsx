@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -70,7 +71,7 @@ export default function CTA() {
             data-aos-delay="200"
           >
             <Image
-              src="/images/hero/server.png"
+              src={r2Asset("/images/hero/server.png")}
               alt="Enterprise Technology Setup"
               fill
               unoptimized

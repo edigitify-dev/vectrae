@@ -66,14 +66,14 @@ function MarqueeRow({
 
 export default function PartnersMarquee() {
   return (
-    <section className="relative overflow-hidden border-t border-white/5 bg-black py-14 sm:py-20">
-      <div className="mx-auto max-w-3xl px-6 text-center" data-aos="fade-up">
+    <section className="relative overflow-hidden border-t border-white/5 bg-black py-14 sm:pb-20 sm:pt-6">
+      <div className="mx-auto max-w-3xl px-6 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/30">
           Trusted By The World&apos;s Leading Technology Brands
         </p>
       </div>
 
-      <div className="mt-12 flex flex-col gap-8">
+      <div className="mt-8 flex flex-col gap-8">
         <MarqueeRow partners={firstRow} durationSeconds={34} />
         <MarqueeRow partners={secondRow} reverse durationSeconds={38} />
       </div>

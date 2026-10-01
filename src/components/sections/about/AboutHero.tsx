@@ -106,9 +106,15 @@ export default function AboutHero() {
           </a>
           <Link
             href="/solutions"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white/70 transition hover:border-white/25 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
           >
             Explore Solutions
+          </Link>
+          <Link
+            href="/company-profile"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
+          >
+            Company Profile
           </Link>
         </motion.div>
       </div>

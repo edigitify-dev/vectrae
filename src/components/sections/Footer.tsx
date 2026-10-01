@@ -64,7 +64,7 @@ export default function Footer() {
               height={26}
               className="h-7 w-auto brightness-0 invert"
             />
-            <p className="mt-4 text-sm leading-relaxed text-white/40">
+            <p className="mt-4 text-sm leading-relaxed text-white/30">
               End-to-end enterprise technology. PAN-India delivery & support.
             </p>
             <div className="mt-5 flex gap-2">
@@ -85,7 +85,7 @@ export default function Footer() {
 
           {/* Solutions */}
           <div data-aos="fade-up" data-aos-delay="100">
-            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/25">
+            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/45">
               Solutions
             </h4>
             <ul className="mt-4 space-y-2.5">
@@ -93,7 +93,7 @@ export default function Footer() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-white/45 transition hover:text-white"
+                    className="text-sm text-white/30 transition hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -104,7 +104,7 @@ export default function Footer() {
 
           {/* Company */}
           <div data-aos="fade-up" data-aos-delay="200">
-            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/25">
+            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/45">
               Company
             </h4>
             <ul className="mt-4 space-y-2.5">
@@ -114,7 +114,7 @@ export default function Footer() {
                     href={item.href}
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener noreferrer" : undefined}
-                    className="text-sm text-white/45 transition hover:text-white"
+                    className="text-sm text-white/30 transition hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -125,7 +125,7 @@ export default function Footer() {
 
           {/* Career */}
           <div data-aos="fade-up" data-aos-delay="250">
-            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/25">
+            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/45">
               Career
             </h4>
             <ul className="mt-4 space-y-2.5">
@@ -133,7 +133,7 @@ export default function Footer() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-white/45 transition hover:text-white"
+                    className="text-sm text-white/30 transition hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -144,14 +144,14 @@ export default function Footer() {
 
           {/* Contact */}
           <div data-aos="fade-up" data-aos-delay="300">
-            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/25">
+            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/45">
               Contact
             </h4>
             <ul className="mt-4 space-y-3">
               <li>
                 <a
                   href="tel:+911140590964"
-                  className="flex items-start gap-2.5 text-sm text-white/45 transition hover:text-white"
+                  className="flex items-start gap-2.5 text-sm text-white/30 transition hover:text-white"
                 >
                   <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
                   +91-11-40590964
@@ -160,14 +160,14 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:enquiry@vectrae.com"
-                  className="flex items-start gap-2.5 text-sm text-white/45 transition hover:text-white"
+                  className="flex items-start gap-2.5 text-sm text-white/30 transition hover:text-white"
                 >
                   <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
                   enquiry@vectrae.com
                 </a>
               </li>
               <li>
-                <p className="flex items-start gap-2.5 text-sm text-white/40">
+                <p className="flex items-start gap-2.5 text-sm text-white/30">
                   <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
                   Mohan Co-Op, New Delhi, 110044
                 </p>
@@ -187,7 +187,7 @@ export default function Footer() {
 
           {/* Map */}
           <div className="col-span-2" data-aos="fade-up" data-aos-delay="400">
-            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/25">
+            <h4 className="text-[11px] font-semibold uppercase tracking-widest text-white/45">
               Find Us
             </h4>
             <a

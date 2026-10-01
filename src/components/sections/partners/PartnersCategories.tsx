@@ -29,7 +29,7 @@ export default function PartnersCategories() {
   return (
     <section
       id="partners"
-      className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28"
+      className="relative overflow-hidden bg-[#fff] py-20 sm:py-12"
     >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">

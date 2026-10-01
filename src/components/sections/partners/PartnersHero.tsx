@@ -25,7 +25,7 @@ export default function PartnersHero() {
   return (
     <section
       onMouseMove={handleMouseMove}
-      className="relative isolate flex min-h-screen flex-col overflow-hidden bg-black"
+      className="relative isolate flex h-auto flex-col overflow-hidden bg-black"
     >
       <motion.div
         aria-hidden
@@ -40,7 +40,7 @@ export default function PartnersHero() {
 
       <Navbar />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 pb-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 pb-16 sm:pt-7">
         <p
           className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
           data-aos="fade-up"
@@ -109,14 +109,6 @@ export default function PartnersHero() {
             Become a Partner
           </a>
         </motion.div>
-      </div>
-
-      <div className="relative z-10 border-t border-white/5 py-6">
-        <div className="mx-auto max-w-6xl px-6 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30">
-            Direct OEM & Technology Partners across every solution vertical
-          </p>
-        </div>
       </div>
     </section>
   );

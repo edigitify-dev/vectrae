@@ -7,45 +7,41 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
-const galleryImages = [
-  "/images/gallery/img (1).png",
-  "/images/gallery/img (2).png",
-  "/images/gallery/img (3).png",
-  "/images/gallery/img (4).png",
-  "/images/gallery/img (5).png",
-  "/images/gallery/img (6).png",
-  "/images/gallery/img (7).png",
-  "/images/gallery/img (8).png",
-  "/images/gallery/img (9).png",
-  "/images/gallery/img (10).png",
-  "/images/gallery/img (11).png",
-  "/images/gallery/img (12).png",
-  "/images/gallery/img (13).png",
-  "/images/gallery/img (14).png",
-  "/images/gallery/img (15).png",
-  "/images/gallery/img (16).png",
-  "/images/gallery/img (17).png",
-  "/images/gallery/img (18).png",
-  "/images/gallery/img (19).png",
-  "/images/gallery/img (20).png",
-  "/images/gallery/img (21).png",
-  "/images/gallery/img (22).png",
-  "/images/gallery/img (23).png",
-  "/images/gallery/img (24).png",
-  "/images/gallery/img (25).png",
-  "/images/gallery/img (26).png",
-  "/images/gallery/img (27).png",
-  "/images/gallery/img (28).png",
-  "/images/gallery/img (29).png",
-  "/images/gallery/img (30).png",
-  "/images/gallery/img (31).png",
-  "/images/gallery/img (32).png",
-  "/images/gallery/img (33).png",
-  "/images/gallery/img (34).png",
-  "/images/gallery/img (35).png",
-  "/images/gallery/img (36).png",
-  "/images/gallery/img (37).png",
+/*
+ * Categories shown as pills above the bento.
+ *
+ * Each category has its own folder inside /public/images/gallery/
+ * with files named "img (1).png", "img (2).png", ...
+ *
+ *   public/images/gallery/events/img (1).png ... img (18).png
+ *   public/images/gallery/projects/img (1).png ... img (19).png
+ *
+ * `count` = how many images are in that folder.
+ * To add a category: create the folder, then add one object here.
+ * The "All" pill automatically combines every folder below.
+ */
+const CATEGORY_CONFIG = [
+  { id: "events", label: "Events", folder: "events", count: 18 },
+  { id: "projects", label: "Projects", folder: "projects", count: 19 },
 ];
+
+const CATEGORIES: { id: string; label: string; images: string[] }[] =
+  CATEGORY_CONFIG.map(({ id, label, folder, count }) => ({
+    id,
+    label,
+    images: Array.from(
+      { length: count },
+      (_, i) => `/images/gallery/${folder}/img (${i + 1}).png`,
+    ),
+  }));
+
+const ALL_CATEGORY = {
+  id: "all",
+  label: "All",
+  images: CATEGORIES.flatMap((category) => category.images),
+};
+
+const PILLS = [ALL_CATEGORY, ...CATEGORIES];
 
 /*
  * Number of photos shown in each bento composition.
@@ -53,6 +49,7 @@ const galleryImages = [
 const IMAGES_PER_SLIDE = 9;
 
 export default function AboutGallery() {
+  const [activeCategory, setActiveCategory] = useState(ALL_CATEGORY.id);
   const [activeSlide, setActiveSlide] = useState(0);
   const [direction, setDirection] = useState(1);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -68,7 +65,16 @@ export default function AboutGallery() {
   }, []);
 
   /*
-   * Automatically divide all images into groups of 9.
+   * Images of the currently selected category.
+   */
+  const galleryImages = useMemo(
+    () =>
+      (PILLS.find((pill) => pill.id === activeCategory) ?? ALL_CATEGORY).images,
+    [activeCategory],
+  );
+
+  /*
+   * Automatically divide the category's images into groups of 9.
    */
   const slides = useMemo(() => {
     const result: string[][] = [];
@@ -78,11 +84,19 @@ export default function AboutGallery() {
     }
 
     return result;
-  }, []);
+  }, [galleryImages]);
 
   const totalSlides = slides.length;
   const totalImages = galleryImages.length;
   const isLightboxOpen = lightboxIndex !== null;
+
+  function selectCategory(id: string) {
+    if (id === activeCategory) return;
+
+    setDirection(1);
+    setActiveSlide(0);
+    setActiveCategory(id);
+  }
 
   function goToSlide(index: number) {
     if (index === activeSlide) return;
@@ -290,13 +304,57 @@ export default function AboutGallery() {
 
       <div className="relative z-10 mx-auto w-full max-w-[1500px] px-6 sm:px-10 lg:px-16">
         {/* ======================================================
+            CATEGORY PILLS
+        ====================================================== */}
+
+        <div className="mb-8 flex justify-center sm:mb-10">
+          <div
+            role="tablist"
+            aria-label="Gallery categories"
+            className="flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-white/10 bg-white/[0.03] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {PILLS.map((pill) => {
+              const isActive = activeCategory === pill.id;
+
+              return (
+                <button
+                  key={pill.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => selectCategory(pill.id)}
+                  className={`relative shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-colors duration-300 sm:px-6 ${
+                    isActive ? "text-black" : "text-white/50 hover:text-white"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="gallery-active-pill"
+                      className="absolute inset-0 rounded-full"
+                      style={{ backgroundImage: BRAND_GRADIENT }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 32,
+                      }}
+                    />
+                  )}
+
+                  <span className="relative z-10">{pill.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ======================================================
             BENTO CAROUSEL
         ====================================================== */}
 
         <div className="relative">
           <AnimatePresence mode="wait" initial={false} custom={direction}>
             <motion.div
-              key={activeSlide}
+              key={`${activeCategory}-${activeSlide}`}
               custom={direction}
               initial={{
                 opacity: 0,
@@ -316,7 +374,7 @@ export default function AboutGallery() {
               }}
             >
               <BentoGrid
-                images={slides[activeSlide]}
+                images={slides[activeSlide] ?? slides[0]}
                 slideIndex={activeSlide}
                 onImageClick={openLightbox}
               />
@@ -328,75 +386,77 @@ export default function AboutGallery() {
             CAROUSEL CONTROLS
         ====================================================== */}
 
-        <div className="mt-6 flex items-center justify-between">
-          {/* Counter */}
-          <div className="flex items-center gap-3">
-            <span
-              className="font-mono text-xs font-medium tracking-[0.18em]"
-              style={{
-                color: "#29B9F2",
-              }}
-            >
-              {String(activeSlide + 1).padStart(2, "0")}
-            </span>
-
-            <span className="h-px w-8 bg-white/10" />
-
-            <span className="font-mono text-xs tracking-[0.18em] text-white/20">
-              {String(totalSlides).padStart(2, "0")}
-            </span>
-          </div>
-
-          {/* Dots */}
-          <div className="flex items-center gap-2">
-            {slides.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                aria-label={`Go to gallery slide ${index + 1}`}
-                aria-current={activeSlide === index}
-                onClick={() => goToSlide(index)}
-                className="group flex h-8 items-center justify-center px-1"
+        {totalSlides > 1 && (
+          <div className="mt-6 flex items-center justify-between">
+            {/* Counter */}
+            <div className="flex items-center gap-3">
+              <span
+                className="font-mono text-xs font-medium tracking-[0.18em]"
+                style={{
+                  color: "#29B9F2",
+                }}
               >
-                <span
-                  className={`block h-1.5 rounded-full transition-all duration-400 ${
-                    activeSlide === index
-                      ? "w-8"
-                      : "w-1.5 bg-white/20 group-hover:bg-white/40"
-                  }`}
-                  style={
-                    activeSlide === index
-                      ? {
-                          backgroundImage: BRAND_GRADIENT,
-                        }
-                      : undefined
-                  }
-                />
+                {String(activeSlide + 1).padStart(2, "0")}
+              </span>
+
+              <span className="h-px w-8 bg-white/10" />
+
+              <span className="font-mono text-xs tracking-[0.18em] text-white/20">
+                {String(totalSlides).padStart(2, "0")}
+              </span>
+            </div>
+
+            {/* Dots */}
+            <div className="flex items-center gap-2">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  aria-label={`Go to gallery slide ${index + 1}`}
+                  aria-current={activeSlide === index}
+                  onClick={() => goToSlide(index)}
+                  className="group flex h-8 items-center justify-center px-1"
+                >
+                  <span
+                    className={`block h-1.5 rounded-full transition-all duration-400 ${
+                      activeSlide === index
+                        ? "w-8"
+                        : "w-1.5 bg-white/20 group-hover:bg-white/40"
+                    }`}
+                    style={
+                      activeSlide === index
+                        ? {
+                            backgroundImage: BRAND_GRADIENT,
+                          }
+                        : undefined
+                    }
+                  />
+                </button>
+              ))}
+            </div>
+
+            {/* Previous / Next */}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={previousSlide}
+                aria-label="Previous gallery slide"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-white/45 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+              >
+                <ChevronLeft className="h-4 w-4" />
               </button>
-            ))}
-          </div>
 
-          {/* Previous / Next */}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={previousSlide}
-              aria-label="Previous gallery slide"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-white/45 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-
-            <button
-              type="button"
-              onClick={nextSlide}
-              aria-label="Next gallery slide"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-white/45 transition-all duration-300 hover:border-[#29B9F2]/30 hover:bg-[#29B9F2]/5 hover:text-[#29B9F2]"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
+              <button
+                type="button"
+                onClick={nextSlide}
+                aria-label="Next gallery slide"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-white/45 transition-all duration-300 hover:border-[#29B9F2]/30 hover:bg-[#29B9F2]/5 hover:text-[#29B9F2]"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* ========================================================

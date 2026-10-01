@@ -131,45 +131,90 @@ function ReasonCard({
 export default function WhyChooseUs() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [dotCount, setDotCount] = useState(whyChooseUs.length);
   const pausedRef = useRef(false);
   const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
+  // Reachable scroll positions (px). One dot per position.
+  const positionsRef = useRef<number[]>([]);
 
   const getCards = () =>
     trackRef.current
       ? (Array.from(trackRef.current.children) as HTMLElement[])
       : [];
 
-  // Track which card is leftmost/active for the dot indicator
+  // Card offsets relative to the first card, clamped to the max scroll,
+  // de-duplicated. Cards that can't reach the left edge collapse into the
+  // last position, so we never show dots that can't be reached.
+  const computePositions = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return [] as number[];
+    const cards = getCards();
+    if (cards.length === 0) return [] as number[];
+
+    const base = cards[0].offsetLeft;
+    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+    const result: number[] = [];
+
+    cards.forEach((card) => {
+      const pos = Math.min(card.offsetLeft - base, maxScroll);
+      if (!result.some((p) => Math.abs(p - pos) < 4)) result.push(pos);
+    });
+
+    return result;
+  }, []);
+
+  const closestIndex = useCallback(() => {
+    const el = trackRef.current;
+    const positions = positionsRef.current;
+    if (!el || positions.length === 0) return 0;
+
+    let closest = 0;
+    let closestDist = Infinity;
+    positions.forEach((pos, i) => {
+      const dist = Math.abs(pos - el.scrollLeft);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = i;
+      }
+    });
+    return closest;
+  }, []);
+
+  // Recalculate positions on mount/resize and track the active dot on scroll
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
 
-    const onScroll = () => {
-      const cards = getCards();
-      let closest = 0;
-      let closestDist = Infinity;
-      cards.forEach((card, i) => {
-        const dist = Math.abs(card.offsetLeft - el.scrollLeft);
-        if (dist < closestDist) {
-          closestDist = dist;
-          closest = i;
-        }
-      });
-      setActiveIndex(closest);
+    const update = () => {
+      positionsRef.current = computePositions();
+      setDotCount(positionsRef.current.length);
+      setActiveIndex(closestIndex());
     };
 
-    el.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => el.removeEventListener("scroll", onScroll);
-  }, []);
+    const onScroll = () => setActiveIndex(closestIndex());
 
-  const scrollToCard = useCallback((index: number) => {
+    update();
+    el.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", update);
+
+    const ro =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(update) : null;
+    ro?.observe(el);
+
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", update);
+      ro?.disconnect();
+    };
+  }, [computePositions, closestIndex]);
+
+  const scrollToPosition = useCallback((index: number) => {
     const el = trackRef.current;
-    const card = el?.children[index] as HTMLElement | undefined;
-    if (!el || !card) return;
-    el.scrollTo({ left: card.offsetLeft, behavior: "smooth" });
+    const pos = positionsRef.current[index];
+    if (!el || pos === undefined) return;
+    el.scrollTo({ left: pos, behavior: "smooth" });
   }, []);
 
   const pauseAutoplay = useCallback(() => {
@@ -181,45 +226,32 @@ export default function WhyChooseUs() {
   }, []);
 
   const handleDotClick = (index: number) => {
-    scrollToCard(index);
+    scrollToPosition(index);
     pauseAutoplay();
   };
 
-  // Autoplay — advances by 2 cards on desktop (lg+), 1 card on smaller screens, loops at the end
+  // Autoplay — advances by 2 positions on desktop (lg+), 1 on smaller screens,
+  // always visits the last position, then loops back to the start
   useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
     const interval = setInterval(() => {
-      if (pausedRef.current || !el) return;
+      if (pausedRef.current) return;
 
-      const cards = getCards();
-      if (cards.length === 0) return;
+      const positions = positionsRef.current;
+      if (positions.length <= 1) return;
 
+      const last = positions.length - 1;
+      const current = closestIndex();
       const advanceBy = window.innerWidth >= 1024 ? 2 : 1;
-      const maxScroll = el.scrollWidth - el.clientWidth;
 
-      let currentIndex = 0;
-      let closestDist = Infinity;
-      cards.forEach((card, i) => {
-        const dist = Math.abs(card.offsetLeft - el.scrollLeft);
-        if (dist < closestDist) {
-          closestDist = dist;
-          currentIndex = i;
-        }
-      });
-
-      const nextIndex = currentIndex + advanceBy;
-
-      if (nextIndex >= cards.length || el.scrollLeft >= maxScroll - 5) {
-        el.scrollTo({ left: 0, behavior: "smooth" });
+      if (current >= last) {
+        scrollToPosition(0);
       } else {
-        el.scrollTo({ left: cards[nextIndex].offsetLeft, behavior: "smooth" });
+        scrollToPosition(Math.min(current + advanceBy, last));
       }
     }, 3500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [closestIndex, scrollToPosition]);
 
   return (
     <section
@@ -244,7 +276,7 @@ export default function WhyChooseUs() {
         <div
           ref={trackRef}
           onWheel={pauseAutoplay}
-          className="mx-auto flex max-w-6xl items-stretch gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth px-6 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mx-auto flex max-w-6xl items-stretch gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth scroll-pl-6 px-6 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {whyChooseUs.map((item, i) => (
             <div
@@ -257,23 +289,26 @@ export default function WhyChooseUs() {
         </div>
       </div>
 
-      <div className="relative z-10 mt-6 flex items-center justify-center gap-2">
-        {whyChooseUs.map((_, i) => {
-          const accent = palette[i % palette.length];
-          return (
-            <button
-              key={i}
-              onClick={() => handleDotClick(i)}
-              aria-label={`Go to reason ${i + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                activeIndex === i
-                  ? `w-6 ${accent.dot}`
-                  : "w-2 bg-neutral-300 hover:bg-neutral-400"
-              }`}
-            />
-          );
-        })}
-      </div>
+      {dotCount > 1 && (
+        <div className="relative z-10 mt-6 flex items-center justify-center gap-2">
+          {Array.from({ length: dotCount }).map((_, i) => {
+            const accent = palette[i % palette.length];
+            return (
+              <button
+                key={i}
+                onClick={() => handleDotClick(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                aria-current={activeIndex === i}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  activeIndex === i
+                    ? `w-6 ${accent.dot}`
+                    : "w-2 bg-neutral-300 hover:bg-neutral-400"
+                }`}
+              />
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 }

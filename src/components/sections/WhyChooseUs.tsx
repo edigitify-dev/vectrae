@@ -131,7 +131,7 @@ function ReasonCard({
 export default function WhyChooseUs() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [dotCount, setDotCount] = useState(whyChooseUs.length);
+  const [dotCount, setDotCount] = useState<number>(whyChooseUs.length);
   const pausedRef = useRef(false);
   const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,

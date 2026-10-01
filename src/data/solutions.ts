@@ -141,7 +141,10 @@ export const solutions: Solution[] = [
       { name: "AMX", logo: r2Asset("/images/oem/AV/amx.webp") },
       { name: "Atlona", logo: r2Asset("/images/oem/AV/atlona.webp") },
       { name: "Prysm", logo: r2Asset("/images/oem/AV/prysm.webp") },
-      { name: "Audio-Technica", logo: r2Asset("/images/oem/AV/audioTechnica.webp") },
+      {
+        name: "Audio-Technica",
+        logo: r2Asset("/images/oem/AV/audioTechnica.webp"),
+      },
       { name: "Kramer", logo: r2Asset("/images/oem/AV/kramer.webp") },
     ],
     subServices: [
@@ -362,7 +365,10 @@ export const solutions: Solution[] = [
     ],
     oems: [
       { name: "Cisco", logo: r2Asset("/images/oem/netSec/cisco.webp") },
-      { name: "Palo Alto Networks", logo: r2Asset("/images/oem/netSec/paloalto.webp") },
+      {
+        name: "Palo Alto Networks",
+        logo: r2Asset("/images/oem/netSec/paloalto.webp"),
+      },
       { name: "Fortinet", logo: r2Asset("/images/oem/netSec/fortinet.webp") },
       { name: "Sophos", logo: r2Asset("/images/oem/netSec/sophos.webp") },
       { name: "McAfee", logo: r2Asset("/images/oem/netSec/mcAfee.webp") },
@@ -722,7 +728,10 @@ export const solutions: Solution[] = [
       { name: "Samsung", logo: r2Asset("/images/oem/endCom/samsung.webp") },
       { name: "LG", logo: r2Asset("/images/oem/endCom/lg.webp") },
       { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
-      { name: "Kensington", logo: r2Asset("/images/oem/endCom/kensington.webp") },
+      {
+        name: "Kensington",
+        logo: r2Asset("/images/oem/endCom/kensington.webp"),
+      },
       { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
     ],
     subServices: [
@@ -882,7 +891,10 @@ export const solutions: Solution[] = [
       { name: "Poly", logo: r2Asset("/images/oem/AV/poly.webp") },
       { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
       { name: "3M", logo: r2Asset("/images/oem/endCom/3m.webp") },
-      { name: "Kensington", logo: r2Asset("/images/oem/endCom/kensington.webp") },
+      {
+        name: "Kensington",
+        logo: r2Asset("/images/oem/endCom/kensington.webp"),
+      },
       { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
       { name: "Philips", logo: r2Asset("/images/oem/endCom/philips.webp") },
     ],
@@ -1009,7 +1021,10 @@ export const solutions: Solution[] = [
         name: "APC by Schneider Electric",
         logo: r2Asset("/images/oem/endCom/apc.webp"),
       },
-      { name: "Schneider Electric", logo: r2Asset("/images/oem/endCom/schneider.webp") },
+      {
+        name: "Schneider Electric",
+        logo: r2Asset("/images/oem/endCom/schneider.webp"),
+      },
     ],
     subServices: [
       {

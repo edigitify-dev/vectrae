@@ -73,8 +73,8 @@ const stats = [
   },
   {
     icon: Users,
-    value: "250+",
-    label: "Professionals",
+    value: "300+",
+    label: "Experts",
     accent: "#2563EB",
     art: "people",
     image: r2Asset("/images/about/stats/img_2.png"),
@@ -89,8 +89,8 @@ const stats = [
   },
   {
     icon: Layers,
-    value: "₹400 Cr+",
-    label: "Annual Turnover",
+    value: "₹500 Cr+",
+    label: "Revenue",
     accent: "#F59E0B",
     art: "growth",
     image: r2Asset("/images/about/stats/img_4.png"),

@@ -57,6 +57,7 @@ type Vertical = {
   id: string;
   label: string;
   short: string;
+  href: string;
   icon: LucideIcon;
   stage: string; // background image for this vertical
   items: Item[];
@@ -68,6 +69,7 @@ const verticals: Vertical[] = [
     label: "End Computing Solutions",
     short: "End Computing",
     icon: Laptop,
+    href: "/solutions/end-computing",
     stage: r2Asset("/images/solutions/end_com.png"),
     items: [
       {
@@ -127,6 +129,7 @@ const verticals: Vertical[] = [
     label: "Data Center Solutions",
     short: "Data Center",
     icon: Server,
+    href: "/solutions/data-center",
     stage: r2Asset("/images/solutions/data_center.png"),
     items: [
       {
@@ -152,6 +155,7 @@ const verticals: Vertical[] = [
     label: "Networking & Security",
     short: "Networking",
     icon: Network,
+    href: "/solutions/networking-security",
     stage: r2Asset("/images/solutions/net_sec.png"),
     items: [
       {
@@ -169,6 +173,7 @@ const verticals: Vertical[] = [
     label: "Power Solutions",
     short: "Power",
     icon: Zap,
+    href: "/solutions/power-solutions",
     stage: r2Asset("/images/solutions/power_sol.png"),
     items: [
       {
@@ -185,6 +190,7 @@ const verticals: Vertical[] = [
     id: "spares",
     label: "IT Spares & Accessories",
     short: "Spares",
+    href: "/solutions/it-spares-accessories",
     icon: Box,
     stage: r2Asset("/images/solutions/it_spares.png"),
     items: [
@@ -220,6 +226,7 @@ const verticals: Vertical[] = [
     label: "Managed IT Services",
     short: "Managed IT",
     icon: Settings,
+    href: "/solutions/managed-it-services",
     stage: r2Asset("/images/solutions/managed_it.png"),
     items: [
       {
@@ -259,6 +266,7 @@ export default function ProductShowcase() {
   const [paused, setPaused] = useState(false);
 
   const selectVertical = (v: Vertical) => {
+    if (v.id === verticalId) return;
     setVerticalId(v.id);
     setActiveId(v.items[0].id);
   };
@@ -473,10 +481,11 @@ export default function ProductShowcase() {
                 const selected = v.id === verticalId;
                 const Icon = v.icon;
                 return (
-                  <button
+                  <Link
                     key={v.id}
-                    type="button"
-                    onClick={() => selectVertical(v)}
+                    href={v.href}
+                    onMouseEnter={() => selectVertical(v)}
+                    onFocus={() => selectVertical(v)}
                     style={
                       selected ? { backgroundImage: BRAND_GRADIENT } : undefined
                     }
@@ -495,7 +504,7 @@ export default function ProductShowcase() {
                     </span>
                     <span className="flex-1">{v.label}</span>
                     {selected && <ArrowRight className="h-4 w-4" />}
-                  </button>
+                  </Link>
                 );
               })}
             </nav>
@@ -528,35 +537,24 @@ export default function ProductShowcase() {
                 {vertical.items.map((item) => {
                   const active = activeId === item.id;
                   return (
-                    <Link
+                    <div
                       key={item.id}
-                      href={item.href}
                       onMouseEnter={() => setActiveId(item.id)}
-                      onFocus={() => setActiveId(item.id)}
-                      className={`group flex flex-col rounded-xl border p-3 transition duration-300 ${
+                      className={`flex flex-col rounded-xl border p-3 transition duration-300 ${
                         active
                           ? "border-[#25D9C7] bg-gradient-to-b from-[#25D9C7]/15 to-transparent shadow-[0_0_22px_rgba(37,217,199,0.25)]"
                           : "border-white/10 bg-white/[0.03] hover:border-white/25"
                       }`}
                     >
-                      <div className="mt-3 flex items-center justify-between gap-2">
+                      <div className="mt-3">
                         <span className="text-sm font-semibold text-white">
                           {item.name}
-                        </span>
-                        <span
-                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition duration-300 ${
-                            active
-                              ? "border-[#25D9C7] text-[#25D9C7]"
-                              : "border-[#29B9F2]/60 text-[#29B9F2]"
-                          } group-hover:translate-x-0.5`}
-                        >
-                          <ArrowRight className="h-3.5 w-3.5" />
                         </span>
                       </div>
                       <p className="mt-1.5 text-xs leading-snug text-white/55">
                         {item.description}
                       </p>
-                    </Link>
+                    </div>
                   );
                 })}
               </motion.div>

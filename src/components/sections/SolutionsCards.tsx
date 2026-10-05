@@ -372,9 +372,9 @@ function ServiceHoloCard({
 
             {/* Capabilities */}
             <ul className="mt-4 space-y-2.5">
-              {service.capabilities.slice(0, 3).map((cap) => (
+              {service.pointers.slice(0, 3).map((cap) => (
                 <li
-                  key={cap.title}
+                  key={cap}
                   className="
                   flex
                   items-center
@@ -415,7 +415,7 @@ function ServiceHoloCard({
                     />
                   </span>
 
-                  <span>{cap.title}</span>
+                  <span>{cap}</span>
                 </li>
               ))}
             </ul>

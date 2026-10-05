@@ -152,7 +152,7 @@ const verticals: Vertical[] = [
   },
   {
     id: "networking",
-    label: "Networking & Security",
+    label: "Cyber Security & Networking",
     short: "Networking",
     icon: Network,
     href: "/solutions/networking-security",

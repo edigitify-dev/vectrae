@@ -45,6 +45,7 @@ export type SubService = {
   title: string;
   tagline: string;
   icon: LucideIcon;
+  pointers: string[];
   description: string;
   capabilities: ServiceCapability[];
   benefits: string[];
@@ -55,6 +56,7 @@ export type Solution = {
   title: string;
   tagline: string;
   icon: LucideIcon;
+  pointers: string[];
   heroImage: string;
   cardImage: string;
   description: string;
@@ -70,6 +72,14 @@ export const solutions: Solution[] = [
     title: "Audio Visual Solutions",
     tagline: "Immersive meeting experiences, engineered for the enterprise.",
     icon: MonitorPlay,
+    pointers: [
+      "Video Conferencing Systems",
+      "Digital Signage & Displays",
+      "Room Automation & Control",
+      "Auditorium & Command Centre AV",
+      "Acoustic & Room Design",
+      "Unified Communications",
+    ],
     heroImage: "/video/av_hero_vid.mp4",
     cardImage: r2Asset("/images/products/av.png"),
     description:
@@ -153,6 +163,11 @@ export const solutions: Solution[] = [
         title: "Meeting Room & Boardroom Solutions",
         tagline: "One-touch meetings, engineered for every room size.",
         icon: MonitorPlay,
+        pointers: [
+          "Room Scheduling & One-Touch Join",
+          "Camera & Audio Tuning",
+          "Display & Acoustic Integration",
+        ],
         description:
           "From huddle spaces to executive boardrooms, we design and integrate AV systems that make every meeting effortless, camera, audio, display, and control, working together out of the box.",
         capabilities: [
@@ -185,6 +200,11 @@ export const solutions: Solution[] = [
         title: "Video Conferencing & Unified Communication",
         tagline: "Microsoft Teams Rooms and Zoom Rooms, deployed at scale.",
         icon: Video,
+        pointers: [
+          "Teams Rooms & Zoom Rooms Certification",
+          "Unified Communications Integration",
+          "Room Health Monitoring",
+        ],
         description:
           "We deploy and manage certified Teams Rooms and Zoom Rooms across your enterprise, unifying every meeting space onto one collaboration platform with centralized monitoring.",
         capabilities: [
@@ -217,6 +237,11 @@ export const solutions: Solution[] = [
         title: "Digital Signage & Video Wall Solutions",
         tagline: "Large-format displays that turn every wall into a canvas.",
         icon: LayoutGrid,
+        pointers: [
+          "Video Wall Engineering",
+          "Content Management Systems",
+          "Interactive Displays",
+        ],
         description:
           "From lobby signage to command-centre video walls, we design, install, and manage content-driven display systems built for 24/7 enterprise use.",
         capabilities: [
@@ -249,6 +274,11 @@ export const solutions: Solution[] = [
         title: "Auditorium & Training Room Solutions",
         tagline: "Sound and visuals engineered for the back row.",
         icon: RadioTower,
+        pointers: [
+          "Sound Reinforcement Design",
+          "Projection & Large-Format Display",
+          "Multi-Camera Capture & Streaming",
+        ],
         description:
           "We design large-venue AV systems, sound reinforcement, projection, and multi-camera capture, for auditoriums, training rooms, and town-hall spaces.",
         capabilities: [
@@ -281,6 +311,11 @@ export const solutions: Solution[] = [
         title: "Command Centre, NOC & SOC Solutions",
         tagline: "Mission-critical video walls for 24/7 operations.",
         icon: MonitorCog,
+        pointers: [
+          "Multi-Screen Video Wall Design",
+          "Redundant Signal Switching",
+          "Control Room Ergonomics",
+        ],
         description:
           "We build command-centre environments for network and security operations, multi-screen video walls, redundant switching, and control-room ergonomics engineered for round-the-clock monitoring.",
         capabilities: [
@@ -312,13 +347,21 @@ export const solutions: Solution[] = [
   },
   {
     slug: "networking-security",
-    title: "Networking & Security",
-    tagline: "Resilient connectivity for the always-on enterprise.",
+    title: "Cyber Security & Networking",
+    tagline: "Resilent Security for all Enterprise Networks.",
     icon: Network,
+    pointers: [
+      "Perimeter, Endpoint & Cloud Security",
+      "Network Active & Passive",
+      "Backup, Managed Networking & Security Services",
+      "Primeter, End point & Cloud Security",
+      "SD-WAN & Cloud Connectivity",
+      "Network Monitoring",
+    ],
     heroImage: r2Asset("/images/products/router.png"),
     cardImage: r2Asset("/images/products/router.png"),
     description:
-      "We design, deploy, and secure the network backbone your business runs on, structured cabling, enterprise Wi-Fi, and firewall infrastructure built for performance at scale.",
+      "We build and secure resilient enterprise IT infrastructure through integrated cybersecurity and networking solutions from perimeter, endpoint and cloud security to active & passive networking, enterprise Wi-Fi, structured cabling, and managed security services.",
     capabilities: [
       {
         icon: Cable,
@@ -340,9 +383,8 @@ export const solutions: Solution[] = [
       },
       {
         icon: ShieldCheck,
-        title: "Firewall & Network Security",
-        description:
-          "Palo Alto Networks-certified perimeter and internal network protection.",
+        title: "Primeter, End point & Cloud Security",
+        description: "Protecting Every Connection, Securing Every Enterprise.",
       },
       {
         icon: Cloud,
@@ -381,6 +423,11 @@ export const solutions: Solution[] = [
         title: "Enterprise Networking",
         tagline: "The backbone your business runs on.",
         icon: Network,
+        pointers: [
+          "Structured Cabling",
+          "LAN/WAN Architecture",
+          "Core & Access Switching",
+        ],
         description:
           "We design and deploy structured cabling, LAN/WAN architecture, and core switching infrastructure built to scale with your enterprise.",
         capabilities: [
@@ -413,6 +460,11 @@ export const solutions: Solution[] = [
         title: "Wireless Infrastructure",
         tagline: "Seamless coverage, engineered for density.",
         icon: Wifi,
+        pointers: [
+          "Wireless Site Surveys",
+          "High-Density Wi-Fi Design",
+          "Guest & BYOD Segmentation",
+        ],
         description:
           "From wireless site surveys to high-density Wi-Fi design, we build wireless infrastructure that performs reliably across offices, campuses, and warehouses.",
         capabilities: [
@@ -445,6 +497,11 @@ export const solutions: Solution[] = [
         title: "Firewall & Network Security",
         tagline: "Perimeter and internal protection, built for scale.",
         icon: ShieldCheck,
+        pointers: [
+          "Perimeter Firewall Deployment",
+          "Network Segmentation",
+          "SD-WAN & Secure Connectivity",
+        ],
         description:
           "We design, deploy, and manage firewall and network security infrastructure, perimeter protection, internal segmentation, and secure connectivity for the modern enterprise.",
         capabilities: [
@@ -477,12 +534,20 @@ export const solutions: Solution[] = [
   {
     slug: "data-center",
     title: "Data Center Solutions",
-    tagline: "Infrastructure built for uptime, scale, and resilience.",
+    tagline: "Engineering the Infrastructure Behind Digital Business.",
     icon: Server,
+    pointers: [
+      "Data Centre Design & Build",
+      "Compute, Storage, Virtualization, Networking & Security",
+      "Data Centre Managed Services",
+      "Physical & Cyber Security",
+      "Hyperconverged Infrastructure",
+      "Cloud Migration",
+    ],
     heroImage: r2Asset("/images/products/ram.png"),
     cardImage: r2Asset("/images/products/ram.png"),
     description:
-      "We build and secure the infrastructure behind your business, from greenfield data centers to disaster recovery and physical security, engineered for enterprise-grade reliability.",
+      "From strategy to deployment and lifecycle management, we engineer resilient data centre ecosystems that power mission-critical workloads. Our integrated approach brings together compute, storage, networking, cybersecurity, power, cooling, structured cabling, and intelligent monitoring, creating scalable, secure, and high-availability infrastructure built for today and engineered for tomorrow.",
     capabilities: [
       {
         icon: HardDrive,
@@ -543,6 +608,11 @@ export const solutions: Solution[] = [
         title: "Data Centre Infrastructure",
         tagline: "Greenfield to brownfield, built for uptime.",
         icon: HardDrive,
+        pointers: [
+          "Greenfield DC Build-Out",
+          "Brownfield Infrastructure Upgrades",
+          "Rack & Cooling Design",
+        ],
         description:
           "We build data center infrastructure from the ground up, racks, cooling, cabling, and power, for both new greenfield builds and brownfield upgrades.",
         capabilities: [
@@ -575,6 +645,11 @@ export const solutions: Solution[] = [
         title: "Server & Storage Solutions",
         tagline: "Compute and storage, sized to your workload.",
         icon: Server,
+        pointers: [
+          "Server Deployment & Sizing",
+          "Enterprise Storage Solutions",
+          "Hyperconverged Infrastructure",
+        ],
         description:
           "We spec, deploy, and support enterprise server and storage infrastructure from Dell and HP, sized precisely to your workload and growth plan.",
         capabilities: [
@@ -607,6 +682,11 @@ export const solutions: Solution[] = [
         title: "Cloud Solutions",
         tagline: "Private, public, or hybrid, your call.",
         icon: Cloud,
+        pointers: [
+          "Cloud Migration Planning",
+          "Hybrid Cloud Architecture",
+          "Managed Cloud Operations",
+        ],
         description:
           "We guide and execute cloud migration and management across private, public, and hybrid environments, matching architecture to your compliance and performance needs.",
         capabilities: [
@@ -638,6 +718,11 @@ export const solutions: Solution[] = [
         title: "Backup & Disaster Recovery",
         tagline: "Business continuity, tested and ready.",
         icon: RefreshCw,
+        pointers: [
+          "Backup Architecture Design",
+          "Disaster Recovery Planning",
+          "DR Testing & Drills",
+        ],
         description:
           "We design and implement backup and disaster recovery architecture, tested, documented, and ready, so a single point of failure never becomes a business outage.",
         capabilities: [
@@ -672,6 +757,14 @@ export const solutions: Solution[] = [
     title: "End Computing Solutions",
     tagline: "Equip every desk, every workstation, every employee.",
     icon: Laptop,
+    pointers: [
+      "Laptops & Desktops",
+      "Thin Client Deployment",
+      "Monitors & Peripherals",
+      "Bulk Imaging & Configuration",
+      "Asset Lifecycle Management",
+      "Warranty & AMC Support",
+    ],
     heroImage: r2Asset("/images/products/laptop.png"),
     cardImage: r2Asset("/images/products/laptop.png"),
     description:
@@ -740,6 +833,11 @@ export const solutions: Solution[] = [
         title: "Laptops, Desktops & Workstations",
         tagline: "Enterprise devices, procured at scale.",
         icon: Laptop,
+        pointers: [
+          "Bulk Device Procurement",
+          "High-Performance Workstations",
+          "Pre-Configured Imaging",
+        ],
         description:
           "Bulk procurement of Dell, HP, and Microsoft laptops, desktops, and high-performance workstations, pre-configured and ready to deploy at enterprise pricing.",
         capabilities: [
@@ -772,6 +870,11 @@ export const solutions: Solution[] = [
         title: "Thin Clients & Collaboration Devices",
         tagline: "Centralized, secure, cost-efficient computing.",
         icon: Monitor,
+        pointers: [
+          "Thin Client Deployment",
+          "Centralized Endpoint Management",
+          "Collaboration Device Rollout",
+        ],
         description:
           "We deploy thin-client environments and collaboration devices that centralize management, reduce endpoint cost, and simplify enterprise IT operations.",
         capabilities: [
@@ -804,6 +907,11 @@ export const solutions: Solution[] = [
         title: "Monitors, Docking & Peripherals",
         tagline: "Standardized workstations, every desk, every branch.",
         icon: LayoutGrid,
+        pointers: [
+          "Monitor & Display Rollout",
+          "Docking Station Deployment",
+          "Peripheral Standardization",
+        ],
         description:
           "From monitors to docking stations, we standardize workstation rollouts across offices and branches, consistent hardware, consistent experience.",
         capabilities: [
@@ -839,6 +947,14 @@ export const solutions: Solution[] = [
     tagline:
       "Fast-turnaround components that keep your infrastructure running.",
     icon: PackageCheck,
+    pointers: [
+      "Genuine OEM Spare Parts",
+      "Rapid Replacement & Logistics",
+      "Cables & Accessories",
+      "Legacy Component Sourcing",
+      "Bulk Inventory Management",
+      "Emergency Dispatch",
+    ],
     heroImage: r2Asset("/images/products/motherboard.png"),
     cardImage: r2Asset("/images/products/motherboard.png"),
     description:
@@ -904,6 +1020,11 @@ export const solutions: Solution[] = [
         title: "Enterprise IT Peripherals",
         tagline: "Genuine peripherals, always in stock.",
         icon: PackageCheck,
+        pointers: [
+          "Genuine OEM Peripherals",
+          "Fast-Dispatch Logistics",
+          "Bulk Peripheral Procurement",
+        ],
         description:
           "A full catalog of enterprise-grade peripherals, keyboards, mice, headsets, docking accessories, sourced genuine and delivered fast, PAN-India.",
         capabilities: [
@@ -935,6 +1056,11 @@ export const solutions: Solution[] = [
         title: "Workplace Accessories & Components",
         tagline: "The small parts that keep everything running.",
         icon: Boxes,
+        pointers: [
+          "Cables & Adapters",
+          "Mounting & Accessories",
+          "Legacy Component Sourcing",
+        ],
         description:
           "Cables, adapters, mounts, and hard-to-find legacy components, we stock and dispatch the accessories that keep enterprise IT and AV systems operational.",
         capabilities: [
@@ -969,6 +1095,14 @@ export const solutions: Solution[] = [
     title: "Power Solutions",
     tagline: "Zero downtime starts with the right power strategy.",
     icon: Zap,
+    pointers: [
+      "UPS Systems & Sizing",
+      "Power Distribution Units",
+      "Backup & Standby Power",
+      "Power Monitoring & Management",
+      "Critical Infrastructure Power",
+      "Energy Efficiency Consulting",
+    ],
     heroImage: r2Asset("/images/products/power.png"),
     cardImage: r2Asset("/images/products/power.png"),
     description:
@@ -1032,6 +1166,11 @@ export const solutions: Solution[] = [
         title: "UPS Systems",
         tagline: "Uninterrupted power, sized to your load.",
         icon: BatteryCharging,
+        pointers: [
+          "UPS Sizing & Design",
+          "Rack & Facility-Scale Deployment",
+          "Battery Management",
+        ],
         description:
           "We design, size, and deploy enterprise UPS systems, from rack-mount to facility-scale, engineered around your critical load and runtime requirements.",
         capabilities: [
@@ -1065,6 +1204,11 @@ export const solutions: Solution[] = [
         tagline:
           "Distribution and monitoring, built for critical infrastructure.",
         icon: Gauge,
+        pointers: [
+          "PDU Design & Deployment",
+          "Power Monitoring Systems",
+          "Remote Power Management",
+        ],
         description:
           "From rack PDUs to facility-wide distribution, we design power distribution and monitoring systems that keep data centers and critical infrastructure running.",
         capabilities: [
@@ -1095,6 +1239,14 @@ export const solutions: Solution[] = [
     title: "Managed IT Services",
     tagline: "Focus on your business. We'll run your IT.",
     icon: LifeBuoy,
+    pointers: [
+      "Annual Maintenance Contracts (AMC)",
+      "Remote Monitoring & Management",
+      "IT Helpdesk Support",
+      "Moves, Adds & Changes",
+      "Field Engineering & On-Site Support",
+      "SLA-Backed Full Managed IT",
+    ],
     heroImage: r2Asset("/images/products/managedIt.png"),
     cardImage: r2Asset("/images/products/managedIt.png"),
     description:

@@ -9,6 +9,7 @@ import {
   ArrowRight,
   Box,
   Laptop,
+  MonitorPlay,
   Network,
   Plus,
   Server,
@@ -48,7 +49,6 @@ type Item = {
   id: string;
   name: string;
   description: string;
-  href: string;
   image?: string;
   pin: Pin; // coordinates are relative to THIS vertical's stage image
 };
@@ -65,6 +65,48 @@ type Vertical = {
 
 const verticals: Vertical[] = [
   {
+    id: "audio-visual",
+    label: "Audio Visual Solutions",
+    short: "Audio Visual",
+    icon: MonitorPlay,
+    href: "/solutions/av-solutions",
+    stage: r2Asset("/images/solutions/av_sol.png"),
+    items: [
+      {
+        id: "collaboration-displays",
+        name: "Collaboration Displays",
+        description: "Interactive screens for brainstorming and presentations.",
+        pin: { dot: [70, 35], pill: [75, 20] },
+      },
+      {
+        id: "digital-signage",
+        name: "Digital Signage",
+        description:
+          "Large-format displays that turn every wall into a canvas.",
+        pin: { dot: [45, 30], pill: [43, 20], side: "left" },
+      },
+      {
+        id: "room-control",
+        name: "Room Control",
+        description: "One-touch control of lighting, scheduling and AV.",
+        pin: { dot: [57, 78], pill: [60, 86] },
+      },
+      {
+        id: "audio-systems",
+        name: "Audio Systems",
+        description: "Clear, echo-free sound for rooms of every size.",
+        pin: { dot: [58, 19], pill: [62, 10] },
+      },
+      {
+        id: "video-conferencing",
+        name: "Video Conferencing",
+        description:
+          "Zoom, Teams and Cisco-certified rooms for hybrid meetings.",
+        pin: { dot: [20, 55], pill: [8, 75] },
+      },
+    ],
+  },
+  {
     id: "end-computing",
     label: "End Computing Solutions",
     short: "End Computing",
@@ -76,14 +118,12 @@ const verticals: Vertical[] = [
         id: "laptops",
         name: "Laptops",
         description: "High-performance laptops for modern enterprises.",
-        href: "/products/workstation-laptop",
         pin: { dot: [15, 52.7], pill: [18, 20] },
       },
       {
         id: "desktops",
         name: "Desktops",
         description: "Reliable desktops for everyday productivity.",
-        href: "/products/enterprise-desktop",
         pin: { dot: [30, 39], pill: [37, 24] },
       },
       // {
@@ -97,21 +137,18 @@ const verticals: Vertical[] = [
         id: "monitors",
         name: "Monitors",
         description: "High-resolution displays for better collaboration.",
-        href: "/products",
         pin: { dot: [50.8, 58], pill: [60, 75], side: "left" },
       },
       {
         id: "printers",
         name: "Printers",
         description: "Smart printing solutions for enterprise workflows.",
-        href: "/products",
         pin: { dot: [78, 52.5], pill: [80, 35] },
       },
       {
         id: "accessories",
         name: "Accessories",
         description: "Complete your workspace with essential accessories.",
-        href: "/products",
         // Example of MULTIPLE dots -> one label
         pin: {
           dot: [
@@ -136,7 +173,6 @@ const verticals: Vertical[] = [
         id: "motherboard",
         name: "Server Motherboards",
         description: "Dual-socket boards built for virtualization.",
-        href: "/products/server-motherboard",
         image: siteImages.products.motherboard,
         pin: { dot: [30, 40], pill: [35, 20] },
       },
@@ -144,7 +180,6 @@ const verticals: Vertical[] = [
         id: "server-ram",
         name: "Server RAM",
         description: "High-speed ECC memory for intensive computing.",
-        href: "/products/server-ram",
         image: siteImages.products.serverRam,
         pin: { dot: [70, 70], pill: [75, 60] },
       },
@@ -162,7 +197,6 @@ const verticals: Vertical[] = [
         id: "router",
         name: "Enterprise WiFi",
         description: "WiFi 7 access points for dense environments.",
-        href: "/products/enterprise-router",
         image: siteImages.products.router,
         pin: { dot: [45, 45], pill: [52, 66] },
       },
@@ -180,7 +214,6 @@ const verticals: Vertical[] = [
         id: "psu",
         name: "Power Supplies",
         description: "Efficient hot-swappable units for 24/7 operation.",
-        href: "/products/power-supply",
         image: siteImages.products.powerSupply,
         pin: { dot: [60, 45], pill: [62, 41] },
       },
@@ -198,7 +231,6 @@ const verticals: Vertical[] = [
         id: "memory",
         name: "Memory",
         description: "Genuine memory modules and upgrade kits.",
-        href: "/products/server-ram",
         image: siteImages.products.serverRam,
         pin: { dot: [20, 80], pill: [25, 70] },
       },
@@ -206,7 +238,6 @@ const verticals: Vertical[] = [
         id: "tablet",
         name: "Peripherals",
         description: "Docks, tablets and desk-side essentials.",
-        href: "/products",
         // MULTIPLE dots -> one "Peripherals" label
         pin: {
           dot: [
@@ -233,7 +264,6 @@ const verticals: Vertical[] = [
         id: "monitoring",
         name: "Monitoring",
         description: "24/7 infrastructure monitoring and response.",
-        href: "/services",
         pin: {
           dot: [
             [30, 35],
@@ -250,7 +280,7 @@ const verticals: Vertical[] = [
 
 const stats = [
   { value: "250+", label: "Enterprise Clients" },
-  { value: "6+", label: "Solution Verticals" },
+  { value: "7+", label: "Solution Verticals" },
   { value: "15+", label: "Years of Expertise" },
 ];
 
@@ -396,8 +426,8 @@ export default function ProductShowcase() {
                       ))}
 
                       {/* single label */}
-                      <Link
-                        href={item.href}
+                      <div
+                        tabIndex={0}
                         onMouseEnter={() => setActiveId(item.id)}
                         onFocus={() => setActiveId(item.id)}
                         aria-label={item.name}
@@ -422,7 +452,7 @@ export default function ProductShowcase() {
                         <span className="whitespace-nowrap text-[10px] font-medium sm:text-sm">
                           {item.name}
                         </span>
-                      </Link>
+                      </div>
                     </div>
                   );
                 })}
@@ -453,9 +483,7 @@ export default function ProductShowcase() {
               </h2>
 
               <p className="mt-5 max-w-md text-sm leading-relaxed text-white/60 sm:text-base xl:max-w-[92%] xl:text-[clamp(0.8rem,1vw,1.1rem)]">
-                Explore our integrated solutions across workspaces,
-                infrastructure, power, networking and more — designed for modern
-                enterprises.
+                Explore our integrated solutions.
               </p>
 
               <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
@@ -517,7 +545,7 @@ export default function ProductShowcase() {
                 Explore {vertical.label}
               </h3>
               <Link
-                href="/products"
+                href={vertical.href}
                 className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#29B9F2] transition hover:text-white"
               >
                 View All {vertical.short}

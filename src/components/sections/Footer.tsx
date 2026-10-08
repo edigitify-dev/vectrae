@@ -176,7 +176,7 @@ export default function Footer() {
             </ul>
 
             <a
-              href="https://wa.me/911140590964"
+              href="https://wa.me/+919205557448?text=Hello%20I%20want%20to%20know%20more"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-5 inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-white/60 transition hover:border-white/20 hover:text-white"
@@ -229,7 +229,7 @@ export default function Footer() {
 
       {/* Floating WhatsApp */}
       <a
-        href="https://wa.me/911140590964"
+        href="https://wa.me/+919205557448?text=Hello%20I%20want%20to%20know%20more"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp"

@@ -363,7 +363,7 @@ export default function ContactFormSection() {
               </ul>
 
               <a
-                href="https://wa.me/911140590964"
+                href="https://wa.me/+919205557448?text=Hello%20I%20want%20to%20know%20more"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80 transition hover:border-white/30 hover:text-white"

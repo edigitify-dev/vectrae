@@ -540,7 +540,7 @@ export const desktopFolders: OSFolder[] = [
             body: "A floating WhatsApp Quick Connect button is fixed bottom-right on all pages. Footer layout uses 4 columns: Company info + social links | Solutions | Industries | Quick Links. A slim OEM partner logo strip sits directly above the footer. Newsletter signup is optional.",
             action: {
               label: "Chat on WhatsApp",
-              href: "https://wa.me/911140590964",
+              href: "https://wa.me/+919205557448?text=Hello%20I%20want%20to%20know%20more",
             },
           },
         ],
@@ -900,7 +900,7 @@ export const desktopFolders: OSFolder[] = [
             ],
             action: {
               label: "Apply Now",
-              href: "mailto:enquiry@vectrae.com?subject=Application: AV Systems Engineer",
+              href: "mailto:Hr@vectrae.com?subject=Application: AV Systems Engineer",
             },
           },
           {
@@ -918,7 +918,7 @@ export const desktopFolders: OSFolder[] = [
             ],
             action: {
               label: "Apply Now",
-              href: "mailto:enquiry@vectrae.com?subject=Application: Network Engineer",
+              href: "mailto:Hr@vectrae.com?subject=Application: Network Engineer",
             },
           },
           {
@@ -936,7 +936,7 @@ export const desktopFolders: OSFolder[] = [
             ],
             action: {
               label: "Apply Now",
-              href: "mailto:enquiry@vectrae.com?subject=Application: Enterprise Sales Manager",
+              href: "mailto:Hr@vectrae.com?subject=Application: Enterprise Sales Manager",
             },
           },
           {
@@ -954,7 +954,7 @@ export const desktopFolders: OSFolder[] = [
             ],
             action: {
               label: "Apply Now",
-              href: "mailto:enquiry@vectrae.com?subject=Application: Project Manager",
+              href: "mailto:Hr@vectrae.com?subject=Application: Project Manager",
             },
           },
         ],
@@ -1023,7 +1023,7 @@ export const desktopFolders: OSFolder[] = [
             ],
             action: {
               label: "Send Application",
-              href: "mailto:enquiry@vectrae.com?subject=Job Application",
+              href: "mailto:Hr@vectrae.com?subject=Job Application",
             },
           },
         ],

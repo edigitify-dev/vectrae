@@ -165,7 +165,7 @@ function ChapterCard({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-1 flex-col p-7 sm:p-8 sm:py-3">
+      <div className="relative z-10 flex flex-1 flex-col p-7 sm:p-8">
         <div className="flex items-center gap-3">
           {/* <span
             className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border bg-white"
@@ -185,7 +185,7 @@ function ChapterCard({
           </span>
         </div>
 
-        <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-tight text-neutral-900">
+        <h3 className="text-2xl font-semibold leading-tight tracking-tight text-neutral-900">
           {chapter.title}
         </h3>
 

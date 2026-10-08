@@ -61,7 +61,7 @@ export default function ContactHero() {
             enquiry@vectrae.com
           </a>
           <a
-            href="https://wa.me/911140590964"
+            href="https://wa.me/+919205557448?text=Hello%20I%20want%20to%20know%20more"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/30 hover:bg-white/10"

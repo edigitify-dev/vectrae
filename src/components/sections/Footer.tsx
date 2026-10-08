@@ -65,7 +65,7 @@ export default function Footer() {
               height={26}
               className="h-7 w-auto brightness-0 invert"
             />
-            <p className="mt-4 text-sm leading-relaxed text-white/30">
+            <p className="mt-4 text-sm leading-relaxed text-white/25">
               End-to-end enterprise technology. PAN-India delivery & support.
             </p>
             <div className="mt-5 flex gap-2">
@@ -94,7 +94,7 @@ export default function Footer() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-white/30 transition hover:text-white"
+                    className="text-sm text-white/25 transition hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -115,7 +115,7 @@ export default function Footer() {
                     href={item.href}
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener noreferrer" : undefined}
-                    className="text-sm text-white/30 transition hover:text-white"
+                    className="text-sm text-white/25 transition hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -134,7 +134,7 @@ export default function Footer() {
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-sm text-white/30 transition hover:text-white"
+                    className="text-sm text-white/25 transition hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -152,7 +152,7 @@ export default function Footer() {
               <li>
                 <a
                   href="tel:+911140590964"
-                  className="flex items-start gap-2.5 text-sm text-white/30 transition hover:text-white"
+                  className="flex items-start gap-2.5 text-sm text-white/25 transition hover:text-white"
                 >
                   <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
                   +91-11-40590964
@@ -161,14 +161,14 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:enquiry@vectrae.com"
-                  className="flex items-start gap-2.5 text-sm text-white/30 transition hover:text-white"
+                  className="flex items-start gap-2.5 text-sm text-white/25 transition hover:text-white"
                 >
                   <Mail className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
                   enquiry@vectrae.com
                 </a>
               </li>
               <li>
-                <p className="flex items-start gap-2.5 text-sm text-white/30">
+                <p className="flex items-start gap-2.5 text-sm text-white/25">
                   <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
                   Mohan Co-Op, New Delhi, 110044
                 </p>

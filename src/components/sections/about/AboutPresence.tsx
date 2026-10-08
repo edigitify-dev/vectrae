@@ -8,7 +8,7 @@ const offices = [
   {
     city: "New Delhi",
     tag: "Head Office",
-    landmark: "Bhandari House, Nehru Place",
+    landmark: "Bhandari House",
     description:
       "The company's original office continues to house the executive leadership and serve as the company's nerve center.",
   },
@@ -38,8 +38,8 @@ const offices = [
 const reach = [
   { value: "7+", label: "Offices Nationwide" },
   { value: "10,000+", label: "Pin-Codes Covered" },
-  { value: "250+", label: "Professionals" },
-  { value: "₹400+ Cr", label: "Annual Turnover" },
+  { value: "300+", label: "Professionals" },
+  { value: "₹500+ Cr", label: "Annual Turnover" },
 ];
 
 export default function AboutPresence() {

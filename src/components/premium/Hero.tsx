@@ -14,7 +14,7 @@ const headlineWords = ["Integrated", "Technology", "Solutions", "For"];
 
 const tickerItems = [
   "2,300+ Enterprises",
-  "250+ Technology Experts",
+  "300+ Technology Experts",
   "OEM Partnerships",
   "25+ Years of Experience",
   "PAN-India Delivery",

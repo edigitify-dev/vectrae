@@ -30,7 +30,7 @@ const metrics = [
   },
   {
     label: "Technology Experts",
-    value: "250+",
+    value: "300+",
     icon: Users,
     iconColor: "text-blue-600",
     iconBg: "bg-blue-50",
@@ -54,7 +54,7 @@ const metrics = [
 const commandStats = [
   { icon: Wifi, value: "99.9%", label: "Uptime", accent: true },
   { icon: Truck, value: "2,300+", label: "Clients" },
-  { icon: Users, value: "250+", label: "Experts" },
+  { icon: Users, value: "300+", label: "Experts" },
   { icon: Settings, value: "24/7", label: "Support" },
 ];
 

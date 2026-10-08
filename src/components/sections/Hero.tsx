@@ -102,7 +102,7 @@ export default function Hero() {
           data-aos-delay="450"
           data-aos-once="true"
         >
-          250+ Technology Experts&nbsp;|&nbsp;PAN-India
+          300+ Technology Experts&nbsp;|&nbsp;PAN-India
           Delivery&nbsp;|&nbsp;2,300+ Enterprise Clients
         </p>
       </div>

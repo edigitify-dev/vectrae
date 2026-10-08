@@ -337,8 +337,8 @@ export default function TrustSignals() {
             </h2>
 
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-500 sm:mt-5">
-              From global banks to Fortune 500 manufacturers, enterprises rely
-              on Vectrae to deliver PAN-India technology infrastructure.
+              From global banks to Fortune 500 companies, enterprises rely on
+              Vectrae to deliver PAN-India technology infrastructure.
             </p>
 
             <div className="mt-7 grid grid-cols-2 gap-5 border-t border-neutral-200 pt-5 sm:mt-8 sm:gap-6 sm:pt-6">
@@ -354,7 +354,7 @@ export default function TrustSignals() {
 
               <div>
                 <p className="text-2xl font-semibold text-neutral-900 sm:text-3xl">
-                  250+
+                  300+
                 </p>
 
                 <p className="mt-1 text-xs text-neutral-500">

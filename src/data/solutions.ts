@@ -758,7 +758,7 @@ export const solutions: Solution[] = [
     tagline: "Equip every desk, every workstation, every employee.",
     icon: Laptop,
     pointers: [
-      "Laptops & Desktops",
+      "Laptops, Desktops & Workstations",
       "Thin Client Deployment",
       "Monitors & Peripherals",
       "Bulk Imaging & Configuration",

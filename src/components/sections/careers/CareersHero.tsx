@@ -80,7 +80,7 @@ export default function CareersHero() {
           transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 max-w-xl text-base leading-relaxed text-white/55 sm:text-lg"
         >
-          250+ certified experts deliver AV, Networking, Data Center, End
+          300+ certified experts deliver AV, Networking, Data Center, End
           Computing, and Power solutions to 2,300+ enterprises PAN-India. Come
           build it with us.
         </motion.p>

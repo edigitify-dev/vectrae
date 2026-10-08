@@ -3,10 +3,22 @@
 // replayed by `npm run db:seed-careers`. Editing it does NOT change the live
 // site. `departments`, `departmentIcons`, and `perks` below remain static —
 // they are not part of the CMS.
-import { GraduationCap, HeartPulse, MapPin, PartyPopper, TrendingUp, Users, type LucideIcon } from "lucide-react";
+import {
+  GraduationCap,
+  HeartPulse,
+  MapPin,
+  PartyPopper,
+  TrendingUp,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import type { JobOpening } from "@/lib/careers-types";
 
-export { departments, departmentIcons, type Department } from "@/lib/careers-types";
+export {
+  departments,
+  departmentIcons,
+  type Department,
+} from "@/lib/careers-types";
 
 const seedJobOpenings: JobOpening[] = [
   {
@@ -182,7 +194,8 @@ export const perks: Perk[] = [
   {
     icon: GraduationCap,
     title: "Learning & Certifications",
-    description: "OEM certification sponsorship and structured upskilling paths.",
+    description:
+      "OEM certification sponsorship and structured upskilling paths.",
   },
   {
     icon: TrendingUp,

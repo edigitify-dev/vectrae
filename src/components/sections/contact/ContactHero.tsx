@@ -37,8 +37,7 @@ export default function ContactHero() {
           data-aos-delay="200"
         >
           Whether you need a quick quote or a complete technology
-          transformation, our experts are ready to help. We respond within 4
-          business hours.
+          transformation, our experts are ready to help.
         </p>
 
         <div
@@ -47,11 +46,11 @@ export default function ContactHero() {
           data-aos-delay="300"
         >
           <a
-            href="tel:+911140590964"
+            href="tel:+91-11-40590964-65"
             className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/30 hover:bg-white/10"
           >
             <Phone className="h-4 w-4 text-[#25D9C7]" />
-            +91-11-40590964
+            +91-11-40590964-65
           </a>
           <a
             href="mailto:enquiry@vectrae.com"

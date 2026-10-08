@@ -21,7 +21,7 @@ const reasons = [
     icon: ShieldCheck,
     title: "Certified Technical Bench",
     description:
-      "250+ trained and OEM-certified engineers ready to design, deploy, and support.",
+      "300+ trained and OEM-certified engineers ready to design, deploy, and support.",
   },
   {
     icon: Building2,

@@ -279,9 +279,9 @@ const verticals: Vertical[] = [
 ];
 
 const stats = [
-  { value: "250+", label: "Enterprise Clients" },
+  { value: "300+", label: "Technology experts" },
   { value: "7+", label: "Solution Verticals" },
-  { value: "15+", label: "Years of Expertise" },
+  { value: "25+", label: "Years of Expertise" },
 ];
 
 /* ------------------------------------------------------------------ */

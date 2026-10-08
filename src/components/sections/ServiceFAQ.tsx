@@ -33,10 +33,10 @@ const faqs = [
     answer:
       "Yes, we deliver and support projects PAN-India through our nationwide execution and service network, not just in our home base of New Delhi.",
   },
-  {
-    question: "How quickly will you respond to an inquiry?",
-    answer: "We respond to every consultation request within 4 business hours.",
-  },
+  // {
+  //   question: "How quickly will you respond to an inquiry?",
+  //   answer: "We respond to every consultation request within 4 business hours.",
+  // },
 ];
 
 type FAQItemProps = {
@@ -121,15 +121,14 @@ export default function ServiceFAQ() {
 
       <div className="relative mx-auto max-w-3xl px-6">
         <div className="text-center" data-aos="fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+          <p className="text-xl font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
             FAQ
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
             Common Questions, Answered
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/55">
-            Everything you need to know before reaching out. Can&apos;t find
-            your answer? We respond within 4 business hours.
+            Everything you need to know before reaching out.
           </p>
         </div>
 

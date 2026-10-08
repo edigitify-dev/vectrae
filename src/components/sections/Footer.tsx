@@ -47,6 +47,29 @@ const socials = [
   { label: "Facebook", href: "https://www.facebook.com/vectraee/", abbr: "fb" },
 ];
 
+const branches = [
+  {
+    city: "Mumbai",
+    address:
+      "Office No. 05/06/06, Building No. 3, 1st Floor, Navjivan Commercial Premises, Mumbai - 400008",
+  },
+  {
+    city: "Bangalore",
+    address:
+      "No. 3/10, Western Portion of 7th Floor, Tower Block, Unity Buildings Complex, Mission Road, Bangalore - 560027",
+  },
+  {
+    city: "Chennai",
+    address:
+      "First Floor, Shop No. 11, G 18, Sidhi Vinayagar Complex, Kalaignar Karunanidhi Salai, Sholinganallur Village and Taluk, Chennai - 600119, Tamil Nadu",
+  },
+  {
+    city: "Hyderabad",
+    address:
+      "A Block, 4th Floor, Flat No. 410 to 413, Cabin No. 3, Chandralok Complex, SD Road, Secunderabad, Hyderabad, Telangana - 500003",
+  },
+];
+
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-[#030712] max-sm:pb-24">
@@ -151,11 +174,11 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               <li>
                 <a
-                  href="tel:+911140590964"
+                  href="tel:+91-11-40590964-65"
                   className="flex items-start gap-2.5 text-sm text-white/25 transition hover:text-white"
                 >
                   <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
-                  +91-11-40590964
+                  +91-11-40590964-65
                 </a>
               </li>
               <li>
@@ -170,7 +193,8 @@ export default function Footer() {
               <li>
                 <p className="flex items-start gap-2.5 text-sm text-white/25">
                   <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
-                  Mohan Co-Op, New Delhi, 110044
+                  A-16-B-1, Mohan Co-Operative Industrial Estate Extn., Mathura
+                  Road New Delhi-110044, India
                 </p>
               </li>
             </ul>
@@ -200,7 +224,7 @@ export default function Footer() {
               <div className="relative h-56 w-full">
                 <iframe
                   title="Vectrae Infotech location map"
-                  src="https://maps.google.com/maps?q=Mohan%20Co-Op%20Industrial%20Estate%2C%20New%20Delhi%2C%20110044&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3387.397315884145!2d77.29610327535366!3d28.506844175733583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3c572a9ee5f%3A0xd4ddf520fbbd12dc!2sVectrae%20Infotech!5e1!3m2!1sen!2sus!4v1791462572481!5m2!1sen!2sus"
                   className="h-full w-full"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -215,11 +239,47 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Branches */}
+        <div className="border-t border-white/[0.06] py-10">
+          <h4
+            className="text-[11px] font-semibold uppercase tracking-widest text-white/45"
+            data-aos="fade-up"
+            data-aos-offset="0"
+          >
+            Our Branches
+          </h4>
+
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {branches.map((b, i) => (
+              <div
+                key={b.city}
+                data-aos="fade-up"
+                data-aos-offset="0"
+                data-aos-delay={i * 100}
+              >
+                <div className="group h-full rounded-xl border border-white/10 bg-white/[0.03] p-5 transition hover:border-[#29B9F2]/40 hover:bg-white/[0.05]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#29B9F2]/10">
+                      <MapPin className="h-4 w-4 text-[#29B9F2]" />
+                    </span>
+                    <h5 className="text-sm font-semibold text-white/80">
+                      {b.city}
+                    </h5>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-white/30 transition group-hover:text-white/50">
+                    {b.address}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div
-          className="flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] py-5 text-xs text-white/25 sm:flex-row"
+          className="flex flex-col items-center justify-between gap-3 border-t border-white/[0.06] py-5 text-center text-xs text-white/25 sm:flex-row sm:text-left"
           data-aos="fade-in"
-          data-aos-delay="300"
+          data-aos-offset="0"
           data-aos-once="true"
         >
           <p>© {new Date().getFullYear()} Vectrae Infotech Pvt. Ltd.</p>

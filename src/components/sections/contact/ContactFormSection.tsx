@@ -336,11 +336,11 @@ export default function ContactFormSection() {
               <ul className="mt-5 space-y-4">
                 <li>
                   <a
-                    href="tel:+911140590964"
+                    href="tel:+91-11-40590964-65"
                     className="flex items-start gap-3 text-sm text-white/70 transition hover:text-white"
                   >
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#25D9C7]" />
-                    +91-11-40590964
+                    +91-11-40590964-65
                   </a>
                 </li>
                 <li>
@@ -354,11 +354,8 @@ export default function ContactFormSection() {
                 </li>
                 <li className="flex items-start gap-3 text-sm text-white/70">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#25D9C7]" />
-                  Mohan Co-Op, New Delhi, 110044
-                </li>
-                <li className="flex items-start gap-3 text-sm text-white/70">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#25D9C7]" />
-                  We respond within 4 business hours
+                  A-16-B-1, Mohan Co-Operative Industrial Estate Extn., Mathura
+                  Road New Delhi-110044, India
                 </li>
               </ul>
 

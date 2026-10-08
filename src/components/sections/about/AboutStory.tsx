@@ -12,6 +12,7 @@ import {
   Users,
   Layers,
 } from "lucide-react";
+import Navbar from "../Navbar";
 
 // Drop your images in /public/about/ (names below). If one is missing,
 // the card falls back to a soft tinted block instead of breaking.
@@ -81,7 +82,7 @@ const stats = [
   },
   {
     icon: Building2,
-    value: "400+",
+    value: "2300+",
     label: "Enterprise Clients",
     accent: "#7C3AED",
     art: "city",
@@ -224,6 +225,10 @@ function TimelineDot({ color }: { color: string }) {
 function Header() {
   return (
     <div className="max-w-md">
+      {/* ambient glows */}
+      <div className="pointer-events-none absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-lime-400/10 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-cyan-400/10 blur-[120px]" />
+      <div className="pointer-events-none absolute top-96 -right-76 h-96 w-96 rounded-full bg-cyan-400/40 blur-[120px]" />
       <span
         className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50/70 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700"
         data-aos="fade-up"
@@ -231,11 +236,11 @@ function Header() {
         <span className="h-2 w-2 rounded-full bg-emerald-500" />
         Our Journey
       </span>
-      <h2 className="mt-5 text-3xl font-semibold leading-[1.15] tracking-tight text-neutral-900 sm:text-4xl lg:text-[42px]">
+      <h2 className="mt-5 text-white text-3xl font-semibold leading-[1.15] tracking-tight text-neutral-900 sm:text-4xl lg:text-[42px]">
         From a Simple Premise to a{" "}
-        <span className="text-[#0F9D8A]">National Partner</span>
+        <span className="text-[#10bea7]">National Partner</span>
       </h2>
-      <p className="mt-5 text-[15px] leading-relaxed text-neutral-500">
+      <p className="mt-5 text-[15px] leading-relaxed text-neutral-400">
         A journey of relentless execution, long-term partnerships and a belief
         that technology infrastructure can quietly power extraordinary
         businesses.
@@ -487,9 +492,10 @@ export default function AboutStory() {
   return (
     <section
       id="story"
-      className="relative overflow-hidden bg-gradient-to-b from-white via-white to-slate-50 py-16 sm:py-20"
+      className="relative overflow-hidden bg-gradient-to-b bg-black pb-16 sm:pb-20"
     >
-      <div className="mx-auto max-w-6xl px-6 sm:px-10">
+      <Navbar />
+      <div className="mx-auto max-w-6xl px-6 sm:px-10 mt-16">
         {/* ───────── Desktop: center-line timeline ───────── */}
         <div className="relative hidden lg:block">
           {/* vertical line */}

@@ -4,7 +4,7 @@ import { r2Asset } from "@/lib/site-images";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
@@ -37,13 +37,13 @@ type Leader = {
 /* ---------- Featured founder (big card) ---------- */
 const founder: Leader = {
   name: "Dinesh Kamra",
-  designation: "Founder / Managing Director",
-  bio: "Founder profile content will be provided by Vectrae HR/Marketing. This space is reserved for his professional background, vision and expertise.",
+  designation: "Managing Director",
+  bio: "Dinesh Kamra is the Managing Director, driving the organization’s strategic vision and growth. With a focus on innovation, leadership, and excellence, he continues to shape the company’s journey forward.",
   image: r2Asset("/images/team/dineshKamra.jpeg"),
   linkedin: "", // add URL when available
 };
 
-/* ---------- Team (auto-swiping carousel) ---------- */
+/* ---------- Team (carousel with left/right buttons) ---------- */
 const team: Leader[] = [
   {
     name: "Rajesh Suri",
@@ -53,18 +53,18 @@ const team: Leader[] = [
   },
   {
     name: "Swarup Nag",
-    designation: "Business Head, Data Center",
+    designation: "Business Head - IT Infrastructure and Data Center solutions",
     bio: "Leadership profile content will be provided by Vectrae HR/Marketing. This space is reserved for the leader's professional background and expertise.",
     image: r2Asset("/images/team/swarup.jpeg"),
   },
   {
-    name: "Kapil",
+    name: "Kapil Gunglani",
     designation: "Business Head, Delhi",
     bio: "Leadership profile content will be provided by Vectrae HR/Marketing. This space is reserved for the leader's professional background and expertise.",
-    image: r2Asset(""),
+    image: "",
   },
   {
-    name: "Madhu Sudhan Sharma",
+    name: "Madhusudhan Sharma",
     designation: "Business Head, Bangalore",
     bio: "Leadership profile content will be provided by Vectrae HR/Marketing. This space is reserved for the leader's professional background and expertise.",
     image: r2Asset("/images/team/madhuSudhanSharma.jpeg"),
@@ -77,15 +77,14 @@ const team: Leader[] = [
   },
   {
     name: "Sagar Ahuja",
-    designation: "Business Head - IT Infrastructure and Data Center solutions",
+    designation: "Business Head, Pune",
     bio: "Leadership profile content will be provided by Vectrae HR/Marketing. This space is reserved for the leader's professional background and expertise.",
-    image: r2Asset("/images/team/sagar.jpeg"),
+    image: r2Asset("/images/team/sagar.png"),
   },
 ];
 
 /* Carousel tuning */
-const AUTOPLAY_MS = 3000; // time between swipes
-const SLIDE_DURATION = 0.7; // seconds for the slide animation
+const SLIDE_DURATION = 0.6; // seconds for the slide animation
 const GAP = 20; // px gap between cards
 const SWIPE_THRESHOLD = 50; // px of touch movement to count as a swipe
 
@@ -198,7 +197,7 @@ function TeamCard({
 }
 
 /* ============================================================
-   TEAM CAROUSEL (auto-swipe every 3s, infinite loop)
+   TEAM CAROUSEL (manual: left / right buttons + touch swipe)
 ============================================================ */
 function TeamCarousel() {
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -207,16 +206,15 @@ function TeamCarousel() {
   const [visible, setVisible] = useState(1);
   const [cardW, setCardW] = useState(0);
   const [index, setIndex] = useState(0);
-  const [instant, setInstant] = useState(false); // used for the invisible loop reset
-  const [paused, setPaused] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
 
   const count = team.length;
-  const canSlide = count > 1;
 
-  // Clones of the first `visible` cards at the end make the loop seamless
-  const clones = Array.from({ length: visible }, (_, i) => team[i % count]);
-  const items = [...team, ...clones];
+  // Furthest position we can slide to without showing empty space
+  const maxIndex = Math.max(0, count - visible);
+  const canSlide = maxIndex > 0;
+
+  // Keeps the position valid if the screen is resized
+  const current = Math.min(index, maxIndex);
 
   /* Measure container -> cards per view + card width */
   useEffect(() => {
@@ -236,41 +234,12 @@ function TeamCarousel() {
     return () => ro.disconnect();
   }, []);
 
-  /* Respect reduced motion */
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduceMotion(mq.matches);
-    const onChange = () => setReduceMotion(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  /* Autoplay */
-  useEffect(() => {
-    if (!canSlide || paused || reduceMotion) return;
-    const id = setInterval(() => {
-      setIndex((i) => Math.min(i + 1, count));
-    }, AUTOPLAY_MS);
-    return () => clearInterval(id);
-  }, [canSlide, paused, reduceMotion, count]);
-
-  /* After sliding onto the clones, silently jump back to the real start */
-  const handleAnimationComplete = () => {
-    if (index >= count) {
-      setInstant(true);
-      setIndex(0);
-    } else if (instant) {
-      setInstant(false);
-    }
-  };
-
-  const next = () => setIndex((i) => Math.min(i + 1, count));
-  const prev = () => setIndex((i) => Math.max(i - 1, 0));
+  const next = () => setIndex(Math.min(current + 1, maxIndex));
+  const prev = () => setIndex(Math.max(current - 1, 0));
 
   /* Touch swipe */
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
-    setPaused(true);
   };
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStartX.current !== null) {
@@ -279,16 +248,16 @@ function TeamCarousel() {
       else if (delta > SWIPE_THRESHOLD) prev();
     }
     touchStartX.current = null;
-    setPaused(false);
   };
 
-  const activeDot = index % count;
+  const atStart = current === 0;
+  const atEnd = current >= maxIndex;
+
+  const btnClass =
+    "flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-black/60 transition-all duration-300 hover:border-[#29B9F2]/50 hover:bg-[#29B9F2]/10 hover:text-[#29B9F2] disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-black/10 disabled:hover:bg-white disabled:hover:text-black/60 sm:h-12 sm:w-12";
 
   return (
-    <div
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div>
       <div
         ref={viewportRef}
         className="overflow-hidden"
@@ -298,46 +267,58 @@ function TeamCarousel() {
         <motion.div
           className="flex"
           style={{ gap: GAP }}
-          animate={{ x: -index * (cardW + GAP) }}
-          transition={
-            instant
-              ? { duration: 0 }
-              : { duration: SLIDE_DURATION, ease: [0.16, 1, 0.3, 1] }
-          }
-          onAnimationComplete={handleAnimationComplete}
+          animate={{ x: -current * (cardW + GAP) }}
+          transition={{ duration: SLIDE_DURATION, ease: [0.16, 1, 0.3, 1] }}
         >
-          {items.map((leader, i) => (
-            <TeamCard
-              key={i}
-              leader={leader}
-              index={i % count}
-              width={cardW || 300}
-              hidden={i >= count}
-            />
+          {team.map((leader, i) => (
+            <TeamCard key={i} leader={leader} index={i} width={cardW || 300} />
           ))}
         </motion.div>
       </div>
 
-      {/* Dots */}
+      {/* Dots (left) + arrow buttons (right) */}
       {canSlide && (
-        <div className="mt-8 flex items-center justify-center gap-2">
-          {team.map((_, i) => (
+        <div className="mt-8 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            {Array.from({ length: maxIndex + 1 }, (_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`Go to slide ${i + 1}`}
+                onClick={() => setIndex(i)}
+                className="group flex h-4 items-center"
+              >
+                <span
+                  className={`block h-1.5 rounded-full transition-all duration-500 ${
+                    i === current
+                      ? "w-8 bg-[#29B9F2]"
+                      : "w-1.5 bg-black/15 group-hover:bg-black/30"
+                  }`}
+                />
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-3">
             <button
-              key={i}
               type="button"
-              aria-label={`Go to slide ${i + 1}`}
-              onClick={() => setIndex(i)}
-              className="group flex h-4 items-center"
+              aria-label="Previous leaders"
+              onClick={prev}
+              disabled={atStart}
+              className={btnClass}
             >
-              <span
-                className={`block h-1.5 rounded-full transition-all duration-500 ${
-                  i === activeDot
-                    ? "w-8 bg-[#29B9F2]"
-                    : "w-1.5 bg-black/15 group-hover:bg-black/30"
-                }`}
-              />
+              <ChevronLeft className="h-5 w-5" />
             </button>
-          ))}
+            <button
+              type="button"
+              aria-label="Next leaders"
+              onClick={next}
+              disabled={atEnd}
+              className={btnClass}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -490,22 +471,6 @@ export default function AboutLeadership() {
               <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-black/20">
                 Vectrae
               </span>
-
-              {founder.linkedin ? (
-                <a
-                  href={founder.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${founder.name} LinkedIn profile`}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-black/35 transition-all duration-300 hover:border-[#29B9F2]/40 hover:bg-[#29B9F2]/10 hover:text-[#29B9F2]"
-                >
-                  <FaLinkedinIn className="h-4 w-4" />
-                </a>
-              ) : (
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-black/10 text-black/20 transition-all duration-300 group-hover:border-[#29B9F2]/30 group-hover:text-[#29B9F2]">
-                  <ArrowUpRight className="h-4 w-4" />
-                </span>
-              )}
             </div>
 
             <div
@@ -516,7 +481,7 @@ export default function AboutLeadership() {
         </motion.article>
 
         {/* ======================================================
-            TEAM CAROUSEL (auto-swipes every 3s)
+            TEAM CAROUSEL (left / right buttons)
         ====================================================== */}
 
         <motion.div

@@ -489,9 +489,9 @@ export const desktopFolders: OSFolder[] = [
             body: "A-16/B-1 Extension, Mohan Co-Op, Industrial Estate, New Delhi - 110044, India",
             meta: [
               { label: "Email", value: "enquiry@vectrae.com" },
-              { label: "Phone", value: "+91-11-40590964" },
+              { label: "Phone", value: "+91-11-40590964-65" },
             ],
-            action: { label: "Call Us", href: "tel:+911140590964" },
+            action: { label: "Call Us", href: "tel:+91-11-40590964-65" },
           },
           {
             id: "social-links",
@@ -536,7 +536,7 @@ export const desktopFolders: OSFolder[] = [
             icon: "headset",
             title: "Support Promise",
             tag: "Footer Element",
-            summary: "We respond within 4 business hours.",
+            summary: "",
             body: "A floating WhatsApp Quick Connect button is fixed bottom-right on all pages. Footer layout uses 4 columns: Company info + social links | Solutions | Industries | Quick Links. A slim OEM partner logo strip sits directly above the footer. Newsletter signup is optional.",
             action: {
               label: "Chat on WhatsApp",

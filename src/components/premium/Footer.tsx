@@ -119,11 +119,11 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               <li>
                 <a
-                  href="tel:+911140590964"
+                  href="tel:+91-11-40590964-65"
                   className="flex items-start gap-2.5 text-sm text-white/45 transition hover:text-white"
                 >
                   <Phone className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
-                  +91-11-40590964
+                  +91-11-40590964-65
                 </a>
               </li>
               <li>
@@ -138,7 +138,8 @@ export default function Footer() {
               <li>
                 <p className="flex items-start gap-2.5 text-sm text-white/40">
                   <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#29B9F2]" />
-                  Mohan Co-Op, New Delhi, 110044
+                  A-16-B-1, Mohan Co-Operative Industrial Estate Extn., Mathura
+                  Road New Delhi-110044, India
                 </p>
               </li>
             </ul>

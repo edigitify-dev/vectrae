@@ -1,12 +1,16 @@
 import { r2Asset } from "@/lib/site-images";
 import {
   BatteryCharging,
+  BellRing,
   Boxes,
   Cable,
+  ClipboardCheck,
   Cloud,
   Database,
+  FileCheck2,
   Gauge,
   HardDrive,
+  KeyRound,
   Laptop,
   LayoutGrid,
   LifeBuoy,
@@ -1296,6 +1300,194 @@ export const solutions: Solution[] = [
     ],
     oems: [],
     subServices: [],
+  },
+  {
+    slug: "software-renewal",
+    title: "Software & Renewal",
+    tagline: "Every license, subscription and renewal, managed in one place.",
+    icon: KeyRound,
+    pointers: [
+      "Enterprise Software Licensing",
+      "Subscription & Renewal Management",
+      "License Audit & Compliance",
+      "Cloud & SaaS Subscriptions",
+      "Security & Backup Software",
+      "Software Asset Management",
+    ],
+    heroImage: r2Asset("/images/products/license_hero.png"),
+    cardImage: r2Asset("/images/products/renewal.png"),
+    description:
+      "From first purchase to every renewal, Vectrae manages the software that runs your enterprise, genuine licensing, subscription tracking, and compliance support, so nothing lapses, nothing is over-bought, and every audit is under control.",
+    capabilities: [
+      {
+        icon: KeyRound,
+        title: "Enterprise Software Licensing",
+        description:
+          "Genuine perpetual and subscription licenses from leading OEMs, sized to your users.",
+      },
+      {
+        icon: BellRing,
+        title: "Subscription & Renewal Management",
+        description:
+          "Renewal calendars and advance alerts so no license or support contract lapses.",
+      },
+      {
+        icon: ClipboardCheck,
+        title: "License Audit & Compliance",
+        description:
+          "Entitlement reviews and audit support to keep your estate compliant and defensible.",
+      },
+      {
+        icon: Cloud,
+        title: "Cloud & SaaS Subscriptions",
+        description:
+          "Microsoft 365, Adobe and other cloud subscriptions, provisioned and managed centrally.",
+      },
+      {
+        icon: ShieldCheck,
+        title: "Security & Backup Software",
+        description:
+          "Endpoint protection, backup and virtualization software, licensed and renewed with your infrastructure.",
+      },
+      {
+        icon: Gauge,
+        title: "Software Asset Management",
+        description:
+          "Usage visibility and right-sizing to cut shelf-ware and reduce software spend.",
+      },
+    ],
+    benefits: [
+      "Authorized reseller relationships with leading software OEMs",
+      "Zero-lapse renewal tracking with advance alerts",
+      "Audit-ready license records and compliance support",
+      "Right-sized subscriptions that cut unused spend",
+    ],
+    oems: [
+      // { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
+      // { name: "Adobe", logo: r2Asset("/images/oem/software/adobe.webp") },
+      // { name: "Autodesk", logo: r2Asset("/images/oem/software/autodesk.webp") },
+      // { name: "Veeam", logo: r2Asset("/images/oem/software/veeam.webp") },
+      // { name: "Red Hat", logo: r2Asset("/images/oem/software/redhat.webp") },
+      // { name: "VMware", logo: r2Asset("/images/oem/software/vmware.webp") },
+      // { name: "Cisco", logo: r2Asset("/images/oem/netSec/cisco.webp") },
+      // {
+      //   name: "Palo Alto Networks",
+      //   logo: r2Asset("/images/oem/netSec/paloalto.webp"),
+      // },
+    ],
+    subServices: [
+      {
+        slug: "software-licensing-procurement",
+        title: "Software Licensing & Procurement",
+        tagline: "Genuine licenses, sized right and delivered fast.",
+        icon: KeyRound,
+        pointers: [
+          "Enterprise Agreement Licensing",
+          "Volume & Bulk Procurement",
+          "License Right-Sizing",
+        ],
+        description:
+          "We source genuine enterprise software from leading OEMs, advising on the right licensing model and volume so you buy what you need, at enterprise pricing.",
+        capabilities: [
+          {
+            icon: FileCheck2,
+            title: "Enterprise Agreement Licensing",
+            description:
+              "Guidance on the licensing program that fits your size and growth plan.",
+          },
+          {
+            icon: PackageCheck,
+            title: "Volume & Bulk Procurement",
+            description:
+              "Volume purchasing for large rollouts, with consolidated invoicing.",
+          },
+          {
+            icon: Gauge,
+            title: "License Right-Sizing",
+            description:
+              "Licenses matched to real user counts, not over- or under-provisioned.",
+          },
+        ],
+        benefits: [
+          "100% genuine licenses, direct from OEM channels",
+          "Volume pricing for large enterprise rollouts",
+        ],
+      },
+      {
+        slug: "subscription-renewal-management",
+        title: "Subscription & Renewal Management",
+        tagline: "Never miss a renewal, never overpay for one.",
+        icon: RefreshCw,
+        pointers: [
+          "Renewal Calendar & Alerts",
+          "Co-Termination & Consolidation",
+          "Cloud & SaaS Management",
+        ],
+        description:
+          "We track every subscription and support contract across your estate, alert you well before expiry, and consolidate renewals so cost and coverage stay predictable.",
+        capabilities: [
+          {
+            icon: BellRing,
+            title: "Renewal Calendar & Alerts",
+            description:
+              "Advance notifications so every renewal is planned, not rushed.",
+          },
+          {
+            icon: RefreshCw,
+            title: "Co-Termination & Consolidation",
+            description:
+              "Aligned renewal dates to simplify budgeting and reduce admin.",
+          },
+          {
+            icon: Cloud,
+            title: "Cloud & SaaS Management",
+            description:
+              "Centralized provisioning and tracking of cloud subscriptions.",
+          },
+        ],
+        benefits: [
+          "Zero-lapse renewal tracking across the estate",
+          "Single point of contact for every renewal",
+        ],
+      },
+      {
+        slug: "license-audit-compliance",
+        title: "License Audit & Compliance",
+        tagline: "Know what you own, prove what you use.",
+        icon: ClipboardCheck,
+        pointers: [
+          "Entitlement & Usage Review",
+          "Audit Readiness Support",
+          "Shelf-Ware Reduction",
+        ],
+        description:
+          "We review your entitlements against actual usage, support you through vendor audits, and identify unused licenses so your estate stays compliant and cost-efficient.",
+        capabilities: [
+          {
+            icon: ClipboardCheck,
+            title: "Entitlement & Usage Review",
+            description:
+              "A clear view of what you own versus what is actually deployed.",
+          },
+          {
+            icon: ShieldCheck,
+            title: "Audit Readiness Support",
+            description:
+              "Documentation and guidance to handle vendor audits with confidence.",
+          },
+          {
+            icon: Gauge,
+            title: "Shelf-Ware Reduction",
+            description:
+              "Unused licenses identified and reclaimed before the next renewal.",
+          },
+        ],
+        benefits: [
+          "Audit-ready license records at all times",
+          "Lower spend through reclaimed, unused licenses",
+        ],
+      },
+    ],
   },
 ];
 

@@ -25,7 +25,10 @@ export default function CTA() {
       className="relative overflow-hidden bg-black py-24 sm:py-32"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.05]">
-        <div className="animate-marquee flex w-max" style={{ animationDuration: "40s" }}>
+        <div
+          className="animate-marquee flex w-max"
+          style={{ animationDuration: "40s" }}
+        >
           {[0, 1].map((p) => (
             <span
               key={p}
@@ -40,7 +43,8 @@ export default function CTA() {
       <div
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
         style={{
-          background: "radial-gradient(480px circle at var(--x, 50%) var(--y, 50%), rgba(41,185,242,0.15), transparent 70%)",
+          background:
+            "radial-gradient(480px circle at var(--x, 50%) var(--y, 50%), rgba(41,185,242,0.15), transparent 70%)",
         }}
       />
 
@@ -53,14 +57,17 @@ export default function CTA() {
         <Reveal delay={0.1}>
           <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-white sm:text-5xl">
             Ready to transform your{" "}
-            <span className="bg-clip-text text-transparent" style={{ backgroundImage: BRAND_GRADIENT }}>
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: BRAND_GRADIENT }}
+            >
               enterprise technology?
             </span>
           </h2>
         </Reveal>
         <Reveal delay={0.2}>
           <p className="mt-4 text-base leading-relaxed text-white/50">
-            Trusted by 2,300+ enterprises. We respond within 4 business hours.
+            Trusted by 2,300+ enterprises.
           </p>
         </Reveal>
 
@@ -78,11 +85,11 @@ export default function CTA() {
             </MagneticButton>
             <MagneticButton>
               <a
-                href="tel:+911140590964"
+                href="tel:+91-11-40590964-65"
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/30 hover:bg-white/10"
               >
                 <PhoneCall className="h-4 w-4 text-[#25D9C7]" />
-                +91-11-40590964
+                +91-11-40590964-65
               </a>
             </MagneticButton>
           </div>

@@ -63,6 +63,14 @@ const PALETTES = [
     border: "border-rose-200",
     glow: "225, 29, 72",
   },
+  {
+    // 08 — Software & Renewal
+    bg: "from-violet-50 via-white to-white",
+    accent: "text-violet-700",
+    accentBg: "bg-violet-600",
+    border: "border-violet-200",
+    glow: "124, 58, 237",
+  },
 ];
 
 function ServiceHoloCard({
@@ -514,21 +522,14 @@ export default function SolutionsCards() {
     <>
       {/* =====================================================
           DESKTOP / TABLET GRID
+
+          8 cards = 2 even rows of 4 on desktop,
+          4 rows of 2 on tablet.
       ===================================================== */}
       <div className="mt-6 hidden md:block">
-        {/* First row — 4 cards */}
         <div className="grid grid-cols-2 gap-7 lg:grid-cols-4">
-          {solutions.slice(0, 4).map((service, i) => (
+          {solutions.map((service, i) => (
             <ServiceHoloCard key={service.slug} service={service} index={i} />
-          ))}
-        </div>
-
-        {/* Second row — 3 centered cards */}
-        <div className="mt-7 flex justify-center gap-7">
-          {solutions.slice(4, 7).map((service, i) => (
-            <div key={service.slug} className="w-[calc((100%-3.5rem)/4)]">
-              <ServiceHoloCard service={service} index={i + 4} />
-            </div>
           ))}
         </div>
       </div>
@@ -555,7 +556,7 @@ export default function SolutionsCards() {
             [&::-webkit-scrollbar]:hidden
           "
         >
-          {solutions.slice(0, 7).map((service, i) => (
+          {solutions.map((service, i) => (
             <div
               key={service.slug}
               ref={(el) => {
@@ -575,7 +576,7 @@ export default function SolutionsCards() {
 
         {/* Dot indicators */}
         <div className="mt-5 flex justify-center gap-1.5">
-          {solutions.slice(0, 7).map((_, i) => (
+          {solutions.map((_, i) => (
             <button
               key={i}
               type="button"

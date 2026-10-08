@@ -6,7 +6,7 @@ import Footer from "@/components/sections/Footer";
 export const metadata: Metadata = {
   title: "Contact Vectrae | Enterprise Technology Consultation",
   description:
-    "Talk to a Vectrae expert about AV, networking, data center, end computing, or power solutions. PAN-India delivery, we respond within 4 business hours.",
+    "Talk to a Vectrae expert about AV, networking, data center, end computing, or power solutions. PAN-India delivery",
 };
 
 export default function ContactPage() {

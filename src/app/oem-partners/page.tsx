@@ -5,6 +5,7 @@ import PartnersCategories from "@/components/sections/partners/PartnersCategorie
 import PartnersWhy from "@/components/sections/partners/PartnersWhy";
 import PartnersCTA from "@/components/sections/partners/PartnersCTA";
 import Footer from "@/components/sections/Footer";
+import ServicesOverview from "@/components/sections/ServicesOverview";
 
 export const metadata: Metadata = {
   title: "OEM Partners | Vectrae Enterprise Technology Solutions",
@@ -19,6 +20,7 @@ export default function OemPartnersPage() {
       <PartnersMarquee />
       <PartnersCategories />
       <PartnersWhy />
+      <ServicesOverview />
       <PartnersCTA />
       <Footer />
     </>

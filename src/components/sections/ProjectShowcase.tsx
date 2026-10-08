@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -20,7 +21,7 @@ const PROJECTS: Project[] = [
     title: "Enterprise Command Center",
     category: "Audio Visual",
     location: "New Delhi",
-    image: "/projects/command-center.jpg",
+    image: r2Asset("/projects/command-center.jpg"),
     span: "md:col-span-2 md:row-span-2",
   },
   {
@@ -28,7 +29,7 @@ const PROJECTS: Project[] = [
     title: "Boardroom Collaboration Suite",
     category: "Collaboration",
     location: "Mumbai",
-    image: "/projects/boardroom.jpg",
+    image: r2Asset("/projects/boardroom.jpg"),
     span: "md:col-span-1 md:row-span-1",
   },
   {
@@ -36,7 +37,7 @@ const PROJECTS: Project[] = [
     title: "Tier-III Data Center",
     category: "Data Center",
     location: "Noida",
-    image: "/projects/data-center.jpg",
+    image: r2Asset("/projects/data-center.jpg"),
     span: "md:col-span-1 md:row-span-2",
   },
   {
@@ -44,7 +45,7 @@ const PROJECTS: Project[] = [
     title: "Digital Signage Network",
     category: "Digital Signage",
     location: "Bengaluru",
-    image: "/projects/signage.jpg",
+    image: r2Asset("/projects/signage.jpg"),
     span: "md:col-span-1 md:row-span-1",
   },
   {
@@ -52,7 +53,7 @@ const PROJECTS: Project[] = [
     title: "Secure Network Backbone",
     category: "Cyber Security & Networking",
     location: "Hyderabad",
-    image: "/projects/network.jpg",
+    image: r2Asset("/projects/network.jpg"),
     span: "md:col-span-2 md:row-span-1",
   },
   {
@@ -60,7 +61,7 @@ const PROJECTS: Project[] = [
     title: "Power & Backup Infrastructure",
     category: "Power Solutions",
     location: "Pune",
-    image: "/projects/power.jpg",
+    image: r2Asset("/projects/power.jpg"),
     span: "md:col-span-1 md:row-span-1",
   },
   {
@@ -68,7 +69,7 @@ const PROJECTS: Project[] = [
     title: "Managed NOC Operations",
     category: "Managed IT",
     location: "Gurugram",
-    image: "/projects/noc.jpg",
+    image: r2Asset("/projects/noc.jpg"),
     span: "md:col-span-1 md:row-span-1",
   },
 ];

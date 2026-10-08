@@ -31,7 +31,7 @@ const certifications: { image: string }[] = [
   { image: r2Asset("/images/certificates/img13.webp") },
   { image: r2Asset("/images/certificates/img14.webp") },
   { image: r2Asset("/images/certificates/img15.webp") },
-  { image: r2Asset("/images/certificates/img16.webp") },
+  // { image: r2Asset("/images/certificates/img16.webp") },
 ];
 
 export default function AboutCertifications() {

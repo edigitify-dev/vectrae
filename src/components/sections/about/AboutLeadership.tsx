@@ -161,11 +161,11 @@ function TeamCard({
           {leader.designation}
         </p>
 
-        <p className="mt-4 line-clamp-4 text-sm leading-6 text-black/40">
+        {/* <p className="mt-4 line-clamp-4 text-sm leading-6 text-black/40">
           {leader.bio}
-        </p>
+        </p> */}
 
-        <div className="mt-6 flex items-center justify-between border-t border-black/[0.07] pt-5">
+        {/* <div className="mt-6 flex items-center justify-between border-t border-black/[0.07] pt-5">
           <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-black/20">
             Vectrae
           </span>
@@ -186,7 +186,7 @@ function TeamCard({
               <ArrowUpRight className="h-4 w-4" />
             </span>
           )}
-        </div>
+        </div> */}
 
         <div
           className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"

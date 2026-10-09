@@ -1,5 +1,6 @@
 "use client";
 import { r2Asset } from "@/lib/site-images";
+import type { ShowcaseImage } from "@/lib/gallery";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -161,19 +162,34 @@ function LazyImage({
   );
 }
 
-export default function ProjectsShowcase() {
+export default function ProjectsShowcase({
+  galleryImages = [],
+}: {
+  galleryImages?: ShowcaseImage[];
+}) {
+  // Merge DB images into the placeholder array, slot by slot
+  const projects: Project[] = PROJECTS.map((placeholder, i) => {
+    const dbImg = galleryImages[i];
+    if (!dbImg) return placeholder;
+    return {
+      ...placeholder,
+      image: dbImg.url,
+      title: dbImg.alt || placeholder.title,
+      category: dbImg.categoryName || placeholder.category,
+    };
+  });
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const active = activeIndex !== null ? PROJECTS[activeIndex] : null;
+  const active = activeIndex !== null ? projects[activeIndex] : null;
 
   const close = useCallback(() => setActiveIndex(null), []);
   const next = useCallback(
-    () => setActiveIndex((i) => (i === null ? i : (i + 1) % PROJECTS.length)),
+    () => setActiveIndex((i) => (i === null ? i : (i + 1) % projects.length)),
     [],
   );
   const prev = useCallback(
     () =>
       setActiveIndex((i) =>
-        i === null ? i : (i - 1 + PROJECTS.length) % PROJECTS.length,
+        i === null ? i : (i - 1 + projects.length) % projects.length,
       ),
     [],
   );
@@ -199,15 +215,15 @@ export default function ProjectsShowcase() {
   useEffect(() => {
     if (activeIndex === null) return;
     const neighbours = [
-      PROJECTS[(activeIndex + 1) % PROJECTS.length],
-      PROJECTS[(activeIndex - 1 + PROJECTS.length) % PROJECTS.length],
+      projects[(activeIndex + 1) % projects.length],
+      projects[(activeIndex - 1 + projects.length) % projects.length],
     ];
     neighbours.forEach((p) => {
       if (!p.image) return;
       const img = new Image();
       img.src = p.image;
     });
-  }, [activeIndex]);
+  }, [activeIndex, projects]);
 
   return (
     <section className="relative overflow-hidden bg-[#05080d] py-24 md:py-32">
@@ -241,7 +257,7 @@ export default function ProjectsShowcase() {
 
         {/* Bento grid */}
         <div className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 md:auto-rows-[200px] md:grid-cols-4 lg:auto-rows-[220px]">
-          {PROJECTS.map((project, i) => (
+          {projects.map((project, i) => (
             <motion.button
               key={project.id}
               type="button"
@@ -337,7 +353,7 @@ export default function ProjectsShowcase() {
                 </div>
                 <span className="text-xs text-white/40">
                   {String((activeIndex ?? 0) + 1).padStart(2, "0")} /{" "}
-                  {String(PROJECTS.length).padStart(2, "0")}
+                  {String(projects.length).padStart(2, "0")}
                 </span>
               </div>
 

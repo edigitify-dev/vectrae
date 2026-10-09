@@ -10,6 +10,7 @@ import SampleAboutUs from "@/components/sections/SampleAboutUs";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import Blog from "@/components/sections/Blog";
 import { getPublishedPosts } from "@/lib/blog";
+import { getGalleryShowcaseImages } from "@/lib/gallery";
 import FootprintMap from "@/components/sections/FootprintMap";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
@@ -17,7 +18,10 @@ import PartnersCategories from "@/components/sections/partners/PartnersCategorie
 import ProjectsShowcase from "@/components/sections/ProjectShowcase";
 
 export default async function Home() {
-  const posts = await getPublishedPosts();
+  const [posts, galleryImages] = await Promise.all([
+    getPublishedPosts(),
+    getGalleryShowcaseImages(7),
+  ]);
 
   return (
     <>
@@ -33,7 +37,7 @@ export default async function Home() {
       <SampleAboutUs />
       {/* <Services /> */}
       <CoreValues />
-      <ProjectsShowcase />
+      <ProjectsShowcase galleryImages={galleryImages} />
       <Blog posts={posts} />
       <CTA />
       <Footer />

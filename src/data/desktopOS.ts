@@ -571,7 +571,7 @@ export const desktopFolders: OSFolder[] = [
               "Vectrae Infotech Pvt. Ltd. is a full-spectrum enterprise technology solutions provider headquartered in New Delhi, India.",
             body: "Founded with a mission to simplify technology for enterprises, Vectrae delivers Audio Visual, IT Infrastructure, Networking & Security, Data Center, End Computing, and Power solutions to 2,300+ enterprise clients across PAN-India.",
             meta: [
-              { label: "Founded", value: "25+ Years Ago" },
+              { label: "Founded", value: "2014" },
               { label: "HQ", value: "New Delhi, India" },
               { label: "Footprint", value: "PAN-India" },
             ],

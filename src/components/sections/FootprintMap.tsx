@@ -43,7 +43,7 @@ const metrics = [
     iconBg: "bg-orange-50",
   },
   {
-    label: "Pincodes",
+    label: "PIN Codes Covered",
     value: "10,000+",
     icon: MapPin,
     iconColor: "text-indigo-600",

@@ -1,7 +1,7 @@
 "use client";
 import { r2Asset } from "@/lib/site-images";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type Project = {
@@ -74,6 +74,93 @@ const PROJECTS: Project[] = [
   },
 ];
 
+type ImgStatus = "loading" | "loaded" | "error";
+
+/**
+ * Lazy image with skeleton while loading, fade-in when loaded,
+ * and a clean placeholder if the image is missing / fails to load.
+ * Parent must be `relative`.
+ */
+function LazyImage({
+  src,
+  alt,
+  className = "",
+  eager = false,
+  placeholderClassName = "",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  eager?: boolean;
+  /** Extra classes for the "coming soon" placeholder (e.g. padding to avoid overlapping card text) */
+  placeholderClassName?: string;
+}) {
+  const [status, setStatus] = useState<ImgStatus>(src ? "loading" : "error");
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // Reset when src changes, and handle images that finished (or failed)
+  // before hydration, since onLoad/onError won't fire for those.
+  useEffect(() => {
+    if (!src) {
+      setStatus("error");
+      return;
+    }
+    setStatus("loading");
+    const el = imgRef.current;
+    if (el && el.complete) {
+      setStatus(el.naturalWidth > 0 ? "loaded" : "error");
+    }
+  }, [src]);
+
+  return (
+    <>
+      {status === "loading" && (
+        <div className="pointer-events-none absolute inset-0 animate-pulse bg-gradient-to-br from-white/5 via-white/10 to-white/5" />
+      )}
+
+      {status === "error" ? (
+        <div
+          role="img"
+          aria-label={`${alt} (image coming soon)`}
+          className={`pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-white/[0.03] via-white/[0.07] to-white/[0.03] text-white/30 ${placeholderClassName}`}
+        >
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <circle cx="9" cy="9" r="1.5" />
+            <path d="m21 15-5-5L5 21" />
+          </svg>
+          <span className="text-[10px] font-medium uppercase tracking-[0.2em]">
+            Image coming soon
+          </span>
+        </div>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          ref={imgRef}
+          src={src}
+          alt={alt}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          onLoad={() => setStatus("loaded")}
+          onError={() => setStatus("error")}
+          className={`${className} transition-opacity duration-500 ${
+            status === "loaded" ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      )}
+    </>
+  );
+}
+
 export default function ProjectsShowcase() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const active = activeIndex !== null ? PROJECTS[activeIndex] : null;
@@ -107,6 +194,20 @@ export default function ProjectsShowcase() {
       document.body.style.overflow = prevOverflow;
     };
   }, [activeIndex, close, next, prev]);
+
+  // Preload neighbouring images while the lightbox is open
+  useEffect(() => {
+    if (activeIndex === null) return;
+    const neighbours = [
+      PROJECTS[(activeIndex + 1) % PROJECTS.length],
+      PROJECTS[(activeIndex - 1 + PROJECTS.length) % PROJECTS.length],
+    ];
+    neighbours.forEach((p) => {
+      if (!p.image) return;
+      const img = new Image();
+      img.src = p.image;
+    });
+  }, [activeIndex]);
 
   return (
     <section className="relative overflow-hidden bg-[#05080d] py-24 md:py-32">
@@ -152,11 +253,10 @@ export default function ProjectsShowcase() {
               transition={{ duration: 0.5, delay: (i % 4) * 0.08 }}
               className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 text-left outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 sm:col-span-1 ${project.span}`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <LazyImage
                 src={project.image}
                 alt={project.title}
-                loading="lazy"
+                placeholderClassName="pb-24"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#05080d] via-[#05080d]/30 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-95" />
@@ -216,12 +316,15 @@ export default function ProjectsShowcase() {
               className="relative flex max-h-full w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0a0f16] shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={active.image}
-                alt={active.title}
-                className="max-h-[70vh] w-full object-contain bg-black"
-              />
+              <div className="relative min-h-[40vh] w-full bg-black">
+                <LazyImage
+                  key={active.id}
+                  src={active.image}
+                  alt={active.title}
+                  eager
+                  className="max-h-[70vh] w-full object-contain"
+                />
+              </div>
               <div className="flex items-center justify-between gap-4 border-t border-white/10 px-5 py-4">
                 <div>
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-lime-300">

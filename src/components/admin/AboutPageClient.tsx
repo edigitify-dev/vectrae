@@ -2,9 +2,9 @@
 
 import { useRef, useState, useTransition, useActionState } from "react";
 import Image from "next/image";
+import GalleryUploadModal from "./GalleryUploadModal";
 import {
   Award,
-  ChevronDown,
   Edit2,
   FolderPlus,
   ImagePlus,
@@ -14,7 +14,6 @@ import {
   X,
 } from "lucide-react";
 import {
-  addGalleryImage,
   createCertification,
   createGalleryCategory,
   deleteCertification,
@@ -270,134 +269,6 @@ function RenameCategoryModal({ cat, onClose }: { cat: GalleryCategory; onClose: 
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Add Image Modal
-// ─────────────────────────────────────────────────────────────────────────────
-
-function AddImageModal({
-  categories,
-  defaultCategoryId,
-  onClose,
-}: {
-  categories: GalleryCategory[];
-  defaultCategoryId?: string;
-  onClose: () => void;
-}) {
-  const [uploadedUrl, setUploadedUrl] = useState("");
-  const [state, action] = useActionState<ActionState, FormData>(addGalleryImage, {});
-  const [pending, startTransition] = useTransition();
-
-  if (state?.success) {
-    onClose();
-    return null;
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <button
-        type="button"
-        aria-label="Close"
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      <div className={`relative w-full max-w-md ${SURFACE} p-6 space-y-5`}>
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-white">Add image</h2>
-          <button type="button" onClick={onClose} className="text-white/40 hover:text-white">
-            <X className="h-4 w-4" aria-hidden />
-          </button>
-        </div>
-
-        {state?.error && <ErrorBanner msg={state.error} />}
-
-        <form action={(fd) => startTransition(() => action(fd))} className="space-y-4">
-          <input type="hidden" name="url" value={uploadedUrl} />
-
-          {/* Category picker */}
-          <div className="space-y-1.5">
-            <label htmlFor="img-cat" className={LABEL}>
-              Category
-            </label>
-            <div className="relative">
-              <select
-                id="img-cat"
-                name="categoryId"
-                defaultValue={defaultCategoryId ?? ""}
-                className={`${INPUT} appearance-none pr-8`}
-                required
-              >
-                <option value="" disabled>
-                  Select a category
-                </option>
-                {categories.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown
-                className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40"
-                aria-hidden
-              />
-            </div>
-          </div>
-
-          {/* Image upload */}
-          <div className="space-y-2">
-            <span className={LABEL}>Image file</span>
-            <ImageUploadButton
-              onUploaded={setUploadedUrl}
-              endpoint="/api/admin/upload-gallery"
-              label="Upload image"
-            />
-            {uploadedUrl && (
-              <div className="relative h-32 w-full overflow-hidden rounded-xl border border-white/10">
-                <Image src={uploadedUrl} alt="" fill className="object-cover" unoptimized />
-              </div>
-            )}
-          </div>
-
-          {/* Alt text */}
-          <div className="space-y-1.5">
-            <label htmlFor="img-alt" className={LABEL}>
-              Alt text
-            </label>
-            <input
-              id="img-alt"
-              name="alt"
-              className={INPUT}
-              placeholder="Describe the image for screen readers"
-            />
-          </div>
-
-          {/* Caption */}
-          <div className="space-y-1.5">
-            <label htmlFor="img-caption" className={LABEL}>
-              Caption (optional)
-            </label>
-            <input id="img-caption" name="caption" className={INPUT} placeholder="Short caption" />
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              type="submit"
-              disabled={pending || !uploadedUrl}
-              style={{ backgroundImage: BRAND_GRADIENT }}
-              className={`${BUTTON_PRIMARY} flex-1`}
-            >
-              {pending && <Loader2 className="h-4 w-4 animate-spin" aria-hidden />}
-              Add image
-            </button>
-            <button type="button" onClick={onClose} className={BUTTON_GHOST}>
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // Gallery tab
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -435,7 +306,7 @@ function GalleryTab({
               className={BUTTON_GHOST}
             >
               <Plus className="h-4 w-4" aria-hidden />
-              Add image
+              Add images
             </button>
           )}
         </div>
@@ -469,7 +340,7 @@ function GalleryTab({
                     </button>
                     <button
                       type="button"
-                      title="Add image to this category"
+                      title="Add images to this category"
                       onClick={() => setAddingImageToCat(cat.id)}
                       className="flex h-8 w-8 items-center justify-center rounded-lg text-white/40 transition-colors hover:bg-white/10 hover:text-white"
                     >
@@ -505,7 +376,7 @@ function GalleryTab({
                       onClick={() => setAddingImageToCat(cat.id)}
                       className="mt-2 text-xs text-[#7bd4f7] hover:opacity-75"
                     >
-                      Add an image →
+                      Add images →
                     </button>
                   )}
                 </div>
@@ -556,7 +427,7 @@ function GalleryTab({
         <RenameCategoryModal cat={renamingCat} onClose={() => setRenamingCat(null)} />
       )}
       {addingImageToCat && (
-        <AddImageModal
+        <GalleryUploadModal
           categories={categories}
           defaultCategoryId={addingImageToCat}
           onClose={() => setAddingImageToCat(null)}

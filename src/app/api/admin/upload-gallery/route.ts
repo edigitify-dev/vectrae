@@ -1,9 +1,6 @@
 import { getCurrentAdmin } from "@/lib/admin/auth";
 import { uploadImageToR2 } from "@/lib/r2";
-
-const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
-
-const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
+import { galleryImageError } from "@/lib/admin/gallery-upload";
 
 /** Uploads a gallery image to Cloudflare R2 under the gallery/images prefix. */
 export async function POST(request: Request) {
@@ -31,13 +28,8 @@ export async function POST(request: Request) {
     return Response.json({ error: "Choose an image to upload." }, { status: 400 });
   }
 
-  if (file.size > MAX_BYTES) {
-    return Response.json({ error: "Image must be 8 MB or smaller." }, { status: 400 });
-  }
-
-  if (!ALLOWED_TYPES.has(file.type)) {
-    return Response.json({ error: "Image must be a JPG, PNG, WebP, or AVIF." }, { status: 400 });
-  }
+  const validationError = galleryImageError(file);
+  if (validationError) return Response.json({ error: validationError }, { status: 400 });
 
   try {
     const url = await uploadImageToR2(file, "about/gallery");

@@ -11,7 +11,7 @@ import SolutionsCards from "@/components/sections/SolutionsCards";
 export const metadata: Metadata = {
   title: "Solutions | Vectrae Enterprise Technology Solutions",
   description:
-    "Explore Vectrae's full-spectrum enterprise technology solutions, Audio Visual, Networking & Security, Data Center, End Computing, IT Spares, Power, and Managed IT, delivered PAN-India.",
+    "Explore Vectrae's full-spectrum enterprise technology solutions, Audio Visual, Networking & Security, Data Center, End Computing, IT Spares,Software & Renewal, Power, and Managed IT, delivered PAN-India.",
 };
 
 export default function SolutionsPage() {

@@ -165,7 +165,7 @@ export default function ServiceCards() {
           </p>
 
           <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
-            Seven pillars of{" "}
+            Eight pillars of{" "}
             <span
               className="bg-clip-text text-transparent"
               style={{ backgroundImage: BRAND_GRADIENT }}

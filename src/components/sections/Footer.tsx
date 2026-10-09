@@ -11,6 +11,7 @@ const links = {
     { label: "Networking & Security", href: "/solutions/networking-security" },
     { label: "Data Center", href: "/solutions/data-center" },
     { label: "End Computing", href: "/solutions/end-computing" },
+    { label: "Software & Renewal", href: "/solutions/software-renewal" },
     { label: "Power Solutions", href: "/solutions/power-solutions" },
     { label: "Managed IT Services", href: "/solutions/managed-it-services" },
   ],

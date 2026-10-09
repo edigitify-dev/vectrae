@@ -25,6 +25,7 @@ const SOLUTION_OPTIONS = [
   "Data Center",
   "End Computing",
   "IT Spares & Accessories",
+  "Software & Renewal",
   "Power Solutions",
   "Managed IT Services",
   "Other",
@@ -141,8 +142,8 @@ export default function ContactFormSection() {
                   Thanks, we&apos;ve got it.
                 </h3>
                 <p className="mt-3 max-w-sm text-sm leading-relaxed text-neutral-500">
-                  A Vectrae expert will reach out within 4 business hours. In
-                  the meantime, feel free to call or WhatsApp us directly.
+                  A Vectrae expert will reach out to you shortly. In the
+                  meantime, feel free to call or WhatsApp us directly.
                 </p>
                 <button
                   type="button"

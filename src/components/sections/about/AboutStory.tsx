@@ -82,7 +82,7 @@ const stats = [
   },
   {
     icon: Building2,
-    value: "2300+",
+    value: "2,300+",
     label: "Enterprise Clients",
     accent: "#7C3AED",
     art: "city",

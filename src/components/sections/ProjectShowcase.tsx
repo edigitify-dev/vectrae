@@ -297,15 +297,9 @@ export default function ProjectsShowcase({
               </span>
 
               <div className="absolute inset-x-0 bottom-0 p-5">
-                <span className="mb-2 inline-block rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-lime-300 backdrop-blur-md">
+                <span className="inline-block rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-lime-300 backdrop-blur-md">
                   {project.category}
                 </span>
-                <h3 className="text-base font-semibold text-white md:text-lg">
-                  {project.title}
-                </h3>
-                <p className="mt-0.5 text-xs text-white/60">
-                  {project.location}
-                </p>
               </div>
             </motion.button>
           ))}

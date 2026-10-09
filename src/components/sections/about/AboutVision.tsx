@@ -149,9 +149,9 @@ export default function AboutVision() {
                       repeat: Infinity,
                       ease: "linear",
                     }}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-md"
+                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 backdrop-blur-md md:px-5 md:py-3"
                   >
-                    <span className="text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
+                    <span className="text-[10px] md:text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
                       Trust
                     </span>
                   </motion.div>
@@ -167,9 +167,9 @@ export default function AboutVision() {
                       repeat: Infinity,
                       ease: "linear",
                     }}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-md"
+                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 backdrop-blur-md md:px-5 md:py-3"
                   >
-                    <span className="text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
+                    <span className="text-[10px] md:text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
                       Innovation
                     </span>
                   </motion.div>
@@ -185,9 +185,9 @@ export default function AboutVision() {
                       repeat: Infinity,
                       ease: "linear",
                     }}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 backdrop-blur-md"
+                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 backdrop-blur-md md:px-5 md:py-3"
                   >
-                    <span className="text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
+                    <span className="text-[10px] md:text-[15px] font-semibold uppercase tracking-[0.2em] text-[#29B9F2]/80">
                       Excellence
                     </span>
                   </motion.div>

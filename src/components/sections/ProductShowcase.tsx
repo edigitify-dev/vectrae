@@ -8,6 +8,7 @@ import Image from "next/image";
 import {
   ArrowRight,
   Box,
+  KeyRound,
   Laptop,
   MonitorPlay,
   Network,
@@ -76,14 +77,14 @@ const verticals: Vertical[] = [
         id: "collaboration-displays",
         name: "Collaboration Displays",
         description: "Interactive screens for brainstorming and presentations.",
-        pin: { dot: [70, 35], pill: [75, 20] },
+        pin: { dot: [70, 35], pill: [65, 45], side: "left" },
       },
       {
         id: "digital-signage",
         name: "Digital Signage",
         description:
           "Large-format displays that turn every wall into a canvas.",
-        pin: { dot: [45, 30], pill: [43, 20], side: "left" },
+        pin: { dot: [45, 30], pill: [43, 22], side: "left" },
       },
       {
         id: "room-control",
@@ -95,7 +96,7 @@ const verticals: Vertical[] = [
         id: "audio-systems",
         name: "Audio Systems",
         description: "Clear, echo-free sound for rooms of every size.",
-        pin: { dot: [58, 19], pill: [62, 10] },
+        pin: { dot: [58, 19], pill: [62, 8] },
       },
       {
         id: "video-conferencing",
@@ -276,11 +277,54 @@ const verticals: Vertical[] = [
       },
     ],
   },
+  {
+    id: "software-renewal",
+    label: "Software & Renewal",
+    short: "Software & Renewal",
+    icon: KeyRound,
+    href: "/solutions/software-renewal",
+    stage: "/images/solutions/licenseRenewal.png",
+    items: [
+      {
+        id: "software-licensing",
+        name: "Software Licensing",
+        description:
+          "Genuine perpetual and subscription licenses for your users.",
+        pin: { dot: [15, 55], pill: [20, 70] },
+      },
+      {
+        id: "renewal-management",
+        name: "Renewal Management",
+        description: "Renewal calendars and advance alerts so nothing lapses.",
+        pin: { dot: [45, 20], pill: [50, 6] },
+      },
+      {
+        id: "compliance-audit",
+        name: "Compliance & Audit",
+        description: "Entitlement reviews and audit support to stay compliant.",
+        pin: { dot: [52, 70], pill: [45, 83], side: "left" },
+      },
+      {
+        id: "cloud-saas",
+        name: "Cloud & SaaS",
+        description:
+          "Microsoft 365, Adobe and other cloud subscriptions, managed centrally.",
+        pin: { dot: [73, 20], pill: [83, 15], side: "right" },
+      },
+      {
+        id: "security-backup",
+        name: "Security & Backup",
+        description:
+          "Endpoint protection and backup software, licensed and renewed.",
+        pin: { dot: [85, 75], pill: [80, 86], side: "left" },
+      },
+    ],
+  },
 ];
 
 const stats = [
   { value: "300+", label: "Technology experts" },
-  { value: "7+", label: "Solution Verticals" },
+  { value: "8+", label: "Solution Verticals" },
   { value: "25+", label: "Years of Expertise" },
 ];
 
@@ -408,7 +452,22 @@ export default function ProductShowcase() {
                 {/* hotspots */}
                 {vertical.items.map((item) => {
                   const active = activeId === item.id;
-                  const left = item.pin.side === "left";
+
+                  /* Which way the label grows on desktop (as authored)... */
+                  const desktopLeft = item.pin.side === "left";
+                  /* ...and on phones, where the stage is tiny: flip labels
+                     inward so they never run off the image. */
+                  const px = item.pin.pill[0];
+                  const mobileLeft =
+                    px >= 58 ? true : px <= 38 ? false : desktopLeft;
+                  const shift =
+                    (mobileLeft ? "-translate-x-full" : "") +
+                    (desktopLeft !== mobileLeft
+                      ? desktopLeft
+                        ? " sm:-translate-x-full"
+                        : " sm:translate-x-0"
+                      : "");
+
                   return (
                     <div key={item.id}>
                       {/* one dot per point */}
@@ -435,21 +494,21 @@ export default function ProductShowcase() {
                           left: `${item.pin.pill[0]}%`,
                           top: `${item.pin.pill[1]}%`,
                         }}
-                        className={`absolute z-10 flex -translate-y-1/2 items-center gap-1.5 rounded-full border bg-[#06161d]/85 p-0.5 pr-2.5 text-white backdrop-blur-md transition duration-300 sm:gap-3 sm:p-1 sm:pr-5 ${
-                          left ? "-translate-x-full" : ""
+                        className={`absolute z-10 flex -translate-y-1/2 items-center gap-1.5 rounded-full border bg-[#06161d]/85 p-0.5 pr-2.5 text-white backdrop-blur-md transition duration-300 xl:gap-3 xl:p-1 xl:pr-5 ${
+                          shift
                         } ${
                           active
                             ? "border-[#25D9C7] shadow-[0_0_24px_rgba(37,217,199,0.45)]"
                             : "border-white/15 hover:border-[#25D9C7]/70"
                         }`}
                       >
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-[#bfe9ff] to-[#29B9F2] text-[#04202b] shadow-[0_0_12px_rgba(41,185,242,0.8)] sm:h-7 sm:w-7">
+                        <span className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#bfe9ff] to-[#29B9F2] text-[#04202b] shadow-[0_0_12px_rgba(41,185,242,0.8)] xl:h-7 xl:w-7">
                           <Plus
-                            className="h-3 w-3 sm:h-4 sm:w-4"
+                            className="h-2 w-2 xl:h-4 xl:w-4"
                             strokeWidth={3}
                           />
                         </span>
-                        <span className="whitespace-nowrap text-[10px] font-medium sm:text-sm">
+                        <span className="whitespace-nowrap text-[7px] font-medium md:text-xs xl:text-sm">
                           {item.name}
                         </span>
                       </div>
@@ -486,9 +545,10 @@ export default function ProductShowcase() {
                 Explore our integrated solutions.
               </p>
 
-              <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+              {/* 3 equal columns on xl so the stats can never wrap unpredictably */}
+              <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 xl:grid xl:grid-cols-3 xl:gap-x-3">
                 {stats.map((s) => (
-                  <div key={s.label}>
+                  <div key={s.label} className="min-w-0">
                     <p className="text-2xl font-semibold text-[#25D9C7] xl:text-[clamp(1.3rem,1.7vw,2rem)]">
                       {s.value}
                     </p>
@@ -500,7 +560,8 @@ export default function ProductShowcase() {
               </div>
             </div>
 
-            {/* Vertical menu */}
+            {/* Vertical menu: on xl the row height scales with the screen so
+                all 8 rows always fit inside the card without overlapping */}
             <nav
               aria-label="Solution verticals"
               className="pointer-events-auto rounded-2xl border border-[#25D9C7]/20 bg-[#06141a]/85 p-2.5 backdrop-blur-md xl:w-[95%]"
@@ -517,21 +578,21 @@ export default function ProductShowcase() {
                     style={
                       selected ? { backgroundImage: BRAND_GRADIENT } : undefined
                     }
-                    className={`flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left text-sm transition duration-300 xl:text-[clamp(0.75rem,0.8vw,0.95rem)] ${
+                    className={`flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left text-sm transition duration-300 xl:h-[clamp(2rem,2.7vw,2.9rem)] xl:py-0 xl:text-[clamp(0.75rem,0.8vw,0.95rem)] ${
                       selected
                         ? "font-semibold text-black"
                         : "text-white/70 hover:bg-white/5 hover:text-white"
                     }`}
                   >
                     <span
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg xl:aspect-square xl:h-[82%] xl:w-auto ${
                         selected ? "" : "bg-white/5 text-white/80"
                       }`}
                     >
-                      <Icon className="h-5 w-5" />
+                      <Icon className="h-5 w-5 xl:h-[55%] xl:w-[55%]" />
                     </span>
                     <span className="flex-1">{v.label}</span>
-                    {selected && <ArrowRight className="h-4 w-4" />}
+                    {selected && <ArrowRight className="h-4 w-4 shrink-0" />}
                   </Link>
                 );
               })}
@@ -568,7 +629,7 @@ export default function ProductShowcase() {
                     <div
                       key={item.id}
                       onMouseEnter={() => setActiveId(item.id)}
-                      className={`flex flex-col rounded-xl border p-3 transition duration-300 ${
+                      className={`flex min-w-0 flex-col rounded-xl border p-3 transition duration-300 ${
                         active
                           ? "border-[#25D9C7] bg-gradient-to-b from-[#25D9C7]/15 to-transparent shadow-[0_0_22px_rgba(37,217,199,0.25)]"
                           : "border-white/10 bg-white/[0.03] hover:border-white/25"

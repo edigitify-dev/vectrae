@@ -51,7 +51,7 @@ export default function CareersOpenings({ jobs }: { jobs: JobOpening[] }) {
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/55">
             Don&apos;t see the right fit?{" "}
             <a
-              href="mailto:enquiry@vectrae.com"
+              href="mailto:hr@vectrae.com"
               className="text-[#29B9F2] underline-offset-4 hover:underline"
             >
               Email us anyway

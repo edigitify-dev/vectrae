@@ -1,48 +1,27 @@
 "use client";
 import { splitLeadership, type LeadershipProfile } from "@/data/leadership";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
 type Leader = LeadershipProfile;
 
-/* Carousel tuning */
-const SLIDE_DURATION = 0.6; // seconds for the slide animation
-const GAP = 20; // px gap between cards
-const SWIPE_THRESHOLD = 50; // px of touch movement to count as a swipe
-
 /* ============================================================
-   TEAM CARD (used inside the carousel)
+   TEAM CARD (used inside the grid)
 ============================================================ */
-function TeamCard({
-  leader,
-  index,
-  width,
-  hidden = false,
-}: {
-  leader: Leader;
-  index: number;
-  width: number;
-  hidden?: boolean;
-}) {
+function TeamCard({ leader, index }: { leader: Leader; index: number }) {
   return (
-    <article
-      aria-hidden={hidden || undefined}
-      style={{ width }}
-      className="group relative shrink-0 overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.025] transition-colors duration-500 hover:border-black/[0.15] hover:bg-black/[0.04]"
-    >
+    <article className="group relative h-full overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.025] transition-colors duration-500 hover:border-black/[0.15] hover:bg-black/[0.04]">
       {/* IMAGE AREA */}
       <div className="relative aspect-[4/4.6] overflow-hidden bg-[#071014]">
         {leader.imageUrl ? (
           <Image
             src={leader.imageUrl}
-            alt={hidden ? "" : leader.name}
+            alt={leader.name}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 1024px) 50vw, 33vw"
             unoptimized
             className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
           />
@@ -68,32 +47,43 @@ function TeamCard({
 
         <div className="absolute inset-0 bg-linear-to-t from-black via-white/10 to-transparent" />
 
-        <div className="absolute left-5 right-5 top-5 flex items-center justify-between">
-          <span className="rounded-full border border-white/10 bg-white/20 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-white/40 backdrop-blur-md">
+        {/* <div className="absolute left-2.5 right-2.5 top-2.5 flex items-center justify-between sm:left-5 sm:right-5 sm:top-5">
+          <span className="rounded-full border border-white/10 bg-white/20 px-2 py-1 text-[7px] font-semibold uppercase tracking-[0.14em] text-white/40 backdrop-blur-md sm:px-3 sm:py-1.5 sm:text-[9px] sm:tracking-[0.18em]">
             Leadership
           </span>
-        </div>
+        </div> */}
       </div>
 
       {/* CONTENT */}
-      <div className="relative p-6 sm:p-7">
-        <h3 className="text-xl font-semibold tracking-[-0.025em] text-black sm:text-2xl">
+      <div className="relative p-3.5 sm:p-7">
+        <h3 className="text-sm font-semibold leading-tight tracking-[-0.025em] text-black sm:text-2xl">
           {leader.name}
         </h3>
 
         <p
-          className="mt-2 bg-clip-text text-xs font-semibold uppercase tracking-[0.12em] text-transparent sm:text-sm"
+          className="mt-1.5 bg-clip-text text-[9px] font-semibold uppercase leading-snug tracking-[0.08em] text-transparent sm:mt-2 sm:text-sm sm:tracking-[0.12em]"
           style={{ backgroundImage: BRAND_GRADIENT }}
         >
           {leader.designation}
         </p>
 
-        {leader.bio && <p className="mt-4 text-sm leading-6 text-black/40">{leader.bio}</p>}
-        {leader.linkedinUrl && <a href={leader.linkedinUrl} target="_blank" rel="noopener noreferrer"
-          tabIndex={hidden ? -1 : undefined} aria-label={`${leader.name} LinkedIn profile`}
-          className="mt-5 inline-flex items-center gap-2 text-sm text-[#1685b2] hover:underline">
-          <FaLinkedinIn className="h-4 w-4" aria-hidden /> LinkedIn
-        </a>}
+        {leader.bio && (
+          <p className="mt-2.5 text-[11px] leading-4 text-black/40 sm:mt-4 sm:text-sm sm:leading-6">
+            {leader.bio}
+          </p>
+        )}
+        {leader.linkedinUrl && (
+          <a
+            href={leader.linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${leader.name} LinkedIn profile`}
+            className="mt-3 inline-flex items-center gap-1.5 text-xs text-[#1685b2] hover:underline sm:mt-5 sm:gap-2 sm:text-sm"
+          >
+            <FaLinkedinIn className="h-3.5 w-3.5 sm:h-4 sm:w-4" aria-hidden />{" "}
+            LinkedIn
+          </a>
+        )}
 
         <div
           className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
@@ -105,130 +95,26 @@ function TeamCard({
 }
 
 /* ============================================================
-   TEAM CAROUSEL (manual: left / right buttons + touch swipe)
+   TEAM GRID (all members visible at once)
 ============================================================ */
-function TeamCarousel({ team }: { team: Leader[] }) {
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number | null>(null);
-
-  const [visible, setVisible] = useState(1);
-  const [cardW, setCardW] = useState(0);
-  const [index, setIndex] = useState(0);
-
-  const count = team.length;
-
-  // Furthest position we can slide to without showing empty space
-  const maxIndex = Math.max(0, count - visible);
-  const canSlide = maxIndex > 0;
-
-  // Keeps the position valid if the screen is resized
-  const current = Math.min(index, maxIndex);
-
-  /* Measure container -> cards per view + card width */
-  useEffect(() => {
-    const el = viewportRef.current;
-    if (!el) return;
-
-    const measure = () => {
-      const w = el.clientWidth;
-      const v = w < 560 ? 1 : w < 900 ? 2 : 3;
-      setVisible(v);
-      setCardW((w - GAP * (v - 1)) / v);
-    };
-
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  const next = () => setIndex(Math.min(current + 1, maxIndex));
-  const prev = () => setIndex(Math.max(current - 1, 0));
-
-  /* Touch swipe */
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current !== null) {
-      const delta = e.changedTouches[0].clientX - touchStartX.current;
-      if (delta < -SWIPE_THRESHOLD) next();
-      else if (delta > SWIPE_THRESHOLD) prev();
-    }
-    touchStartX.current = null;
-  };
-
-  const atStart = current === 0;
-  const atEnd = current >= maxIndex;
-
-  const btnClass =
-    "flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-black/60 transition-all duration-300 hover:border-[#29B9F2]/50 hover:bg-[#29B9F2]/10 hover:text-[#29B9F2] disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-black/10 disabled:hover:bg-white disabled:hover:text-black/60 sm:h-12 sm:w-12";
-
+function TeamGrid({ team }: { team: Leader[] }) {
   return (
-    <div>
-      <div
-        ref={viewportRef}
-        className="overflow-hidden"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
+    <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+      {team.map((leader, i) => (
         <motion.div
-          className="flex"
-          style={{ gap: GAP }}
-          animate={{ x: -current * (cardW + GAP) }}
-          transition={{ duration: SLIDE_DURATION, ease: [0.16, 1, 0.3, 1] }}
+          key={leader.id}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{
+            duration: 0.6,
+            delay: (i % 3) * 0.08,
+            ease: [0.16, 1, 0.3, 1],
+          }}
         >
-          {team.map((leader, i) => (
-            <TeamCard key={leader.id} leader={leader} index={i} width={cardW || 300} />
-          ))}
+          <TeamCard leader={leader} index={i} />
         </motion.div>
-      </div>
-
-      {/* Dots (left) + arrow buttons (right) */}
-      {canSlide && (
-        <div className="mt-8 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            {Array.from({ length: maxIndex + 1 }, (_, i) => (
-              <button
-                key={i}
-                type="button"
-                aria-label={`Go to slide ${i + 1}`}
-                onClick={() => setIndex(i)}
-                className="group flex h-4 items-center"
-              >
-                <span
-                  className={`block h-1.5 rounded-full transition-all duration-500 ${
-                    i === current
-                      ? "w-8 bg-[#29B9F2]"
-                      : "w-1.5 bg-black/15 group-hover:bg-black/30"
-                  }`}
-                />
-              </button>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              aria-label="Previous leaders"
-              onClick={prev}
-              disabled={atStart}
-              className={btnClass}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              aria-label="Next leaders"
-              onClick={next}
-              disabled={atEnd}
-              className={btnClass}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-      )}
+      ))}
     </div>
   );
 }
@@ -236,7 +122,11 @@ function TeamCarousel({ team }: { team: Leader[] }) {
 /* ============================================================
    MAIN SECTION
 ============================================================ */
-export default function AboutLeadershipClient({ members }: { members: Leader[] }) {
+export default function AboutLeadershipClient({
+  members,
+}: {
+  members: Leader[];
+}) {
   const { featured: founder, team } = splitLeadership(members);
   if (members.length === 0) return null;
   return (
@@ -323,100 +213,110 @@ export default function AboutLeadershipClient({ members }: { members: Leader[] }
             FEATURED FOUNDER CARD  (30% image / 70% content)
         ====================================================== */}
 
-        {founder && <motion.article
-          initial={{ opacity: 0, y: 45 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="group relative mt-14 grid w-full overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.025] transition-colors duration-500 hover:border-black/[0.15] hover:bg-black/[0.04] sm:mt-20 lg:mt-24 lg:grid-cols-[30%_70%]"
-        >
-          {/* Image (left) */}
-          <div className="relative aspect-[4/4.6] overflow-hidden bg-[#071014] max-lg:max-h-[520px] max-lg:w-full lg:aspect-auto lg:min-h-[460px]">
-            {founder.imageUrl ? (
-              <Image
-                src={founder.imageUrl}
-                alt={founder.name}
-                fill
-                unoptimized
-                sizes="(max-width: 1024px) 100vw, 30vw"
-                className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute h-64 w-64 rounded-full border border-white/[0.05]" />
-                <div className="absolute h-44 w-44 rounded-full border border-dashed border-white/[0.06]" />
-                <div className="absolute h-28 w-28 rounded-full border border-[#29B9F2]/10 bg-[#29B9F2]/[0.025]" />
+        {founder && (
+          <motion.article
+            initial={{ opacity: 0, y: 45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+            className="group relative mt-14 grid w-full overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.025] transition-colors duration-500 hover:border-black/[0.15] hover:bg-black/[0.04] sm:mt-20 lg:mt-24 lg:grid-cols-[30%_70%]"
+          >
+            {/* Image (left) */}
+            <div className="relative aspect-[4/4.6] overflow-hidden bg-[#071014] max-lg:max-h-[520px] max-lg:w-full lg:aspect-auto lg:min-h-[460px]">
+              {founder.imageUrl ? (
+                <Image
+                  src={founder.imageUrl}
+                  alt={founder.name}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 1024px) 100vw, 30vw"
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="absolute h-64 w-64 rounded-full border border-white/[0.05]" />
+                  <div className="absolute h-44 w-44 rounded-full border border-dashed border-white/[0.06]" />
+                  <div className="absolute h-28 w-28 rounded-full border border-[#29B9F2]/10 bg-[#29B9F2]/[0.025]" />
+                </div>
+              )}
+
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
+            </div>
+
+            {/* Content (right) */}
+            <div className="relative flex flex-col justify-between p-7 sm:p-10 lg:p-14">
+              <div>
+                <div className="flex items-center justify-end gap-4">
+                  <span className="rounded-full border border-black/10 bg-black/[0.04] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-black/40">
+                    Featured leader
+                  </span>
+                </div>
+
+                <h3 className="mt-8 text-3xl font-semibold tracking-[-0.03em] text-black sm:text-4xl lg:text-5xl">
+                  {founder.name}
+                </h3>
+
+                <p
+                  className="mt-3 bg-clip-text text-xs font-semibold uppercase tracking-[0.14em] text-transparent sm:text-sm"
+                  style={{ backgroundImage: BRAND_GRADIENT }}
+                >
+                  {founder.designation}
+                </p>
+
+                <p className="mt-6 max-w-2xl text-sm leading-7 text-black/45 sm:mt-8 sm:text-base sm:leading-8">
+                  {founder.bio}
+                </p>
+                {founder.linkedinUrl && (
+                  <a
+                    href={founder.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 text-sm text-[#1685b2] hover:underline"
+                  >
+                    <FaLinkedinIn className="h-4 w-4" aria-hidden /> LinkedIn
+                  </a>
+                )}
               </div>
-            )}
 
-            <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
-          </div>
-
-          {/* Content (right) */}
-          <div className="relative flex flex-col justify-between p-7 sm:p-10 lg:p-14">
-            <div>
-              <div className="flex items-center justify-end gap-4">
-                <span className="rounded-full border border-black/10 bg-black/[0.04] px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-black/40">
-                  Featured leader
+              <div className="mt-10 flex items-center justify-between border-t border-black/[0.07] pt-5">
+                <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-black/20">
+                  Vectrae
                 </span>
               </div>
 
-              <h3 className="mt-8 text-3xl font-semibold tracking-[-0.03em] text-black sm:text-4xl lg:text-5xl">
-                {founder.name}
-              </h3>
-
-              <p
-                className="mt-3 bg-clip-text text-xs font-semibold uppercase tracking-[0.14em] text-transparent sm:text-sm"
+              <div
+                className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
                 style={{ backgroundImage: BRAND_GRADIENT }}
-              >
-                {founder.designation}
-              </p>
-
-              <p className="mt-6 max-w-2xl text-sm leading-7 text-black/45 sm:mt-8 sm:text-base sm:leading-8">
-                {founder.bio}
-              </p>
-              {founder.linkedinUrl && <a href={founder.linkedinUrl} target="_blank" rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 text-sm text-[#1685b2] hover:underline">
-                <FaLinkedinIn className="h-4 w-4" aria-hidden /> LinkedIn
-              </a>}
+              />
             </div>
+          </motion.article>
+        )}
 
-            <div className="mt-10 flex items-center justify-between border-t border-black/[0.07] pt-5">
-              <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-black/20">
-                Vectrae
+        {/* ======================================================
+            TEAM GRID (all members on one page)
+        ====================================================== */}
+
+        {team.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 45 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-14 sm:mt-16"
+          >
+            <div className="mb-8 flex items-center gap-3">
+              <span
+                className="h-px w-10"
+                style={{ backgroundImage: BRAND_GRADIENT }}
+              />
+              <span className="text-xs font-semibold uppercase tracking-[0.3em] text-black/40">
+                Our Team
               </span>
             </div>
 
-            <div
-              className="absolute bottom-0 left-0 h-px w-0 transition-all duration-700 group-hover:w-full"
-              style={{ backgroundImage: BRAND_GRADIENT }}
-            />
-          </div>
-        </motion.article>}
-
-        {/* ======================================================
-            TEAM CAROUSEL (left / right buttons)
-        ====================================================== */}
-
-        {team.length > 0 && <motion.div
-          initial={{ opacity: 0, y: 45 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-14 sm:mt-16"
-        >
-          <div className="mb-8 flex items-center gap-3">
-            <span
-              className="h-px w-10"
-              style={{ backgroundImage: BRAND_GRADIENT }}
-            />
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-black/40">
-              Our Team
-            </span>
-          </div>
-
-          <TeamCarousel team={team} />
-        </motion.div>}
+            <TeamGrid team={team} />
+          </motion.div>
+        )}
       </div>
 
       {/* SECTION DIVIDER */}

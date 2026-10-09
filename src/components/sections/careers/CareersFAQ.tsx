@@ -136,7 +136,7 @@ export default function CareersFAQ() {
             Have a question we didn&apos;t cover?
           </p>
           <a
-            href="mailto:enquiry@vectrae.com"
+            href="mailto:hr@vectrae.com"
             className="group inline-flex items-center gap-4 rounded-full border border-white/10 bg-white/5 py-1.5 pl-6 pr-1.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/20 hover:bg-white/10"
           >
             Email Our Talent Team

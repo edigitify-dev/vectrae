@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -214,6 +215,28 @@ export const certifications = pgTable(
   (table) => [index("certifications_sort_order_idx").on(table.sortOrder)],
 );
 
+export const leadershipMembers = pgTable(
+  "leadership_members",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    name: text("name").notNull(),
+    designation: text("designation").notNull(),
+    bio: text("bio").notNull().default(""),
+    imageUrl: text("image_url").notNull().default(""),
+    linkedinUrl: text("linkedin_url").notNull().default(""),
+    isFeatured: boolean("is_featured").notNull().default(false),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("leadership_members_sort_order_idx").on(table.sortOrder),
+    uniqueIndex("leadership_members_one_featured_idx").on(table.isFeatured)
+      .where(sql`${table.isFeatured} = true`),
+  ],
+);
+
+export type LeadershipMember = typeof leadershipMembers.$inferSelect;
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type ContactEnquiry = typeof contactEnquiries.$inferSelect;
 export type JobApplication = typeof jobApplications.$inferSelect;

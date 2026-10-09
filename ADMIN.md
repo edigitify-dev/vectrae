@@ -9,6 +9,7 @@ An internal console at `/admin` for what the site collects and publishes:
 | Applications | `/admin/applications` | Career applications with downloadable CVs, hiring stage, interview notes |
 | Careers | `/admin/careers` | Job openings CMS: write, edit, publish, unpublish, delete. Publishing pushes straight to the careers page |
 | Blog | `/admin/blog` | Full CMS: write, edit, publish, unpublish, delete. Publishing pushes straight to the live site |
+| About | `/admin/about` | Gallery, certificates, and leadership. Add/edit members, upload or change photos, set display order, and choose the featured leader |
 | Settings | `/admin/settings` | Your account, password change, and (for owners) the list of admin users |
 
 ## Architecture
@@ -22,6 +23,10 @@ An internal console at `/admin` for what the site collects and publishes:
 - **Resumes** — a private Vercel Blob store (`vectrae-resumes`), separate from images because one Blob store cannot mix public and private blobs. Never publicly addressable — verified to return `403` to anonymous fetches. Read back only through [`/api/admin/resume`](src/app/api/admin/resume/route.ts), which re-checks the session. Uses `BLOB_RESUMES_READ_WRITE_TOKEN`.
 
 ## Roles
+
+Leadership management is under **About page → Leadership**. Saved changes appear on the public `/about` page. Photos are public R2 objects; removing or replacing a photo changes the profile without deleting the stored object.
+
+For a new database, run `npm run db:setup-leadership` after the normal database setup. This applies the additive migration and imports the seven existing profiles only when the leadership table is empty. Existing members are preserved when the command is rerun.
 
 | Role | Can do |
 | --- | --- |

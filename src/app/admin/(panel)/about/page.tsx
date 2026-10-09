@@ -1,6 +1,6 @@
-import { asc, eq } from "drizzle-orm";
+import { asc } from "drizzle-orm";
 import { getDb, withRetry } from "@/db";
-import { certifications, galleryCategories, galleryImages } from "@/db/schema";
+import { certifications, galleryCategories, galleryImages, leadershipMembers } from "@/db/schema";
 import PageHeader from "@/components/admin/PageHeader";
 import AboutPageClient from "@/components/admin/AboutPageClient";
 import { getCurrentAdmin, requireAdmin } from "@/lib/admin/auth";
@@ -15,7 +15,7 @@ export default async function AdminAboutPage({ searchParams }: Props) {
   const readOnly = admin?.role === "editor";
 
   const { tab } = await searchParams;
-  const activeTab = tab === "certifications" ? "certifications" : "gallery";
+  const activeTab = tab === "leadership" ? "leadership" : tab === "certifications" ? "certifications" : "gallery";
 
   let categoriesWithImages: ({
     id: string;
@@ -36,15 +36,18 @@ export default async function AdminAboutPage({ searchParams }: Props) {
   })[] = [];
 
   let certs: (typeof certifications.$inferSelect)[] = [];
+  let leaders: (typeof leadershipMembers.$inferSelect)[] = [];
+  let loadError = false;
 
   try {
     const db = getDb();
 
-    const [cats, imgs, certsData] = await withRetry(() =>
+    const [cats, imgs, certsData, leadersData] = await withRetry(() =>
       db.batch([
         db.select().from(galleryCategories).orderBy(asc(galleryCategories.sortOrder), asc(galleryCategories.createdAt)),
         db.select().from(galleryImages).orderBy(asc(galleryImages.sortOrder), asc(galleryImages.createdAt)),
         db.select().from(certifications).orderBy(asc(certifications.sortOrder), asc(certifications.createdAt)),
+        db.select().from(leadershipMembers).orderBy(asc(leadershipMembers.sortOrder), asc(leadershipMembers.createdAt)),
       ]),
     );
 
@@ -55,8 +58,10 @@ export default async function AdminAboutPage({ searchParams }: Props) {
     }));
 
     certs = certsData;
+    leaders = leadersData;
   } catch (error) {
     console.error("[admin/about] Failed to load data:", error);
+    loadError = true;
   }
 
   return (
@@ -64,12 +69,14 @@ export default async function AdminAboutPage({ searchParams }: Props) {
       <PageHeader
         eyebrow="Content"
         title="About page"
-        description="Manage the gallery categories, images, and certifications shown on the About page."
+        description="Manage the gallery, certifications, and leadership shown on the About page."
       />
 
+      {loadError && <p role="alert" className="text-sm text-red-400">Couldn&apos;t load About content. Please refresh the page.</p>}
       <AboutPageClient
         categories={categoriesWithImages}
         certifications={certs}
+        leadership={leaders}
         readOnly={readOnly ?? false}
         tab={activeTab}
       />

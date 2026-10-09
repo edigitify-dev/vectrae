@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef, useState, useTransition, useActionState } from "react";
+import { useState, useTransition, useActionState } from "react";
 import Image from "next/image";
 import GalleryUploadModal from "./GalleryUploadModal";
+import ImageUploadButton from "./ImageUploadButton";
+import LeadershipTab from "./LeadershipTab";
 import {
   Award,
   Edit2,
@@ -32,7 +34,7 @@ import {
   SURFACE,
 } from "@/components/admin/tokens";
 import { BRAND_GRADIENT } from "@/lib/brand";
-import type { Certification, GalleryCategory, GalleryImage } from "@/db/schema";
+import type { Certification, GalleryCategory, GalleryImage, LeadershipMember } from "@/db/schema";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Types
@@ -43,8 +45,9 @@ type CategoryWithImages = GalleryCategory & { images: GalleryImage[] };
 type Props = {
   categories: CategoryWithImages[];
   certifications: Certification[];
+  leadership: LeadershipMember[];
   readOnly: boolean;
-  tab: "gallery" | "certifications";
+  tab: "gallery" | "certifications" | "leadership";
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -64,76 +67,6 @@ function SuccessBanner({ msg }: { msg: string }) {
     <p className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
       {msg}
     </p>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Image upload button (calls the API route, returns a URL)
-// ─────────────────────────────────────────────────────────────────────────────
-
-function ImageUploadButton({
-  onUploaded,
-  endpoint,
-  accept = "image/jpeg,image/png,image/webp,image/avif",
-  label = "Upload image",
-}: {
-  onUploaded: (url: string) => void;
-  endpoint: string;
-  accept?: string;
-  label?: string;
-}) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function handleFile(file: File) {
-    setError(null);
-    setUploading(true);
-    const fd = new FormData();
-    fd.append("file", file);
-    try {
-      const res = await fetch(endpoint, { method: "POST", body: fd });
-      const json = await res.json();
-      if (!res.ok || json.error) {
-        setError(json.error ?? "Upload failed.");
-      } else {
-        onUploaded(json.url as string);
-      }
-    } catch {
-      setError("Network error — please try again.");
-    } finally {
-      setUploading(false);
-    }
-  }
-
-  return (
-    <div className="space-y-1.5">
-      <button
-        type="button"
-        onClick={() => inputRef.current?.click()}
-        disabled={uploading}
-        className={`${BUTTON_GHOST} text-xs`}
-      >
-        {uploading ? (
-          <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
-        ) : (
-          <ImagePlus className="h-3.5 w-3.5" aria-hidden />
-        )}
-        {uploading ? "Uploading…" : label}
-      </button>
-      <input
-        ref={inputRef}
-        type="file"
-        accept={accept}
-        className="sr-only"
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) handleFile(f);
-          e.target.value = "";
-        }}
-      />
-      {error && <p className="text-xs text-red-400">{error}</p>}
-    </div>
   );
 }
 
@@ -750,33 +683,35 @@ function CertificationsTab({
 // Root client component
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function AboutPageClient({ categories, certifications, readOnly, tab }: Props) {
-  const [activeTab, setActiveTab] = useState<"gallery" | "certifications">(tab);
+export default function AboutPageClient({ categories, certifications, leadership, readOnly, tab }: Props) {
+  const [activeTab, setActiveTab] = useState<"gallery" | "certifications" | "leadership">(tab);
 
   return (
     <div className="space-y-7">
       {/* Tab bar */}
       <div className="flex gap-1 rounded-xl border border-white/10 bg-white/[0.025] p-1">
-        {(["gallery", "certifications"] as const).map((t) => (
+        {(["gallery", "certifications", "leadership"] as const).map((t) => (
           <button
             key={t}
             type="button"
             onClick={() => setActiveTab(t)}
-            className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold capitalize transition-all duration-200 ${
+            className={`flex-1 rounded-lg px-2 py-2.5 text-xs font-semibold capitalize transition-all duration-200 sm:px-4 sm:text-sm ${
               activeTab === t
                 ? "bg-white/10 text-white shadow-sm"
                 : "text-white/45 hover:text-white/75"
             }`}
           >
-            {t === "gallery" ? "Gallery" : "Certifications"}
+            {t === "gallery" ? "Gallery" : t === "certifications" ? "Certifications" : "Leadership"}
           </button>
         ))}
       </div>
 
       {activeTab === "gallery" ? (
         <GalleryTab categories={categories} readOnly={readOnly} />
-      ) : (
+      ) : activeTab === "certifications" ? (
         <CertificationsTab certifications={certifications} readOnly={readOnly} />
+      ) : (
+        <LeadershipTab members={leadership} readOnly={readOnly} />
       )}
     </div>
   );

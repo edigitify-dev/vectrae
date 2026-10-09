@@ -15,6 +15,13 @@
       "when": 1791457429095,
       "tag": "0001_lethal_songbird",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791519141349,
+      "tag": "0002_leadership",
+      "breakpoints": true
     }
   ]
 }

@@ -79,7 +79,7 @@ const team: Leader[] = [
     name: "Sagar Ahuja",
     designation: "Business Head, Pune",
     bio: "Leadership profile content will be provided by Vectrae HR/Marketing. This space is reserved for the leader's professional background and expertise.",
-    image: r2Asset("/images/team/sagar.png"),
+    image: r2Asset("/images/team/sagarAhuja.png"),
   },
 ];
 

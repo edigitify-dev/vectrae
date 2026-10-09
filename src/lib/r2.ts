@@ -7,6 +7,7 @@ const EXTENSIONS: Record<string, string> = {
   "image/png": "png",
   "image/webp": "webp",
   "image/avif": "avif",
+  "application/pdf": "pdf",
 };
 
 let cachedClient: S3Client | null = null;

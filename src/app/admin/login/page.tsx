@@ -14,9 +14,8 @@ type Props = {
 export default async function AdminLoginPage({ searchParams }: Props) {
   const { next, changed } = await searchParams;
 
-  // Database-verified, unlike the proxy's cheap signature-only check — this is
-  // what safely redirects an already-signed-in visitor away from the login
-  // page without risking a loop against a stale-but-signature-valid cookie.
+  // Verify the session in the database before redirecting; the proxy only
+  // checks token format, so expired or revoked cookies can still reach here.
   const admin = await getCurrentAdmin();
 
   if (admin) {

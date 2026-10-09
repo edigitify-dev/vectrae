@@ -14,7 +14,7 @@ An internal console at `/admin` for what the site collects and publishes:
 ## Architecture
 
 - **Database** — Neon Postgres via Drizzle ORM. Schema in [src/db/schema.ts](src/db/schema.ts), client in [src/db/index.ts](src/db/index.ts).
-- **Auth** — **password only, no email/username.** The submitted password is checked against every row in `admin_users` (scrypt); on a match a signed JWT goes into an httpOnly cookie for an 8-hour session.
+- **Auth** — **password only, no email/username.** The submitted password is checked against every row in `admin_users` (scrypt); on a match a random token goes into an httpOnly cookie for an 8-hour session. Only its SHA-256 digest is stored in `admin_sessions`. No separate session signing secret is needed. Logging out deletes the database session.
   - [src/proxy.ts](src/proxy.ts) bounces signed-out traffic away from `/admin` cheaply.
   - **The real boundary** is [`requireAdmin()`](src/lib/admin/auth.ts) in the panel layout and every mutation: it re-checks the session against the database on each request, so a deleted user or a bumped `session_version` loses access immediately.
   - `admin_users.email` still exists as the row's identifier (used by `npm run admin:create` and shown in Settings) — it is just never asked for at login.
@@ -45,7 +45,7 @@ An internal console at `/admin` for what the site collects and publishes:
    vercel env pull .env.local --yes
    ```
 
-   You should now have `DATABASE_URL`, `ADMIN_SESSION_SECRET`, `BLOB_READ_WRITE_TOKEN`, and `BLOB_RESUMES_READ_WRITE_TOKEN`.
+   You should now have `DATABASE_URL`, `BLOB_READ_WRITE_TOKEN`, and `BLOB_RESUMES_READ_WRITE_TOKEN`.
 
 3. **Create the tables:**
 

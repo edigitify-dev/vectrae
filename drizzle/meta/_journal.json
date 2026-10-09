@@ -8,6 +8,13 @@
       "when": 1788419159954,
       "tag": "0000_abandoned_mercury",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791457429095,
+      "tag": "0001_lethal_songbird",
+      "breakpoints": true
     }
   ]
 }

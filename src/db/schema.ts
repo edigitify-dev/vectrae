@@ -38,6 +38,18 @@ export const adminUsers = pgTable(
   (table) => [uniqueIndex("admin_users_email_key").on(table.email)],
 );
 
+export const adminSessions = pgTable(
+  "admin_sessions",
+  {
+    // Store a SHA-256 digest, never the bearer token sent to the browser.
+    tokenHash: text("token_hash").primaryKey(),
+    userId: uuid("user_id").notNull().references(() => adminUsers.id, { onDelete: "cascade" }),
+    sessionVersion: integer("session_version").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  },
+  (table) => [index("admin_sessions_expires_at_idx").on(table.expiresAt)],
+);
+
 export const contactEnquiries = pgTable(
   "contact_enquiries",
   {
@@ -153,8 +165,60 @@ export const jobOpenings = pgTable(
   ],
 );
 
+export const galleryCategories = pgTable(
+  "gallery_categories",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    name: text("name").notNull(),
+    slug: text("slug").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [uniqueIndex("gallery_categories_slug_key").on(table.slug)],
+);
+
+export const galleryImages = pgTable(
+  "gallery_images",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    categoryId: uuid("category_id").notNull().references(() => galleryCategories.id, { onDelete: "cascade" }),
+    url: text("url").notNull(),
+    alt: text("alt").notNull().default(""),
+    caption: text("caption").notNull().default(""),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    index("gallery_images_category_id_idx").on(table.categoryId),
+    index("gallery_images_sort_order_idx").on(table.sortOrder),
+  ],
+);
+
+export const certifications = pgTable(
+  "certifications",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    name: text("name").notNull(),
+    issuingOrg: text("issuing_org").notNull().default(""),
+    issueDate: text("issue_date").notNull().default(""),
+    description: text("description").notNull().default(""),
+    // R2 URL to the uploaded certificate image/PDF
+    fileUrl: text("file_url").notNull().default(""),
+    // Optional separate thumbnail image (if cert file is PDF)
+    thumbnailUrl: text("thumbnail_url").notNull().default(""),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("certifications_sort_order_idx").on(table.sortOrder)],
+);
+
 export type AdminUser = typeof adminUsers.$inferSelect;
 export type ContactEnquiry = typeof contactEnquiries.$inferSelect;
 export type JobApplication = typeof jobApplications.$inferSelect;
 export type BlogPostRow = typeof blogPosts.$inferSelect;
 export type JobOpeningRow = typeof jobOpenings.$inferSelect;
+export type GalleryCategory = typeof galleryCategories.$inferSelect;
+export type GalleryImage = typeof galleryImages.$inferSelect;
+export type Certification = typeof certifications.$inferSelect;

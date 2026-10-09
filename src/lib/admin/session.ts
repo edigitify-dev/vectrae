@@ -1,88 +1,78 @@
-import { SignJWT, jwtVerify, type JWTPayload } from "jose";
+import "server-only";
 
-export const SESSION_COOKIE = "vectrae_admin_session";
-export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 8; // 8 hours
+import { createHash, randomBytes } from "node:crypto";
+import { and, eq, gt, lte } from "drizzle-orm";
+import { getDb, withRetry } from "@/db";
+import { adminSessions, adminUsers } from "@/db/schema";
+import { isSessionToken, SESSION_MAX_AGE_SECONDS, type AdminRole } from "./session-cookie";
 
-export type AdminRole = "owner" | "admin" | "editor";
+export { SESSION_COOKIE, sessionCookieOptions, type AdminRole } from "./session-cookie";
 
 export type SessionPayload = {
   userId: string;
   email: string;
   name: string;
   role: AdminRole;
-  /** Mirrors `admin_users.session_version`, so tokens can be revoked. */
   sessionVersion: number;
 };
 
-const ISSUER = "vectrae-admin";
-
-function getSecret(): Uint8Array {
-  const secret = process.env.ADMIN_SESSION_SECRET;
-
-  if (!secret || secret.length < 32) {
-    throw new Error(
-      "ADMIN_SESSION_SECRET is missing or too short (needs >= 32 characters). Generate one with `openssl rand -base64 48`.",
-    );
-  }
-
-  return new TextEncoder().encode(secret);
+function tokenHash(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
 }
 
 export async function createSessionToken(payload: SessionPayload): Promise<string> {
-  return new SignJWT({
-    email: payload.email,
-    name: payload.name,
-    role: payload.role,
-    sv: payload.sessionVersion,
-  })
-    .setProtectedHeader({ alg: "HS256" })
-    .setSubject(payload.userId)
-    .setIssuer(ISSUER)
-    .setIssuedAt()
-    .setExpirationTime(`${SESSION_MAX_AGE_SECONDS}s`)
-    .sign(getSecret());
+  const token = randomBytes(32).toString("hex");
+  const now = new Date();
+
+  await withRetry(() => getDb().delete(adminSessions).where(lte(adminSessions.expiresAt, now)));
+  await withRetry(() => getDb().insert(adminSessions).values({
+    tokenHash: tokenHash(token),
+    userId: payload.userId,
+    sessionVersion: payload.sessionVersion,
+    expiresAt: new Date(now.getTime() + SESSION_MAX_AGE_SECONDS * 1000),
+  }));
+
+  return token;
 }
 
-/** Returns null for any token that is absent, malformed, expired, or unsigned by us. */
+/** Validate the random token, expiry, account and password version in one query. */
 export async function readSessionToken(token: string | undefined): Promise<SessionPayload | null> {
-  if (!token) {
+  if (!isSessionToken(token)) {
     return null;
   }
 
   try {
-    const { payload } = await jwtVerify(token, getSecret(), { issuer: ISSUER });
+    const [user] = await withRetry(() => getDb()
+      .select({
+        userId: adminUsers.id,
+        email: adminUsers.email,
+        name: adminUsers.name,
+        role: adminUsers.role,
+        sessionVersion: adminUsers.sessionVersion,
+      })
+      .from(adminSessions)
+      .innerJoin(adminUsers, eq(adminSessions.userId, adminUsers.id))
+      .where(and(
+        eq(adminSessions.tokenHash, tokenHash(token)),
+        gt(adminSessions.expiresAt, new Date()),
+        eq(adminSessions.sessionVersion, adminUsers.sessionVersion),
+      ))
+      .limit(1));
 
-    return toSessionPayload(payload);
-  } catch {
+    if (!user) {
+      return null;
+    }
+
+    const role = user.role === "owner" || user.role === "editor" ? user.role : "admin";
+    return { ...user, role };
+  } catch (error) {
+    console.error("[admin/session] Failed to load session:", error);
     return null;
   }
 }
 
-function toSessionPayload(payload: JWTPayload): SessionPayload | null {
-  const { sub, email, name, role, sv } = payload as JWTPayload & {
-    email?: unknown;
-    name?: unknown;
-    role?: unknown;
-    sv?: unknown;
-  };
-
-  if (
-    typeof sub !== "string" ||
-    typeof email !== "string" ||
-    typeof name !== "string" ||
-    typeof sv !== "number" ||
-    (role !== "owner" && role !== "admin" && role !== "editor")
-  ) {
-    return null;
+export async function deleteSessionToken(token: string | undefined): Promise<void> {
+  if (isSessionToken(token)) {
+    await withRetry(() => getDb().delete(adminSessions).where(eq(adminSessions.tokenHash, tokenHash(token))));
   }
-
-  return { userId: sub, email, name, role, sessionVersion: sv };
 }
-
-export const sessionCookieOptions = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  path: "/",
-  maxAge: SESSION_MAX_AGE_SECONDS,
-} as const;

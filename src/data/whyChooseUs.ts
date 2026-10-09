@@ -23,7 +23,7 @@ export const whyChooseUs = [
   },
   {
     title: "Enterprise-Grade Expertise",
-    description: "250+ certified professionals across all verticals.",
+    description: "300+ certified professionals across all verticals.",
     image: siteImages.products.motherboard,
   },
 ] as const;

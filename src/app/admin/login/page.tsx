@@ -1,3 +1,4 @@
+import { r2Asset } from "@/lib/site-images";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -36,7 +37,7 @@ export default async function AdminLoginPage({ searchParams }: Props) {
 
       <div className="relative w-full max-w-md">
         <Link href="/" className="inline-flex items-center gap-2">
-          <Image src="/logo.png" alt="Vectrae" width={112} height={28} className="h-7 w-auto" priority />
+          <Image src={r2Asset("/logo.png")} alt="Vectrae" width={112} height={28} className="h-7 w-auto" priority />
         </Link>
 
         <div className="mt-8 rounded-3xl border border-white/10 bg-white/[0.03] p-7 backdrop-blur-sm sm:p-9">

@@ -13,6 +13,8 @@ import { getPublishedPosts } from "@/lib/blog";
 import FootprintMap from "@/components/sections/FootprintMap";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
+import PartnersCategories from "@/components/sections/partners/PartnersCategories";
+import ProjectsShowcase from "@/components/sections/ProjectShowcase";
 
 export default async function Home() {
   const posts = await getPublishedPosts();
@@ -24,12 +26,14 @@ export default async function Home() {
       <ServicesOverview />
       <ProductShowcase />
       <FootprintMap />
+      <PartnersCategories />
       {/* <Workspace /> */}
       {/* <About /> */}
       <WhyChooseUs />
       <SampleAboutUs />
       {/* <Services /> */}
       <CoreValues />
+      <ProjectsShowcase />
       <Blog posts={posts} />
       <CTA />
       <Footer />

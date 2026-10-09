@@ -5,11 +5,13 @@ import { useRef, type MouseEvent, type ReactNode } from "react";
 type SpotlightCardProps = {
   children: ReactNode;
   className?: string;
+  onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 };
 
 export default function SpotlightCard({
   children,
   className = "",
+  onClick,
 }: SpotlightCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -25,6 +27,7 @@ export default function SpotlightCard({
     <div
       ref={ref}
       onMouseMove={handleMouseMove}
+      onClick={onClick}
       className={`group relative overflow-hidden ${className}`}
     >
       <div

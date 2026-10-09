@@ -24,7 +24,8 @@ export default function Blog({ posts }: { posts: BlogPost[] }) {
             Latest from Vectrae
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg">
-            Stay updated with the latest trends, technologies, and strategies driving modern enterprise IT infrastructure.
+            Stay updated with the latest trends, technologies, and strategies
+            driving modern enterprise IT infrastructure.
           </p>
         </div>
 
@@ -49,7 +50,7 @@ export default function Blog({ posts }: { posts: BlogPost[] }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   </div>
                 )}
-                
+
                 <div className="flex flex-1 flex-col justify-between p-6 sm:p-8">
                   <div>
                     <div className="flex items-center gap-3">
@@ -71,7 +72,7 @@ export default function Blog({ posts }: { posts: BlogPost[] }) {
                       </Link>
                     </h3>
                   </div>
-  
+
                   <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-6 text-xs font-medium text-white/50">
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-1.5">
@@ -90,7 +91,11 @@ export default function Blog({ posts }: { posts: BlogPost[] }) {
           ))}
         </div>
 
-        <div className="mt-16 flex justify-center" data-aos="fade-up" data-aos-delay="400">
+        <div
+          className="mt-16 flex justify-center"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
           <Link
             href="/blog"
             className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm font-semibold text-white transition duration-300 hover:border-white/20 hover:bg-white/[0.08]"

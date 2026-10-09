@@ -9,7 +9,7 @@ import { siteImages } from "@/lib/site-images";
 
 const metrics = [
   { label: "Enterprise Clients", value: "2,300+", icon: Building },
-  { label: "Technology Experts", value: "250+", icon: Users },
+  { label: "Technology Experts", value: "300+", icon: Users },
   { label: "Managed Support", value: "24/7", icon: Headset },
   { label: "Years of Experience", value: "25+", icon: MapPin },
 ];
@@ -101,7 +101,7 @@ export default function FootprintMap() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <Reveal>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#0f9ac9]">
+              <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#0f9ac9]">
                 National Coverage
               </p>
               <h2 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">

@@ -13,7 +13,7 @@ export default function ContactHero() {
 
       <div className="relative z-10 mx-auto max-w-3xl px-6 pb-20 pt-8 text-center sm:pb-28 sm:pt-14">
         <p
-          className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+          className="text-xl font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
           data-aos="fade-up"
         >
           Get In Touch
@@ -36,8 +36,8 @@ export default function ContactHero() {
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          Whether you need a quick quote or a complete technology transformation, our
-          experts are ready to help. We respond within 4 business hours.
+          Whether you need a quick quote or a complete technology
+          transformation, our experts are ready to help.
         </p>
 
         <div
@@ -46,11 +46,11 @@ export default function ContactHero() {
           data-aos-delay="300"
         >
           <a
-            href="tel:+911140590964"
+            href="tel:+91-11-40590964-65"
             className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/30 hover:bg-white/10"
           >
             <Phone className="h-4 w-4 text-[#25D9C7]" />
-            +91-11-40590964
+            +91-11-40590964-65
           </a>
           <a
             href="mailto:enquiry@vectrae.com"
@@ -60,7 +60,7 @@ export default function ContactHero() {
             enquiry@vectrae.com
           </a>
           <a
-            href="https://wa.me/911140590964"
+            href="https://wa.me/+919205557448?text=Hello%20I%20want%20to%20know%20more"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/30 hover:bg-white/10"

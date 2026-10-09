@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -13,7 +14,7 @@ const headlineWords = ["Integrated", "Technology", "Solutions", "For"];
 
 const tickerItems = [
   "2,300+ Enterprises",
-  "250+ Technology Experts",
+  "300+ Technology Experts",
   "OEM Partnerships",
   "25+ Years of Experience",
   "PAN-India Delivery",
@@ -42,7 +43,7 @@ export default function Hero() {
       <header className="relative z-20 flex items-center justify-between border-b border-white/10 px-6 py-5 sm:px-10">
         <div className="flex items-center gap-3">
           <Image
-            src="/logo.png"
+            src={r2Asset("/logo.png")}
             alt="Vectrae"
             width={140}
             height={29}

@@ -21,9 +21,9 @@ export default async function CareersPage() {
 
   return (
     <>
-      <CareersHero />
-      <CareersCulture />
+      {/* <CareersHero /> */}
       <CareersOpenings jobs={jobs} />
+      <CareersCulture />
       <CareersFAQ />
       <Footer />
     </>

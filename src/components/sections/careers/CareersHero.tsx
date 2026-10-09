@@ -43,7 +43,7 @@ export default function CareersHero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 pb-16">
         <p
-          className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+          className="text-lg max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
           data-aos="fade-up"
         >
           Careers at Vectrae
@@ -80,7 +80,7 @@ export default function CareersHero() {
           transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 max-w-xl text-base leading-relaxed text-white/55 sm:text-lg"
         >
-          250+ certified experts deliver AV, Networking, Data Center, End
+          300+ certified experts deliver AV, Networking, Data Center, End
           Computing, and Power solutions to 2,300+ enterprises PAN-India. Come
           build it with us.
         </motion.p>

@@ -13,11 +13,10 @@ const R2_BASE = "https://pub-9e9d29d15e3c4dbfbded10ae4d8b9ebf.r2.dev/site";
 
 export const siteImages = {
   aboutBg: `${R2_BASE}/images/about-bg.webp`,
-  sampleAboutUs: `${R2_BASE}/images/sample_about_us.webp`,
   wcuSolutions: `${R2_BASE}/images/wcu/solutions.webp`,
   workspaceWallpaper: `${R2_BASE}/workspace-wallpaper.webp`,
   indiaMap: `${R2_BASE}/india-map.svg`,
-  indiaMapNetwork: "/map.png",
+  indiaMapNetwork: `${R2_BASE}/map.webp`,
   blog: {
     avTech: `${R2_BASE}/images/blog/av-tech.webp`,
     managedIt: `${R2_BASE}/images/blog/managed-it.webp`,
@@ -32,3 +31,6 @@ export const siteImages = {
     serverRam: `${R2_BASE}/images/products/server-ram.webp`,
   },
 } as const;
+
+export const r2Asset = (p: string) =>
+  `${R2_BASE}${(p.startsWith("/") ? p : `/${p}`).replace(/\.(png|jpe?g)$/i, ".webp")}`;

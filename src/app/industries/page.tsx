@@ -3,6 +3,7 @@ import IndustriesHero from "@/components/sections/industries/IndustriesHero";
 import IndustriesGrid from "@/components/sections/industries/IndustriesGrid";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
+import ServicesOverview from "@/components/sections/ServicesOverview";
 
 export const metadata: Metadata = {
   title: "Industries We Serve | Vectrae Enterprise Technology Solutions",
@@ -15,6 +16,7 @@ export default function IndustriesPage() {
     <>
       <IndustriesHero />
       <IndustriesGrid />
+      <ServicesOverview />
       <CTA />
       <Footer />
     </>

@@ -1,7 +1,15 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Check, Clock, Mail, MapPin, MessageCircle, Phone, Send } from "lucide-react";
+import {
+  Check,
+  Clock,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Send,
+} from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
 const COMPANY_SIZE_OPTIONS = [
@@ -95,14 +103,20 @@ export default function ContactFormSection() {
       const data = await res.json().catch(() => null);
 
       if (!res.ok) {
-        throw new Error(data?.error || "Something went wrong. Please try again.");
+        throw new Error(
+          data?.error || "Something went wrong. Please try again.",
+        );
       }
 
       setStatus("success");
       setForm(INITIAL_STATE);
     } catch (err) {
       setStatus("error");
-      setErrorMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.",
+      );
     }
   }
 
@@ -127,8 +141,8 @@ export default function ContactFormSection() {
                   Thanks, we&apos;ve got it.
                 </h3>
                 <p className="mt-3 max-w-sm text-sm leading-relaxed text-neutral-500">
-                  A Vectrae expert will reach out within 4 business hours. In the meantime, feel
-                  free to call or WhatsApp us directly.
+                  A Vectrae expert will reach out within 4 business hours. In
+                  the meantime, feel free to call or WhatsApp us directly.
                 </p>
                 <button
                   type="button"
@@ -242,7 +256,11 @@ export default function ContactFormSection() {
                               ? "border-transparent text-black"
                               : "border-neutral-200 text-neutral-600 hover:border-neutral-300"
                           }`}
-                          style={active ? { backgroundImage: BRAND_GRADIENT } : undefined}
+                          style={
+                            active
+                              ? { backgroundImage: BRAND_GRADIENT }
+                              : undefined
+                          }
                         >
                           {option}
                         </button>
@@ -285,7 +303,9 @@ export default function ContactFormSection() {
                 </div>
 
                 {status === "error" && (
-                  <p className="text-sm font-medium text-red-600">{errorMessage}</p>
+                  <p className="text-sm font-medium text-red-600">
+                    {errorMessage}
+                  </p>
                 )}
 
                 <button
@@ -294,7 +314,9 @@ export default function ContactFormSection() {
                   style={{ backgroundImage: BRAND_GRADIENT }}
                   className="group inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold text-black shadow-lg transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
                 >
-                  {status === "submitting" ? "Sending…" : "Request a Consultation"}
+                  {status === "submitting"
+                    ? "Sending…"
+                    : "Request a Consultation"}
                   <Send className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </button>
               </form>
@@ -308,17 +330,17 @@ export default function ContactFormSection() {
             data-aos-delay="150"
           >
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[#29B9F2]">
+              <p className="text-xl font-semibold uppercase tracking-widest text-[#29B9F2]">
                 Reach Us Directly
               </p>
               <ul className="mt-5 space-y-4">
                 <li>
                   <a
-                    href="tel:+911140590964"
+                    href="tel:+91-11-40590964-65"
                     className="flex items-start gap-3 text-sm text-white/70 transition hover:text-white"
                   >
                     <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#25D9C7]" />
-                    +91-11-40590964
+                    +91-11-40590964-65
                   </a>
                 </li>
                 <li>
@@ -332,16 +354,13 @@ export default function ContactFormSection() {
                 </li>
                 <li className="flex items-start gap-3 text-sm text-white/70">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#25D9C7]" />
-                  Mohan Co-Op, New Delhi, 110044
-                </li>
-                <li className="flex items-start gap-3 text-sm text-white/70">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#25D9C7]" />
-                  We respond within 4 business hours
+                  A-16-B-1, Mohan Co-Operative Industrial Estate Extn., Mathura
+                  Road New Delhi-110044, India
                 </li>
               </ul>
 
               <a
-                href="https://wa.me/911140590964"
+                href="https://wa.me/+919205557448?text=Hello%20I%20want%20to%20know%20more"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/80 transition hover:border-white/30 hover:text-white"

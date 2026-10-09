@@ -8,21 +8,24 @@ import { priorityPartnerLogos } from "@/data/partners";
 export default function AboutTrust() {
   const valueItems = coreValues.map((value) => (
     <span
-      key={value}
+      key={value.title}
       className="text-4xl font-bold uppercase tracking-tight sm:text-6xl"
-      style={{ WebkitTextStroke: "1.5px rgba(0,0,0,0.12)", color: "transparent" }}
+      style={{
+        WebkitTextStroke: "1.5px rgba(0,0,0,0.12)",
+        color: "transparent",
+      }}
     >
-      {value}
+      {value.title}
     </span>
   ));
 
-  const certItems = priorityPartnerLogos.slice(0, 10).map((name) => (
+  const certItems = priorityPartnerLogos.slice(0, 10).map((partner) => (
     <span
-      key={name}
+      key={partner.name}
       className="flex items-center gap-2 rounded-full border border-black/10 bg-black/[0.03] px-4 py-2 text-sm font-medium text-neutral-700"
     >
       <ShieldCheck className="h-4 w-4 text-[#25D9C7]" />
-      {name}
+      {partner.name}
     </span>
   ));
 
@@ -33,7 +36,9 @@ export default function AboutTrust() {
 
         <div className="pointer-events-none absolute inset-x-0 top-1/2 z-10 -translate-y-1/2 px-6">
           <div className="mx-auto max-w-xl bg-white/90 py-4 text-center backdrop-blur-sm">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#0f9ac9]">Trust</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#0f9ac9]">
+              Trust
+            </p>
             <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
               Certified. Partnered. Chosen.
             </h2>

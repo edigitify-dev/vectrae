@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -15,7 +16,7 @@ export default function CTA() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left">
             <p
-              className="text-xs font-semibold uppercase tracking-widest text-[#29B9F2]"
+              className="text-xl max-sm:text-sm font-semibold uppercase tracking-widest text-[#29B9F2]"
               data-aos="fade-up"
             >
               Let's Get Started
@@ -26,7 +27,10 @@ export default function CTA() {
               data-aos-delay="100"
             >
               Ready to transform your{" "}
-              <span className="bg-clip-text text-transparent" style={{ backgroundImage: BRAND_GRADIENT }}>
+              <span
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: BRAND_GRADIENT }}
+              >
                 enterprise technology?
               </span>
             </h2>
@@ -35,9 +39,9 @@ export default function CTA() {
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              Trusted by 2,300+ enterprises. We respond within 4 business hours.
+              Trusted by 2,300+ enterprises.
             </p>
-    
+
             <div
               className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
               data-aos="fade-up"
@@ -52,11 +56,11 @@ export default function CTA() {
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <a
-                href="tel:+911140590964"
+                href="tel:+91-11-40590964-65"
                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/30 hover:bg-white/10"
               >
                 <PhoneCall className="h-4 w-4 text-[#25D9C7]" />
-                +91-11-40590964
+                +91-11-40590964-65
               </a>
             </div>
           </div>
@@ -67,7 +71,7 @@ export default function CTA() {
             data-aos-delay="200"
           >
             <Image
-              src={siteImages.wcuSolutions}
+              src={r2Asset("/images/hero/server.png")}
               alt="Enterprise Technology Setup"
               fill
               unoptimized

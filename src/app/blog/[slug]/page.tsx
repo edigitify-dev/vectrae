@@ -2,14 +2,26 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, Calendar, ChevronRight, Clock, List, Quote } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Calendar,
+  ChevronRight,
+  Clock,
+  List,
+  Quote,
+} from "lucide-react";
 import Navbar from "@/components/sections/Navbar";
 import SpotlightCard from "@/components/ui/SpotlightCard";
 import ReadingProgress from "@/components/sections/blog/ReadingProgress";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
 import { BRAND_GRADIENT } from "@/lib/brand";
-import { getPublishedPost, getPublishedSlugs, getRelatedPosts } from "@/lib/blog";
+import {
+  getPublishedPost,
+  getPublishedSlugs,
+  getRelatedPosts,
+} from "@/lib/blog";
 import { slugifyHeading, type BlogBlock } from "@/lib/blog-types";
 import { categoryIcons, DEFAULT_CATEGORY_ICON } from "@/lib/blogCategoryIcon";
 
@@ -37,7 +49,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-function BlockRenderer({ block, dropCap }: { block: BlogBlock; dropCap?: boolean }) {
+function BlockRenderer({
+  block,
+  dropCap,
+}: {
+  block: BlogBlock;
+  dropCap?: boolean;
+}) {
   switch (block.type) {
     case "heading":
       return (
@@ -67,9 +85,13 @@ function BlockRenderer({ block, dropCap }: { block: BlogBlock; dropCap?: boolean
           style={{ borderImage: `${BRAND_GRADIENT} 1` }}
         >
           <Quote className="h-6 w-6 text-[#29B9F2]" />
-          <p className="mt-4 text-xl font-medium leading-snug text-neutral-800">{block.text}</p>
+          <p className="mt-4 text-xl font-medium leading-snug text-neutral-800">
+            {block.text}
+          </p>
           {block.attribution && (
-            <p className="mt-4 text-sm font-semibold text-neutral-500">{block.attribution}</p>
+            <p className="mt-4 text-sm font-semibold text-neutral-500">
+              {block.attribution}
+            </p>
           )}
         </div>
       );
@@ -77,7 +99,10 @@ function BlockRenderer({ block, dropCap }: { block: BlogBlock; dropCap?: boolean
       return (
         <ul className="mt-6 space-y-3">
           {block.items.map((item, i) => (
-            <li key={i} className="flex items-start gap-3 text-lg leading-relaxed text-neutral-600">
+            <li
+              key={i}
+              className="flex items-start gap-3 text-lg leading-relaxed text-neutral-600"
+            >
               <span
                 className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
                 style={{ backgroundImage: BRAND_GRADIENT }}
@@ -100,7 +125,9 @@ export default async function BlogPostPage({ params }: Props) {
   const CategoryIcon = categoryIcons[post.category] ?? DEFAULT_CATEGORY_ICON;
   const related = await getRelatedPosts(post.slug, post.category, 3);
   const headings = post.content
-    .filter((b): b is Extract<BlogBlock, { type: "heading" }> => b.type === "heading")
+    .filter(
+      (b): b is Extract<BlogBlock, { type: "heading" }> => b.type === "heading",
+    )
     .map((b) => ({ text: b.text, id: slugifyHeading(b.text) }));
 
   return (
@@ -109,7 +136,14 @@ export default async function BlogPostPage({ params }: Props) {
 
       {/* Full-bleed editorial hero */}
       <section className="relative isolate flex min-h-[62vh] flex-col overflow-hidden bg-black sm:min-h-[78vh]">
-        <Image src={post.image} alt="" fill priority unoptimized className="object-cover" />
+        <Image
+          src={post.image}
+          alt=""
+          fill
+          priority
+          unoptimized
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/25 to-black/90" />
 
         <div className="relative z-10">
@@ -117,7 +151,10 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
 
         <div className="relative z-10 mx-auto mt-auto w-full max-w-4xl px-6 pb-12 sm:pb-16">
-          <div className="flex items-center gap-1.5 text-sm text-white/50" data-aos="fade-up">
+          <div
+            className="flex items-center gap-1.5 text-sm text-white/50"
+            data-aos="fade-up"
+          >
             <Link href="/" className="transition hover:text-white/80">
               Home
             </Link>
@@ -134,7 +171,11 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="mt-8 flex items-center gap-3" data-aos="fade-up" data-aos-delay="100">
+          <div
+            className="mt-8 flex items-center gap-3"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             <span
               className="flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-wider backdrop-blur-sm"
               style={{
@@ -173,7 +214,9 @@ export default async function BlogPostPage({ params }: Props) {
               {post.author.initials}
             </span>
             <div className="leading-tight">
-              <p className="font-semibold text-neutral-900">{post.author.name}</p>
+              <p className="font-semibold text-neutral-900">
+                {post.author.name}
+              </p>
               <p className="text-xs text-neutral-400">{post.author.role}</p>
             </div>
           </div>
@@ -221,20 +264,28 @@ export default async function BlogPostPage({ params }: Props) {
               )}
 
               <div className="rounded-2xl border border-black/10 bg-neutral-50 p-6">
-                <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">Written By</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
+                  Written By
+                </p>
                 <div className="mt-4 flex items-center gap-3">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-sm font-bold text-neutral-700">
                     {post.author.initials}
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-neutral-900">{post.author.name}</p>
-                    <p className="text-xs text-neutral-500">{post.author.role}</p>
+                    <p className="text-sm font-semibold text-neutral-900">
+                      {post.author.name}
+                    </p>
+                    <p className="text-xs text-neutral-500">
+                      {post.author.role}
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">Tagged</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">
+                  Tagged
+                </p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
                     <Link
@@ -249,9 +300,12 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
 
               <div className="rounded-2xl bg-black p-6">
-                <p className="text-sm font-semibold text-white">Have a project like this?</p>
+                <p className="text-sm font-semibold text-white">
+                  Have a project like this?
+                </p>
                 <p className="mt-2 text-sm leading-relaxed text-white/50">
-                  Talk to our practice leads about your enterprise technology roadmap.
+                  Talk to our practice leads about your enterprise technology
+                  roadmap.
                 </p>
                 <Link
                   href="/contact"
@@ -270,7 +324,10 @@ export default async function BlogPostPage({ params }: Props) {
       {related.length > 0 && (
         <section className="relative overflow-hidden border-t border-black/5 bg-[#f5f5f0] py-20 sm:py-28">
           <div className="mx-auto max-w-6xl px-6">
-            <div className="mb-10 flex items-end justify-between" data-aos="fade-up">
+            <div
+              className="mb-10 flex items-end justify-between"
+              data-aos="fade-up"
+            >
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                   Keep Reading
@@ -289,11 +346,20 @@ export default async function BlogPostPage({ params }: Props) {
 
             <div className="grid gap-5 sm:grid-cols-3">
               {related.map((r, i) => {
-                const RelIcon = categoryIcons[r.category] ?? DEFAULT_CATEGORY_ICON;
+                const RelIcon =
+                  categoryIcons[r.category] ?? DEFAULT_CATEGORY_ICON;
                 return (
-                  <Link key={r.slug} href={`/blog/${r.slug}`} className="group relative h-full">
+                  <Link
+                    key={r.slug}
+                    href={`/blog/${r.slug}`}
+                    className="group relative h-full"
+                  >
                     <SpotlightCard className="flex h-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm transition hover:border-black/20 hover:shadow-md">
-                      <div className="relative h-44 w-full overflow-hidden" data-aos="fade-up" data-aos-delay={i * 80}>
+                      <div
+                        className="relative h-44 w-full overflow-hidden"
+                        data-aos="fade-up"
+                        data-aos-delay={i * 80}
+                      >
                         <Image
                           src={r.image}
                           alt={r.title}

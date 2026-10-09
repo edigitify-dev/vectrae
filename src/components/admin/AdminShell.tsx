@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -118,7 +119,7 @@ export default function AdminShell({
   const sidebarBody = (
     <div className="flex h-full flex-col">
       <Link href="/admin" className="flex items-center gap-2.5 px-3 py-1">
-        <Image src="/logo.png" alt="" width={96} height={24} className="h-6 w-auto" />
+        <Image src={r2Asset("/logo.png")} alt="" width={96} height={24} className="h-6 w-auto" />
         <span className="rounded-md border border-white/15 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/60">
           Admin
         </span>
@@ -205,7 +206,7 @@ export default function AdminShell({
           >
             <Menu className="h-5 w-5" aria-hidden />
           </button>
-          <Image src="/logo.png" alt="Vectrae Admin" width={88} height={22} className="h-5 w-auto" />
+          <Image src={r2Asset("/logo.png")} alt="Vectrae Admin" width={88} height={22} className="h-5 w-auto" />
         </header>
 
         <main className="min-w-0 flex-1 px-4 py-6 sm:px-6 lg:px-10 lg:py-10">{children}</main>

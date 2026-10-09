@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useEffect, useRef, useState, type RefObject } from "react";
 import {
@@ -243,7 +244,7 @@ export default function Workspace() {
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-1.5">
                       <Image
-                        src="/logo.png"
+                        src={r2Asset("/logo.png")}
                         alt="Vectrae"
                         width={140}
                         height={29}
@@ -430,7 +431,7 @@ export default function Workspace() {
                       className="relative"
                     >
                       <Image
-                        src="/logo.png"
+                        src={r2Asset("/logo.png")}
                         alt="Vectrae"
                         width={280}
                         height={58}

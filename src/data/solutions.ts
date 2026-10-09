@@ -1,11 +1,16 @@
+import { r2Asset } from "@/lib/site-images";
 import {
   BatteryCharging,
+  BellRing,
   Boxes,
   Cable,
+  ClipboardCheck,
   Cloud,
   Database,
+  FileCheck2,
   Gauge,
   HardDrive,
+  KeyRound,
   Laptop,
   LayoutGrid,
   LifeBuoy,
@@ -34,11 +39,17 @@ export type ServiceCapability = {
   description: string;
 };
 
+export type OemPartner = {
+  name: string;
+  logo?: string; // path under /public, e.g. "/images/oem/AV/crestron.webp"
+};
+
 export type SubService = {
   slug: string;
   title: string;
   tagline: string;
   icon: LucideIcon;
+  pointers: string[];
   description: string;
   capabilities: ServiceCapability[];
   benefits: string[];
@@ -49,11 +60,13 @@ export type Solution = {
   title: string;
   tagline: string;
   icon: LucideIcon;
+  pointers: string[];
   heroImage: string;
+  cardImage: string;
   description: string;
   capabilities: ServiceCapability[];
   benefits: string[];
-  oems: string[];
+  oems: OemPartner[];
   subServices: SubService[];
 };
 
@@ -63,7 +76,16 @@ export const solutions: Solution[] = [
     title: "Audio Visual Solutions",
     tagline: "Immersive meeting experiences, engineered for the enterprise.",
     icon: MonitorPlay,
-    heroImage: siteImages.blog.avTech,
+    pointers: [
+      "Video Conferencing Systems",
+      "Digital Signage & Displays",
+      "Room Automation & Control",
+      "Auditorium & Command Centre AV",
+      "Acoustic & Room Design",
+      "Unified Communications",
+    ],
+    heroImage: "/video/av_hero_vid.mp4",
+    cardImage: r2Asset("/images/products/av.png"),
     description:
       "From huddle rooms to command centres, we design and deploy audio-visual systems that make every meeting effortless, video conferencing, digital signage, and unified communications, integrated and supported end-to-end.",
     capabilities: [
@@ -111,30 +133,33 @@ export const solutions: Solution[] = [
       "Minimal-disruption deployment for live offices",
     ],
     oems: [
-      "Crestron",
-      "Extron",
-      "Cisco",
-      "Poly",
-      "Jabra",
-      "Samsung",
-      "LG",
-      "Sony",
-      "Bosch",
-      "Sennheiser",
-      "Harman",
-      "QSC",
-      "Biamp",
-      "Yealink",
-      "Huddly",
-      "Key Digital",
-      "Aurora",
-      "ATEN",
-      "Lightware",
-      "AMX",
-      "Atlona",
-      "Prysm",
-      "Audio-Technica",
-      "Kramer",
+      { name: "Crestron", logo: r2Asset("/images/oem/AV/crestron.webp") },
+      { name: "Extron", logo: r2Asset("/images/oem/AV/extron.webp") },
+      { name: "Cisco", logo: r2Asset("/images/oem/AV/cisco.webp") },
+      { name: "Poly", logo: r2Asset("/images/oem/AV/poly.webp") },
+      { name: "Jabra", logo: r2Asset("/images/oem/AV/jabra.webp") },
+      { name: "Samsung", logo: r2Asset("/images/oem/AV/samsung.webp") },
+      { name: "LG", logo: r2Asset("/images/oem/AV/lg.webp") },
+      { name: "Sony", logo: r2Asset("/images/oem/AV/sony.webp") },
+      { name: "Bosch", logo: r2Asset("/images/oem/AV/bosch.webp") },
+      { name: "Sennheiser", logo: r2Asset("/images/oem/AV/sennheiser.webp") },
+      { name: "Harman", logo: r2Asset("/images/oem/AV/harman.webp") },
+      { name: "QSC", logo: r2Asset("/images/oem/AV/qsc.webp") },
+      { name: "Biamp", logo: r2Asset("/images/oem/AV/biamp.webp") },
+      { name: "Yealink", logo: r2Asset("/images/oem/AV/yealink.webp") },
+      { name: "Huddly", logo: r2Asset("/images/oem/AV/huddly.webp") },
+      { name: "Key Digital", logo: r2Asset("/images/oem/AV/keyDigital.webp") },
+      { name: "Aurora", logo: r2Asset("/images/oem/AV/aurora.webp") },
+      { name: "ATEN", logo: r2Asset("/images/oem/AV/aten.webp") },
+      { name: "Lightware", logo: r2Asset("/images/oem/AV/lightware.webp") },
+      { name: "AMX", logo: r2Asset("/images/oem/AV/amx.webp") },
+      { name: "Atlona", logo: r2Asset("/images/oem/AV/atlona.webp") },
+      { name: "Prysm", logo: r2Asset("/images/oem/AV/prysm.webp") },
+      {
+        name: "Audio-Technica",
+        logo: r2Asset("/images/oem/AV/audioTechnica.webp"),
+      },
+      { name: "Kramer", logo: r2Asset("/images/oem/AV/kramer.webp") },
     ],
     subServices: [
       {
@@ -142,6 +167,11 @@ export const solutions: Solution[] = [
         title: "Meeting Room & Boardroom Solutions",
         tagline: "One-touch meetings, engineered for every room size.",
         icon: MonitorPlay,
+        pointers: [
+          "Room Scheduling & One-Touch Join",
+          "Camera & Audio Tuning",
+          "Display & Acoustic Integration",
+        ],
         description:
           "From huddle spaces to executive boardrooms, we design and integrate AV systems that make every meeting effortless, camera, audio, display, and control, working together out of the box.",
         capabilities: [
@@ -174,6 +204,11 @@ export const solutions: Solution[] = [
         title: "Video Conferencing & Unified Communication",
         tagline: "Microsoft Teams Rooms and Zoom Rooms, deployed at scale.",
         icon: Video,
+        pointers: [
+          "Teams Rooms & Zoom Rooms Certification",
+          "Unified Communications Integration",
+          "Room Health Monitoring",
+        ],
         description:
           "We deploy and manage certified Teams Rooms and Zoom Rooms across your enterprise, unifying every meeting space onto one collaboration platform with centralized monitoring.",
         capabilities: [
@@ -206,6 +241,11 @@ export const solutions: Solution[] = [
         title: "Digital Signage & Video Wall Solutions",
         tagline: "Large-format displays that turn every wall into a canvas.",
         icon: LayoutGrid,
+        pointers: [
+          "Video Wall Engineering",
+          "Content Management Systems",
+          "Interactive Displays",
+        ],
         description:
           "From lobby signage to command-centre video walls, we design, install, and manage content-driven display systems built for 24/7 enterprise use.",
         capabilities: [
@@ -238,6 +278,11 @@ export const solutions: Solution[] = [
         title: "Auditorium & Training Room Solutions",
         tagline: "Sound and visuals engineered for the back row.",
         icon: RadioTower,
+        pointers: [
+          "Sound Reinforcement Design",
+          "Projection & Large-Format Display",
+          "Multi-Camera Capture & Streaming",
+        ],
         description:
           "We design large-venue AV systems, sound reinforcement, projection, and multi-camera capture, for auditoriums, training rooms, and town-hall spaces.",
         capabilities: [
@@ -270,6 +315,11 @@ export const solutions: Solution[] = [
         title: "Command Centre, NOC & SOC Solutions",
         tagline: "Mission-critical video walls for 24/7 operations.",
         icon: MonitorCog,
+        pointers: [
+          "Multi-Screen Video Wall Design",
+          "Redundant Signal Switching",
+          "Control Room Ergonomics",
+        ],
         description:
           "We build command-centre environments for network and security operations, multi-screen video walls, redundant switching, and control-room ergonomics engineered for round-the-clock monitoring.",
         capabilities: [
@@ -301,12 +351,21 @@ export const solutions: Solution[] = [
   },
   {
     slug: "networking-security",
-    title: "Networking & Security",
-    tagline: "Resilient connectivity for the always-on enterprise.",
+    title: "Cyber Security & Networking",
+    tagline: "Resilent Security for all Enterprise Networks.",
     icon: Network,
-    heroImage: siteImages.products.router,
+    pointers: [
+      "Perimeter, Endpoint & Cloud Security",
+      "Network Active & Passive",
+      "Backup, Managed Networking & Security Services",
+      "Primeter, End point & Cloud Security",
+      "SD-WAN & Cloud Connectivity",
+      "Network Monitoring",
+    ],
+    heroImage: r2Asset("/images/products/router.png"),
+    cardImage: r2Asset("/images/products/router.png"),
     description:
-      "We design, deploy, and secure the network backbone your business runs on, structured cabling, enterprise Wi-Fi, and firewall infrastructure built for performance at scale.",
+      "We build and secure resilient enterprise IT infrastructure through integrated cybersecurity and networking solutions from perimeter, endpoint and cloud security to active & passive networking, enterprise Wi-Fi, structured cabling, and managed security services.",
     capabilities: [
       {
         icon: Cable,
@@ -328,9 +387,8 @@ export const solutions: Solution[] = [
       },
       {
         icon: ShieldCheck,
-        title: "Firewall & Network Security",
-        description:
-          "Palo Alto Networks-certified perimeter and internal network protection.",
+        title: "Primeter, End point & Cloud Security",
+        description: "Protecting Every Connection, Securing Every Enterprise.",
       },
       {
         icon: Cloud,
@@ -352,13 +410,16 @@ export const solutions: Solution[] = [
       "Rapid fault response with PAN-India field support",
     ],
     oems: [
-      "Cisco",
-      "Palo Alto Networks",
-      "Fortinet",
-      "Sophos",
-      "McAfee",
-      "D-Link",
-      "CommScope",
+      { name: "Cisco", logo: r2Asset("/images/oem/netSec/cisco.webp") },
+      {
+        name: "Palo Alto Networks",
+        logo: r2Asset("/images/oem/netSec/paloalto.webp"),
+      },
+      { name: "Fortinet", logo: r2Asset("/images/oem/netSec/fortinet.webp") },
+      { name: "Sophos", logo: r2Asset("/images/oem/netSec/sophos.webp") },
+      { name: "McAfee", logo: r2Asset("/images/oem/netSec/mcAfee.webp") },
+      { name: "D-Link", logo: r2Asset("/images/oem/netSec/dLink.webp") },
+      { name: "CommScope", logo: r2Asset("/images/oem/netSec/commscope.webp") },
     ],
     subServices: [
       {
@@ -366,6 +427,11 @@ export const solutions: Solution[] = [
         title: "Enterprise Networking",
         tagline: "The backbone your business runs on.",
         icon: Network,
+        pointers: [
+          "Structured Cabling",
+          "LAN/WAN Architecture",
+          "Core & Access Switching",
+        ],
         description:
           "We design and deploy structured cabling, LAN/WAN architecture, and core switching infrastructure built to scale with your enterprise.",
         capabilities: [
@@ -398,6 +464,11 @@ export const solutions: Solution[] = [
         title: "Wireless Infrastructure",
         tagline: "Seamless coverage, engineered for density.",
         icon: Wifi,
+        pointers: [
+          "Wireless Site Surveys",
+          "High-Density Wi-Fi Design",
+          "Guest & BYOD Segmentation",
+        ],
         description:
           "From wireless site surveys to high-density Wi-Fi design, we build wireless infrastructure that performs reliably across offices, campuses, and warehouses.",
         capabilities: [
@@ -430,6 +501,11 @@ export const solutions: Solution[] = [
         title: "Firewall & Network Security",
         tagline: "Perimeter and internal protection, built for scale.",
         icon: ShieldCheck,
+        pointers: [
+          "Perimeter Firewall Deployment",
+          "Network Segmentation",
+          "SD-WAN & Secure Connectivity",
+        ],
         description:
           "We design, deploy, and manage firewall and network security infrastructure, perimeter protection, internal segmentation, and secure connectivity for the modern enterprise.",
         capabilities: [
@@ -462,11 +538,20 @@ export const solutions: Solution[] = [
   {
     slug: "data-center",
     title: "Data Center Solutions",
-    tagline: "Infrastructure built for uptime, scale, and resilience.",
+    tagline: "Engineering the Infrastructure Behind Digital Business.",
     icon: Server,
-    heroImage: siteImages.products.serverRam,
+    pointers: [
+      "Data Centre Design & Build",
+      "Compute, Storage, Virtualization, Networking & Security",
+      "Data Centre Managed Services",
+      "Physical & Cyber Security",
+      "Hyperconverged Infrastructure",
+      "Cloud Migration",
+    ],
+    heroImage: r2Asset("/images/products/ram.png"),
+    cardImage: r2Asset("/images/products/ram.png"),
     description:
-      "We build and secure the infrastructure behind your business, from greenfield data centers to disaster recovery and physical security, engineered for enterprise-grade reliability.",
+      "From strategy to deployment and lifecycle management, we engineer resilient data centre ecosystems that power mission-critical workloads. Our integrated approach brings together compute, storage, networking, cybersecurity, power, cooling, structured cabling, and intelligent monitoring, creating scalable, secure, and high-availability infrastructure built for today and engineered for tomorrow.",
     capabilities: [
       {
         icon: HardDrive,
@@ -511,13 +596,27 @@ export const solutions: Solution[] = [
       "Compliance-ready security and access control",
       "Disaster recovery planning built into every deployment",
     ],
-    oems: ["Dell", "HP", "Lenovo", "APC by Schneider Electric", "CommScope"],
+    oems: [
+      { name: "Dell", logo: r2Asset("/images/oem/endCom/dell.webp") },
+      { name: "HP", logo: r2Asset("/images/oem/endCom/hp.webp") },
+      { name: "Lenovo", logo: r2Asset("/images/oem/endCom/lenovo.webp") },
+      {
+        name: "APC by Schneider Electric",
+        logo: r2Asset("/images/oem/endCom/apc.webp"),
+      },
+      { name: "CommScope", logo: r2Asset("/images/oem/netSec/commscope.webp") },
+    ],
     subServices: [
       {
         slug: "dc-infrastructure",
         title: "Data Centre Infrastructure",
         tagline: "Greenfield to brownfield, built for uptime.",
         icon: HardDrive,
+        pointers: [
+          "Greenfield DC Build-Out",
+          "Brownfield Infrastructure Upgrades",
+          "Rack & Cooling Design",
+        ],
         description:
           "We build data center infrastructure from the ground up, racks, cooling, cabling, and power, for both new greenfield builds and brownfield upgrades.",
         capabilities: [
@@ -550,6 +649,11 @@ export const solutions: Solution[] = [
         title: "Server & Storage Solutions",
         tagline: "Compute and storage, sized to your workload.",
         icon: Server,
+        pointers: [
+          "Server Deployment & Sizing",
+          "Enterprise Storage Solutions",
+          "Hyperconverged Infrastructure",
+        ],
         description:
           "We spec, deploy, and support enterprise server and storage infrastructure from Dell and HP, sized precisely to your workload and growth plan.",
         capabilities: [
@@ -582,6 +686,11 @@ export const solutions: Solution[] = [
         title: "Cloud Solutions",
         tagline: "Private, public, or hybrid, your call.",
         icon: Cloud,
+        pointers: [
+          "Cloud Migration Planning",
+          "Hybrid Cloud Architecture",
+          "Managed Cloud Operations",
+        ],
         description:
           "We guide and execute cloud migration and management across private, public, and hybrid environments, matching architecture to your compliance and performance needs.",
         capabilities: [
@@ -613,6 +722,11 @@ export const solutions: Solution[] = [
         title: "Backup & Disaster Recovery",
         tagline: "Business continuity, tested and ready.",
         icon: RefreshCw,
+        pointers: [
+          "Backup Architecture Design",
+          "Disaster Recovery Planning",
+          "DR Testing & Drills",
+        ],
         description:
           "We design and implement backup and disaster recovery architecture, tested, documented, and ready, so a single point of failure never becomes a business outage.",
         capabilities: [
@@ -647,7 +761,16 @@ export const solutions: Solution[] = [
     title: "End Computing Solutions",
     tagline: "Equip every desk, every workstation, every employee.",
     icon: Laptop,
-    heroImage: siteImages.products.laptop,
+    pointers: [
+      "Laptops, Desktops & Workstations",
+      "Thin Client Deployment",
+      "Monitors & Peripherals",
+      "Bulk Imaging & Configuration",
+      "Asset Lifecycle Management",
+      "Warranty & AMC Support",
+    ],
+    heroImage: r2Asset("/images/products/laptop.png"),
+    cardImage: r2Asset("/images/products/laptop.png"),
     description:
       "From laptops to thin clients, we procure, configure, and manage the devices your workforce uses every day, with lifecycle support that keeps IT overhead low.",
     capabilities: [
@@ -694,16 +817,19 @@ export const solutions: Solution[] = [
       "Full asset lifecycle tracking and reporting",
     ],
     oems: [
-      "Lenovo",
-      "Dell",
-      "HP",
-      "Acer",
-      "Microsoft",
-      "Samsung",
-      "LG",
-      "Targus",
-      "Kensington",
-      "Logitech",
+      { name: "Lenovo", logo: r2Asset("/images/oem/endCom/lenovo.webp") },
+      { name: "Dell", logo: r2Asset("/images/oem/endCom/dell.webp") },
+      { name: "HP", logo: r2Asset("/images/oem/endCom/hp.webp") },
+      { name: "Acer", logo: r2Asset("/images/oem/endCom/acer.webp") },
+      { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
+      { name: "Samsung", logo: r2Asset("/images/oem/endCom/samsung.webp") },
+      { name: "LG", logo: r2Asset("/images/oem/endCom/lg.webp") },
+      { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
+      {
+        name: "Kensington",
+        logo: r2Asset("/images/oem/endCom/kensington.webp"),
+      },
+      { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
     ],
     subServices: [
       {
@@ -711,6 +837,11 @@ export const solutions: Solution[] = [
         title: "Laptops, Desktops & Workstations",
         tagline: "Enterprise devices, procured at scale.",
         icon: Laptop,
+        pointers: [
+          "Bulk Device Procurement",
+          "High-Performance Workstations",
+          "Pre-Configured Imaging",
+        ],
         description:
           "Bulk procurement of Dell, HP, and Microsoft laptops, desktops, and high-performance workstations, pre-configured and ready to deploy at enterprise pricing.",
         capabilities: [
@@ -743,6 +874,11 @@ export const solutions: Solution[] = [
         title: "Thin Clients & Collaboration Devices",
         tagline: "Centralized, secure, cost-efficient computing.",
         icon: Monitor,
+        pointers: [
+          "Thin Client Deployment",
+          "Centralized Endpoint Management",
+          "Collaboration Device Rollout",
+        ],
         description:
           "We deploy thin-client environments and collaboration devices that centralize management, reduce endpoint cost, and simplify enterprise IT operations.",
         capabilities: [
@@ -775,6 +911,11 @@ export const solutions: Solution[] = [
         title: "Monitors, Docking & Peripherals",
         tagline: "Standardized workstations, every desk, every branch.",
         icon: LayoutGrid,
+        pointers: [
+          "Monitor & Display Rollout",
+          "Docking Station Deployment",
+          "Peripheral Standardization",
+        ],
         description:
           "From monitors to docking stations, we standardize workstation rollouts across offices and branches, consistent hardware, consistent experience.",
         capabilities: [
@@ -810,7 +951,16 @@ export const solutions: Solution[] = [
     tagline:
       "Fast-turnaround components that keep your infrastructure running.",
     icon: PackageCheck,
-    heroImage: siteImages.products.motherboard,
+    pointers: [
+      "Genuine OEM Spare Parts",
+      "Rapid Replacement & Logistics",
+      "Cables & Accessories",
+      "Legacy Component Sourcing",
+      "Bulk Inventory Management",
+      "Emergency Dispatch",
+    ],
+    heroImage: r2Asset("/images/products/motherboard.png"),
+    cardImage: r2Asset("/images/products/motherboard.png"),
     description:
       "When hardware fails, downtime isn't an option. We stock and dispatch genuine OEM spare parts and accessories, so your IT and AV systems stay operational.",
     capabilities: [
@@ -857,13 +1007,16 @@ export const solutions: Solution[] = [
       "Managed inventory for zero-downtime operations",
     ],
     oems: [
-      "Jabra",
-      "Poly",
-      "Logitech",
-      "3M",
-      "Kensington",
-      "Targus",
-      "Philips",
+      { name: "Jabra", logo: r2Asset("/images/oem/AV/jabra.webp") },
+      { name: "Poly", logo: r2Asset("/images/oem/AV/poly.webp") },
+      { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
+      { name: "3M", logo: r2Asset("/images/oem/endCom/3m.webp") },
+      {
+        name: "Kensington",
+        logo: r2Asset("/images/oem/endCom/kensington.webp"),
+      },
+      { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
+      { name: "Philips", logo: r2Asset("/images/oem/endCom/philips.webp") },
     ],
     subServices: [
       {
@@ -871,6 +1024,11 @@ export const solutions: Solution[] = [
         title: "Enterprise IT Peripherals",
         tagline: "Genuine peripherals, always in stock.",
         icon: PackageCheck,
+        pointers: [
+          "Genuine OEM Peripherals",
+          "Fast-Dispatch Logistics",
+          "Bulk Peripheral Procurement",
+        ],
         description:
           "A full catalog of enterprise-grade peripherals, keyboards, mice, headsets, docking accessories, sourced genuine and delivered fast, PAN-India.",
         capabilities: [
@@ -902,6 +1060,11 @@ export const solutions: Solution[] = [
         title: "Workplace Accessories & Components",
         tagline: "The small parts that keep everything running.",
         icon: Boxes,
+        pointers: [
+          "Cables & Adapters",
+          "Mounting & Accessories",
+          "Legacy Component Sourcing",
+        ],
         description:
           "Cables, adapters, mounts, and hard-to-find legacy components, we stock and dispatch the accessories that keep enterprise IT and AV systems operational.",
         capabilities: [
@@ -936,7 +1099,16 @@ export const solutions: Solution[] = [
     title: "Power Solutions",
     tagline: "Zero downtime starts with the right power strategy.",
     icon: Zap,
-    heroImage: siteImages.products.powerSupply,
+    pointers: [
+      "UPS Systems & Sizing",
+      "Power Distribution Units",
+      "Backup & Standby Power",
+      "Power Monitoring & Management",
+      "Critical Infrastructure Power",
+      "Energy Efficiency Consulting",
+    ],
+    heroImage: r2Asset("/images/products/power.png"),
+    cardImage: r2Asset("/images/products/power.png"),
     description:
       "From UPS systems to distribution infrastructure, Vectrae designs and deploys the power backbone that keeps enterprise operations running, critical infrastructure, engineered for zero downtime.",
     capabilities: [
@@ -982,13 +1154,27 @@ export const solutions: Solution[] = [
       "PAN-India installation and AMC support",
       "Rapid-response field engineering for power-critical outages",
     ],
-    oems: ["APC by Schneider Electric", "Schneider Electric"],
+    oems: [
+      {
+        name: "APC by Schneider Electric",
+        logo: r2Asset("/images/oem/endCom/apc.webp"),
+      },
+      {
+        name: "Schneider Electric",
+        logo: r2Asset("/images/oem/endCom/schneider.webp"),
+      },
+    ],
     subServices: [
       {
         slug: "ups-systems",
         title: "UPS Systems",
         tagline: "Uninterrupted power, sized to your load.",
         icon: BatteryCharging,
+        pointers: [
+          "UPS Sizing & Design",
+          "Rack & Facility-Scale Deployment",
+          "Battery Management",
+        ],
         description:
           "We design, size, and deploy enterprise UPS systems, from rack-mount to facility-scale, engineered around your critical load and runtime requirements.",
         capabilities: [
@@ -1022,6 +1208,11 @@ export const solutions: Solution[] = [
         tagline:
           "Distribution and monitoring, built for critical infrastructure.",
         icon: Gauge,
+        pointers: [
+          "PDU Design & Deployment",
+          "Power Monitoring Systems",
+          "Remote Power Management",
+        ],
         description:
           "From rack PDUs to facility-wide distribution, we design power distribution and monitoring systems that keep data centers and critical infrastructure running.",
         capabilities: [
@@ -1052,7 +1243,16 @@ export const solutions: Solution[] = [
     title: "Managed IT Services",
     tagline: "Focus on your business. We'll run your IT.",
     icon: LifeBuoy,
-    heroImage: siteImages.blog.managedIt,
+    pointers: [
+      "Annual Maintenance Contracts (AMC)",
+      "Remote Monitoring & Management",
+      "IT Helpdesk Support",
+      "Moves, Adds & Changes",
+      "Field Engineering & On-Site Support",
+      "SLA-Backed Full Managed IT",
+    ],
+    heroImage: r2Asset("/images/products/managedIt.png"),
+    cardImage: r2Asset("/images/products/managedIt.png"),
     description:
       "Proactive AMC, remote monitoring, and full-scope IT support, Vectrae's managed services keep enterprise technology running so your team can focus on the business, not the break-fix.",
     capabilities: [
@@ -1100,6 +1300,194 @@ export const solutions: Solution[] = [
     ],
     oems: [],
     subServices: [],
+  },
+  {
+    slug: "software-renewal",
+    title: "Software & Renewal",
+    tagline: "Every license, subscription and renewal, managed in one place.",
+    icon: KeyRound,
+    pointers: [
+      "Enterprise Software Licensing",
+      "Subscription & Renewal Management",
+      "License Audit & Compliance",
+      "Cloud & SaaS Subscriptions",
+      "Security & Backup Software",
+      "Software Asset Management",
+    ],
+    heroImage: r2Asset("/images/products/license_hero.png"),
+    cardImage: r2Asset("/images/products/renewal.png"),
+    description:
+      "From first purchase to every renewal, Vectrae manages the software that runs your enterprise, genuine licensing, subscription tracking, and compliance support, so nothing lapses, nothing is over-bought, and every audit is under control.",
+    capabilities: [
+      {
+        icon: KeyRound,
+        title: "Enterprise Software Licensing",
+        description:
+          "Genuine perpetual and subscription licenses from leading OEMs, sized to your users.",
+      },
+      {
+        icon: BellRing,
+        title: "Subscription & Renewal Management",
+        description:
+          "Renewal calendars and advance alerts so no license or support contract lapses.",
+      },
+      {
+        icon: ClipboardCheck,
+        title: "License Audit & Compliance",
+        description:
+          "Entitlement reviews and audit support to keep your estate compliant and defensible.",
+      },
+      {
+        icon: Cloud,
+        title: "Cloud & SaaS Subscriptions",
+        description:
+          "Microsoft 365, Adobe and other cloud subscriptions, provisioned and managed centrally.",
+      },
+      {
+        icon: ShieldCheck,
+        title: "Security & Backup Software",
+        description:
+          "Endpoint protection, backup and virtualization software, licensed and renewed with your infrastructure.",
+      },
+      {
+        icon: Gauge,
+        title: "Software Asset Management",
+        description:
+          "Usage visibility and right-sizing to cut shelf-ware and reduce software spend.",
+      },
+    ],
+    benefits: [
+      "Authorized reseller relationships with leading software OEMs",
+      "Zero-lapse renewal tracking with advance alerts",
+      "Audit-ready license records and compliance support",
+      "Right-sized subscriptions that cut unused spend",
+    ],
+    oems: [
+      // { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
+      // { name: "Adobe", logo: r2Asset("/images/oem/software/adobe.webp") },
+      // { name: "Autodesk", logo: r2Asset("/images/oem/software/autodesk.webp") },
+      // { name: "Veeam", logo: r2Asset("/images/oem/software/veeam.webp") },
+      // { name: "Red Hat", logo: r2Asset("/images/oem/software/redhat.webp") },
+      // { name: "VMware", logo: r2Asset("/images/oem/software/vmware.webp") },
+      // { name: "Cisco", logo: r2Asset("/images/oem/netSec/cisco.webp") },
+      // {
+      //   name: "Palo Alto Networks",
+      //   logo: r2Asset("/images/oem/netSec/paloalto.webp"),
+      // },
+    ],
+    subServices: [
+      {
+        slug: "software-licensing-procurement",
+        title: "Software Licensing & Procurement",
+        tagline: "Genuine licenses, sized right and delivered fast.",
+        icon: KeyRound,
+        pointers: [
+          "Enterprise Agreement Licensing",
+          "Volume & Bulk Procurement",
+          "License Right-Sizing",
+        ],
+        description:
+          "We source genuine enterprise software from leading OEMs, advising on the right licensing model and volume so you buy what you need, at enterprise pricing.",
+        capabilities: [
+          {
+            icon: FileCheck2,
+            title: "Enterprise Agreement Licensing",
+            description:
+              "Guidance on the licensing program that fits your size and growth plan.",
+          },
+          {
+            icon: PackageCheck,
+            title: "Volume & Bulk Procurement",
+            description:
+              "Volume purchasing for large rollouts, with consolidated invoicing.",
+          },
+          {
+            icon: Gauge,
+            title: "License Right-Sizing",
+            description:
+              "Licenses matched to real user counts, not over- or under-provisioned.",
+          },
+        ],
+        benefits: [
+          "100% genuine licenses, direct from OEM channels",
+          "Volume pricing for large enterprise rollouts",
+        ],
+      },
+      {
+        slug: "subscription-renewal-management",
+        title: "Subscription & Renewal Management",
+        tagline: "Never miss a renewal, never overpay for one.",
+        icon: RefreshCw,
+        pointers: [
+          "Renewal Calendar & Alerts",
+          "Co-Termination & Consolidation",
+          "Cloud & SaaS Management",
+        ],
+        description:
+          "We track every subscription and support contract across your estate, alert you well before expiry, and consolidate renewals so cost and coverage stay predictable.",
+        capabilities: [
+          {
+            icon: BellRing,
+            title: "Renewal Calendar & Alerts",
+            description:
+              "Advance notifications so every renewal is planned, not rushed.",
+          },
+          {
+            icon: RefreshCw,
+            title: "Co-Termination & Consolidation",
+            description:
+              "Aligned renewal dates to simplify budgeting and reduce admin.",
+          },
+          {
+            icon: Cloud,
+            title: "Cloud & SaaS Management",
+            description:
+              "Centralized provisioning and tracking of cloud subscriptions.",
+          },
+        ],
+        benefits: [
+          "Zero-lapse renewal tracking across the estate",
+          "Single point of contact for every renewal",
+        ],
+      },
+      {
+        slug: "license-audit-compliance",
+        title: "License Audit & Compliance",
+        tagline: "Know what you own, prove what you use.",
+        icon: ClipboardCheck,
+        pointers: [
+          "Entitlement & Usage Review",
+          "Audit Readiness Support",
+          "Shelf-Ware Reduction",
+        ],
+        description:
+          "We review your entitlements against actual usage, support you through vendor audits, and identify unused licenses so your estate stays compliant and cost-efficient.",
+        capabilities: [
+          {
+            icon: ClipboardCheck,
+            title: "Entitlement & Usage Review",
+            description:
+              "A clear view of what you own versus what is actually deployed.",
+          },
+          {
+            icon: ShieldCheck,
+            title: "Audit Readiness Support",
+            description:
+              "Documentation and guidance to handle vendor audits with confidence.",
+          },
+          {
+            icon: Gauge,
+            title: "Shelf-Ware Reduction",
+            description:
+              "Unused licenses identified and reclaimed before the next renewal.",
+          },
+        ],
+        benefits: [
+          "Audit-ready license records at all times",
+          "Lower spend through reclaimed, unused licenses",
+        ],
+      },
+    ],
   },
 ];
 

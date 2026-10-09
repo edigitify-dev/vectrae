@@ -18,7 +18,7 @@ export default function SolutionsPage() {
   return (
     <>
       <ServicesHero />
-      <div id="solutions" className="py-16 px-24">
+      <div id="solutions" className="py-16 px-24 max-sm:px-4">
         {/* <ServiceCards /> */}
         <SolutionsCards />
       </div>

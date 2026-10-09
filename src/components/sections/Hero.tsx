@@ -8,7 +8,7 @@ export default function Hero() {
       <WovenCanvas />
 
       {/* Mobile-only blur + dim layer: the canvas pattern is too busy behind text on small screens */}
-      <div className="pointer-events-none absolute inset-0 backdrop-blur-[1px] bg-black/35 sm:hidden" />
+      <div className="pointer-events-none absolute inset-0 backdrop-blur-[0.85px] bg-black/35 sm:hidden" />
 
       {/* Subtle overlays to ensure text readability without hiding the 3D canvas */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
@@ -102,7 +102,7 @@ export default function Hero() {
           data-aos-delay="450"
           data-aos-once="true"
         >
-          250+ Technology Experts&nbsp;|&nbsp;PAN-India
+          300+ Technology Experts&nbsp;|&nbsp;PAN-India
           Delivery&nbsp;|&nbsp;2,300+ Enterprise Clients
         </p>
       </div>

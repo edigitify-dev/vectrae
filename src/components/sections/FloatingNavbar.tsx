@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useRef, useState } from "react";
 import Image from "next/image";
@@ -49,7 +50,7 @@ export default function FloatingNavbar() {
     >
       <div className="flex items-center">
         <Link href="/">
-          <Image src="/logo.png" alt="Vectrae" width={154} height={32} className="h-8 w-auto" priority />
+          <Image src={r2Asset("/logo.png")} alt="Vectrae" width={154} height={32} className="h-8 w-auto" priority />
         </Link>
       </div>
 

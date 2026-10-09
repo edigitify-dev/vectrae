@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, ChevronRight, PhoneCall } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronRight,
+  PhoneCall,
+} from "lucide-react";
 import Navbar from "@/components/sections/Navbar";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
@@ -49,6 +54,22 @@ export default async function IndustryDetailPage({ params }: Props) {
     })
     .filter((f): f is NonNullable<typeof f> => Boolean(f));
 
+  // Marquee only makes sense with enough logos; fewer than 4 → static responsive cards
+  const useMarquee = featuredClients.length >= 4;
+
+  const renderClientCard = (client: (typeof clientLogos)[number]) => (
+    <div className="group flex h-24 w-44 items-center justify-center rounded-2xl border border-black/[0.06] bg-white px-6 shadow-[0_18px_40px_-20px_rgba(37,217,199,0.35),0_2px_6px_rgba(15,23,42,0.04)] transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-[#25D9C7]/30 hover:shadow-[0_24px_50px_-18px_rgba(37,217,199,0.45),0_2px_8px_rgba(15,23,42,0.06)] sm:h-28 sm:w-60">
+      <Image
+        src={client.logo}
+        alt={client.name}
+        width={140}
+        height={56}
+        unoptimized
+        className="h-8 w-auto max-w-full object-contain transition-transform duration-500 group-hover:scale-105 sm:h-9"
+      />
+    </div>
+  );
+
   return (
     <>
       <ReadingProgress />
@@ -58,7 +79,10 @@ export default async function IndustryDetailPage({ params }: Props) {
         <Navbar />
 
         <div className="relative mx-auto max-w-3xl px-6 pb-20 pt-6 text-center sm:pb-28">
-          <div className="flex flex-wrap items-center justify-center gap-1.5 text-sm text-white/40" data-aos="fade-up">
+          <div
+            className="flex flex-wrap items-center justify-center gap-1.5 text-sm text-white/40"
+            data-aos="fade-up"
+          >
             <Link href="/" className="transition hover:text-white/70">
               Home
             </Link>
@@ -92,7 +116,11 @@ export default async function IndustryDetailPage({ params }: Props) {
             {industry.overview}
           </p>
 
-          <div className="mx-auto mt-6 flex flex-wrap justify-center gap-2" data-aos="fade-up" data-aos-delay="200">
+          <div
+            className="mx-auto mt-6 flex flex-wrap justify-center gap-2"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             {industry.focusAreas.map((area) => (
               <span
                 key={area}
@@ -117,11 +145,11 @@ export default async function IndustryDetailPage({ params }: Props) {
               <ArrowRight className="h-4 w-4" />
             </Link>
             <a
-              href="tel:+911140590964"
+              href="tel:+91-11-40590964-65"
               className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10"
             >
               <PhoneCall className="h-4 w-4 text-[#25D9C7]" />
-              +91-11-40590964
+              +91-11-40590964-65
             </a>
           </div>
         </div>
@@ -155,7 +183,9 @@ export default async function IndustryDetailPage({ params }: Props) {
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <p className="mt-4 text-sm leading-relaxed text-neutral-600">{challenge}</p>
+                <p className="mt-4 text-sm leading-relaxed text-neutral-600">
+                  {challenge}
+                </p>
               </div>
             ))}
           </div>
@@ -190,8 +220,12 @@ export default async function IndustryDetailPage({ params }: Props) {
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-[#25D9C7] transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_18px_rgba(37,217,199,0.4)]">
                     <SolutionIcon className="h-5 w-5" />
                   </span>
-                  <h3 className="mt-5 text-lg font-semibold text-white">{solution.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/50">{note}</p>
+                  <h3 className="mt-5 text-lg font-semibold text-white">
+                    {solution.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/50">
+                    {note}
+                  </p>
                   <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#25D9C7]">
                     Explore
                     <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -205,27 +239,89 @@ export default async function IndustryDetailPage({ params }: Props) {
 
       {/* Featured clients */}
       {featuredClients.length > 0 && (
-        <section className="relative overflow-hidden bg-white py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-6">
-            <p className="text-center text-xs font-semibold uppercase tracking-[0.3em] text-neutral-400">
-              Trusted by {industry.title} Leaders
-            </p>
-            <div className="mt-10">
+        <section className="relative overflow-hidden bg-white py-20">
+          {/* soft teal glow */}
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_50%_55%,rgba(37,217,199,0.10),transparent_70%)]" />
+
+          {/* faint arc behind the cards */}
+          <svg
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-1/2 hidden h-72 w-full -translate-y-[38%] lg:block"
+            viewBox="0 0 1200 300"
+            preserveAspectRatio="none"
+            fill="none"
+          >
+            <defs>
+              <linearGradient id="clients-arc" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#25D9C7" stopOpacity="0" />
+                <stop offset="50%" stopColor="#25D9C7" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#25D9C7" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M0 40 Q600 330 1200 40"
+              stroke="url(#clients-arc)"
+              strokeWidth="1"
+            />
+          </svg>
+
+          <div className="relative mx-auto max-w-6xl px-6">
+            {/* heading */}
+            <div
+              className="flex items-center justify-center gap-4 sm:gap-8"
+              data-aos="fade-up"
+            >
+              <span className="h-px w-16 bg-gradient-to-r from-transparent to-[#0f5c57]/30 sm:w-40" />
+              <p className="text-center text-[11px] font-semibold uppercase tracking-[0.45em] text-[#0f5c57] sm:text-xs">
+                Trusted by {industry.title} Leaders
+              </p>
+              <span className="h-px w-16 bg-gradient-to-l from-transparent to-[#0f5c57]/30 sm:w-40" />
+            </div>
+
+            {/* glowing dot */}
+            <div
+              className="mt-5 flex justify-center"
+              data-aos="fade-up"
+              data-aos-delay="50"
+            >
+              <span className="relative flex h-3 w-3 items-center justify-center">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-[#25D9C7]/30 blur-[3px]" />
+                <span className="relative h-2 w-2 rounded-full bg-[#25D9C7] shadow-[0_0_10px_rgba(37,217,199,0.8)]" />
+              </span>
+            </div>
+
+            {/* fewer than 4 logos → simple responsive cards, no marquee */}
+            {!useMarquee && (
+              <div className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-5">
+                {featuredClients.map((client, i) => (
+                  <div
+                    key={client.name}
+                    data-aos="fade-up"
+                    data-aos-delay={i * 60}
+                  >
+                    {renderClientCard(client)}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* 4+ logos → continuous marquee, full width with faded edges */}
+          {useMarquee && (
+            <div
+              className="relative mt-12 py-6 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
               <LogoMarquee
                 items={featuredClients.map((client) => (
-                  <Image
-                    key={client.name}
-                    src={client.logo}
-                    alt={client.name}
-                    width={140}
-                    height={56}
-                    unoptimized
-                    className="h-8 w-auto object-contain opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0 sm:h-10"
-                  />
+                  <div key={client.name} className="mx-2.5 shrink-0">
+                    {renderClientCard(client)}
+                  </div>
                 ))}
               />
             </div>
-          </div>
+          )}
         </section>
       )}
 

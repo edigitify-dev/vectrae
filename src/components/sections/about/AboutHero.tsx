@@ -44,7 +44,7 @@ export default function AboutHero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-6 pb-16">
         <p
-          className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+          className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
           data-aos="fade-up"
         >
           About Us
@@ -106,9 +106,15 @@ export default function AboutHero() {
           </a>
           <Link
             href="/solutions"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white/70 transition hover:border-white/25 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
           >
             Explore Solutions
+          </Link>
+          <Link
+            href="/company-profile"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/20 hover:bg-white/10"
+          >
+            Company Profile
           </Link>
         </motion.div>
       </div>

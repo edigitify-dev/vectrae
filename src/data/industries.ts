@@ -1,3 +1,4 @@
+import { r2Asset } from "@/lib/site-images";
 import {
   Briefcase,
   Car,
@@ -34,7 +35,7 @@ export const industries: Industry[] = [
     slug: "it-ites",
     title: "IT & ITES",
     headline: "Technology Solutions for Technology Companies",
-    image: "/images/industry/industry_IT.png",
+    image: r2Asset("/images/industry/industry_IT.png"),
     icon: Cpu,
     overview:
       "IT and ITES enterprises run at scale, thousands of employees, dozens of meeting rooms, and infrastructure that can't afford downtime. Vectrae delivers the AV, networking, and device infrastructure that keeps large technology campuses running without friction.",

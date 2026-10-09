@@ -1,21 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { BRAND_GRADIENT } from "@/lib/brand";
 import { partnersByCategory } from "@/data/partners";
 
-const CATEGORIES = Object.keys(partnersByCategory) as (keyof typeof partnersByCategory)[];
+const CATEGORIES = Object.keys(
+  partnersByCategory,
+) as (keyof typeof partnersByCategory)[];
+
+function getInitials(name: string) {
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return words
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
 
 export default function PartnersCategories() {
-  const [activeCategory, setActiveCategory] = useState<keyof typeof partnersByCategory>(CATEGORIES[0]);
+  const [activeCategory, setActiveCategory] = useState<
+    keyof typeof partnersByCategory
+  >(CATEGORIES[0]);
   const activePartners = partnersByCategory[activeCategory];
 
   return (
-    <section id="partners" className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28">
+    <section
+      id="partners"
+      className="relative overflow-hidden bg-[#fff] py-20 sm:py-12"
+    >
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+          <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
             Partner Directory
           </p>
           <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -39,7 +57,9 @@ export default function PartnersCategories() {
                     ? "border-transparent text-black shadow-sm"
                     : "border-black/10 bg-white text-neutral-600 hover:border-black/20"
                 }`}
-                style={isActive ? { backgroundImage: BRAND_GRADIENT } : undefined}
+                style={
+                  isActive ? { backgroundImage: BRAND_GRADIENT } : undefined
+                }
               >
                 {category}
                 <span
@@ -52,7 +72,11 @@ export default function PartnersCategories() {
           })}
         </div>
 
-        <div className="mt-12 rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10" data-aos="fade-up" data-aos-delay="150">
+        <div
+          className="mt-12 rounded-3xl border border-black/10 bg-white p-6 shadow-sm sm:p-10"
+          data-aos="fade-up"
+          data-aos-delay="150"
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}
@@ -60,20 +84,33 @@ export default function PartnersCategories() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap gap-2.5"
+              className="flex flex-wrap justify-center gap-3"
             >
-              {activePartners.map((name) => (
+              {activePartners.map((partner) => (
                 <span
-                  key={name}
-                  className="group inline-flex items-center gap-2.5 rounded-xl border border-black/10 bg-neutral-50 px-4 py-3 text-sm font-semibold text-neutral-700 transition hover:border-black/20 hover:bg-white hover:shadow-md"
+                  key={partner.name}
+                  className="group inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-black/10 bg-neutral-50 py-1 px-1 text-sm font-semibold text-neutral-700 shadow-sm transition hover:border-black/20 hover:bg-white hover:shadow-md"
                 >
-                  <span
-                    className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-black"
-                    style={{ backgroundImage: BRAND_GRADIENT }}
-                  >
-                    {name.charAt(0)}
-                  </span>
-                  {name}
+                  {partner.logo ? (
+                    <span className="relative flex h-10 w-26 shrink-0 items-center justify-center overflow-hidden rounded-full border border-black/10 bg-white">
+                      <Image
+                        src={partner.logo}
+                        alt={partner.name}
+                        width={28}
+                        height={28}
+                        unoptimized
+                        className="h-full w-full object-contain p-2.5"
+                      />
+                    </span>
+                  ) : (
+                    <span
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold text-black"
+                      style={{ backgroundImage: BRAND_GRADIENT }}
+                    >
+                      {getInitials(partner.name)}
+                    </span>
+                  )}
+                  {/* <span className="whitespace-nowrap">{partner.name}</span> */}
                 </span>
               ))}
             </motion.div>

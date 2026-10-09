@@ -1,4 +1,5 @@
 "use client";
+import { r2Asset } from "@/lib/site-images";
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -52,7 +53,7 @@ function MobileMenuOverlay({
       >
         <Link href="/" onClick={onClose}>
           <Image
-            src="/logo.png"
+            src={r2Asset("/logo.png")}
             alt="Vectrae"
             width={130}
             height={27}

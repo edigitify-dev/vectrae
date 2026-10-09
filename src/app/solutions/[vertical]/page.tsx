@@ -1,3 +1,4 @@
+import { r2Asset } from "@/lib/site-images";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +9,6 @@ import {
   CheckCircle2,
   ChevronRight,
   PhoneCall,
-  ShieldCheck,
   Sparkles,
 } from "lucide-react";
 import Navbar from "@/components/sections/Navbar";
@@ -16,6 +16,7 @@ import Odometer from "@/components/ui/Odometer";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
 import PremiumHeroBackdrop from "@/components/ui/PremiumHeroBackdrop";
+import SolutionMedia from "@/components/ui/SolutionMedia";
 import ReadingProgress from "@/components/sections/blog/ReadingProgress";
 import { BRAND_GRADIENT, NOISE_BG_URL } from "@/lib/brand";
 import { solutions, getSolution } from "@/data/solutions";
@@ -40,6 +41,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function getOemInitials(name: string) {
+  const words = name.trim().split(/\s+/);
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return words
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
 export default async function SolutionOverviewPage({ params }: Props) {
   const { vertical } = await params;
   const solution = getSolution(vertical);
@@ -49,12 +60,12 @@ export default async function SolutionOverviewPage({ params }: Props) {
   const related = solutions.filter((s) => s.slug !== vertical).slice(0, 3);
 
   const capabilityImages = [
-    "/images/audioCard/audioCardImg1.png",
-    "/images/audioCard/audioCardImg2.png",
-    "/images/audioCard/audioCardImg3.png",
-    "/images/audioCard/audioCardImg4.png",
-    "/images/audioCard/audioCardImg5.png",
-    "/images/audioCard/audioCardImg6.png",
+    r2Asset("/images/audioCard/audioCardImg1.png"),
+    r2Asset("/images/audioCard/audioCardImg2.png"),
+    r2Asset("/images/audioCard/audioCardImg3.png"),
+    r2Asset("/images/audioCard/audioCardImg4.png"),
+    r2Asset("/images/audioCard/audioCardImg5.png"),
+    r2Asset("/images/audioCard/audioCardImg6.png"),
   ];
 
   return (
@@ -125,11 +136,11 @@ export default async function SolutionOverviewPage({ params }: Props) {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <a
-                  href="tel:+911140590964"
+                  href="tel:+91-11-40590964-65"
                   className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/10"
                 >
                   <PhoneCall className="h-4 w-4 text-[#25D9C7]" />
-                  +91-11-40590964
+                  +91-11-40590964-65
                 </a>
               </div>
             </div>
@@ -139,13 +150,11 @@ export default async function SolutionOverviewPage({ params }: Props) {
               data-aos="fade-left"
               data-aos-delay="150"
             >
-              <Image
+              <SolutionMedia
                 src={solution.heroImage}
                 alt={solution.title}
-                fill
                 priority
-                unoptimized
-                className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                className="transition-transform duration-1000 ease-out group-hover:scale-105"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
 
@@ -208,7 +217,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
 
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               What&apos;s Included
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -216,14 +225,14 @@ export default async function SolutionOverviewPage({ params }: Props) {
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-14 flex flex-wrap justify-center gap-5">
             {solution.capabilities.map((cap, i) => {
               const CapIcon = cap.icon;
 
               return (
                 <div
                   key={cap.title}
-                  className="group relative overflow-hidden rounded-2xl border border-black/10 bg-white px-6 py-14 shadow-sm transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
+                  className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)] sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.833rem)]"
                   data-aos="fade-up"
                   data-aos-delay={i * 60}
                 >
@@ -273,7 +282,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
         <section className="relative overflow-hidden bg-white py-20 sm:py-28">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center" data-aos="fade-up">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+              <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
                 Go Deeper
               </p>
               <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-5xl">
@@ -281,14 +290,14 @@ export default async function SolutionOverviewPage({ params }: Props) {
               </h2>
             </div>
 
-            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 flex flex-wrap justify-center gap-5">
               {solution.subServices.map((sub, i) => {
                 const SubIcon = sub.icon;
                 return (
                   <Link
                     key={sub.slug}
                     href={`/solutions/${solution.slug}/${sub.slug}`}
-                    className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)]"
+                    className="group relative flex w-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-[#f5f5f0] px-8 py-6 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-transparent hover:bg-white hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.45),0_20px_45px_-15px_rgba(15,23,42,0.18)] sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.833rem)]"
                     data-aos="fade-up"
                     data-aos-delay={i * 60}
                   >
@@ -328,9 +337,9 @@ export default async function SolutionOverviewPage({ params }: Props) {
           style={{ backgroundImage: NOISE_BG_URL }}
         />
 
-        <div className="relative mx-auto max-w-4xl px-6 text-center">
+        <div className="relative mx-auto max-w-6xl px-6 text-center">
           <p
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
+            className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]"
             data-aos="fade-up"
           >
             Why Vectrae
@@ -358,31 +367,57 @@ export default async function SolutionOverviewPage({ params }: Props) {
           </div>
 
           {solution.oems.length > 0 && (
-            <div className="mx-auto mt-16 max-w-3xl" data-aos="fade-up">
-              <p className="text-xs font-semibold uppercase tracking-widest text-white/30">
+            <div className="mx-auto mt-16 max-w-5xl" data-aos="fade-up">
+              <p className="text-center text-xs font-semibold uppercase tracking-widest text-white/30">
                 Technology Partners for {solution.title}
               </p>
-              <div className="mt-5 flex flex-wrap justify-center gap-2">
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
                 {solution.oems.map((oem) => (
                   <span
-                    key={oem}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-white/60 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#25D9C7]/40 hover:text-white/90"
+                    key={oem.name}
+                    className="inline-flex w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-full border border-white/10 bg-white/[0.03] py-1.5 px-1.5 text-sm font-medium text-white/70 shadow-[inset_0_0_20px_rgba(37,217,199,0.12)] backdrop-blur-sm transition-all duration-300 hover:border-[#25D9C7]/30 hover:bg-white/[0.06]"
                   >
-                    <ShieldCheck className="h-3 w-3 text-[#25D9C7]" />
-                    {oem}
+                    {oem.logo ? (
+                      <span className="relative flex h-10 w-26 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
+                        <Image
+                          src={oem.logo}
+                          alt={oem.name}
+                          width={28}
+                          height={28}
+                          unoptimized
+                          className="h-full w-full object-contain p-1.5"
+                        />
+                      </span>
+                    ) : (
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/60 shadow-[inset_0_0_12px_rgba(37,217,199,0.35)]">
+                        {getOemInitials(oem.name)}
+                      </span>
+                    )}
+                    {/* <span className="whitespace-nowrap">{oem.name}</span> */}
                   </span>
                 ))}
               </div>
+              <Link
+                href="#more"
+                style={{ backgroundImage: BRAND_GRADIENT }}
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-black transition hover:opacity-90 mt-8"
+              >
+                View More Solutions
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           )}
         </div>
       </section>
 
       {/* Related solutions */}
-      <section className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28">
+      <section
+        className="relative overflow-hidden bg-[#f5f5f0] py-20 sm:py-28"
+        id="more"
+      >
         <div className="mx-auto max-w-6xl px-6">
           <div className="mb-10 text-center" data-aos="fade-up">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
+            <p className="text-xl max-sm:text-sm font-semibold uppercase tracking-[0.3em] text-[#29B9F2]">
               Explore More
             </p>
             <h2 className="mx-auto mt-4 text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
@@ -390,23 +425,21 @@ export default async function SolutionOverviewPage({ params }: Props) {
             </h2>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-3">
+          <div className="flex flex-wrap justify-center gap-5">
             {related.map((r, i) => {
               const RelIcon = r.icon;
               return (
                 <Link
                   key={r.slug}
                   href={`/solutions/${r.slug}`}
-                  className="group relative h-64 overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 ease-out hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.5),0_25px_50px_-15px_rgba(0,0,0,0.5)]"
+                  className="group relative h-64 w-full overflow-hidden rounded-2xl shadow-md transition-shadow duration-500 ease-out hover:shadow-[0_0_0_1.5px_rgba(37,217,199,0.5),0_25px_50px_-15px_rgba(0,0,0,0.5)] sm:w-[calc(33.333%-0.833rem)]"
                   data-aos="fade-up"
                   data-aos-delay={i * 100}
                 >
-                  <Image
+                  <SolutionMedia
                     src={r.heroImage}
                     alt={r.title}
-                    fill
-                    unoptimized
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black/80" />
                   <div className="pointer-events-none absolute inset-0 -translate-x-[120%] skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-[120%]" />

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Handshake, Users, Move3D, Scale, Sparkles } from "lucide-react";
+import { Handshake, Users, Move3D, Scale, Lightbulb } from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
 const values = [
@@ -38,7 +38,7 @@ const values = [
     title: "Curiosity",
     description:
       "Enterprise IT, especially emerging technologies such as artificial intelligence, is constantly evolving, so we encourage our people to embrace that dynamism and constantly update their skills.",
-    icon: Sparkles,
+    icon: Lightbulb,
   },
 ];
 

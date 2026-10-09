@@ -6,7 +6,7 @@ import {
   Check,
   Network,
   ShieldCheck,
-  Sparkles,
+  Target,
 } from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
@@ -16,7 +16,7 @@ const missionPoints = [
     title: "Right Solutions",
     description:
       "Technology aligned to your business, not technology for technology's sake.",
-    icon: Sparkles,
+    icon: Target,
   },
   {
     number: "02",

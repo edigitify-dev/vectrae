@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { MonitorPlay, Sparkles, ArrowRight } from "lucide-react";
+import { MonitorPlay, CircleCheck, ArrowRight } from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
 const EXCLUDED_PREFIXES = ["/admin", "/desktop", "/premium"];
@@ -68,7 +68,7 @@ export default function FloatingAvWidget() {
             <span className="text-[9.5px] font-semibold text-[#25D9C7] flex items-center gap-1">
               {isAvPage ? (
                 <>
-                  <Sparkles className="h-2.5 w-2.5 animate-spin text-[#25D9C7]" /> Viewing Flagship
+                  <CircleCheck className="h-2.5 w-2.5 text-[#25D9C7]" /> Viewing Flagship
                 </>
               ) : (
                 <>

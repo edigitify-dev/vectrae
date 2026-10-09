@@ -8,7 +8,7 @@ import {
   ShieldCheck,
   Users,
   MonitorSmartphone,
-  Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 import { BRAND_GRADIENT } from "@/lib/brand";
 import { industries } from "@/data/industries";
@@ -480,7 +480,7 @@ export default function IndustriesGrid() {
                 <div className="mt-auto pt-5 sm:pt-8">
                   <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5">
                     {active.focusAreas.slice(0, 3).map((area, index) => {
-                      const FeatureIcon = featureIcons[index] ?? Sparkles;
+                      const FeatureIcon = featureIcons[index] ?? CheckCircle2;
 
                       return (
                         <motion.div

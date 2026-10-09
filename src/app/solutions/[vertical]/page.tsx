@@ -9,7 +9,7 @@ import {
   CheckCircle2,
   ChevronRight,
   PhoneCall,
-  Sparkles,
+  Handshake,
 } from "lucide-react";
 import Navbar from "@/components/sections/Navbar";
 import Odometer from "@/components/ui/Odometer";
@@ -168,7 +168,7 @@ export default async function SolutionOverviewPage({ params }: Props) {
                   style={{ backgroundImage: BRAND_GRADIENT }}
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-black"
                 >
-                  <Sparkles className="h-4 w-4" />
+                  <Handshake className="h-4 w-4" />
                 </span>
                 <div>
                   <p className="text-sm font-bold leading-none text-white">

@@ -34,7 +34,7 @@ export const desktopFolders: OSFolder[] = [
       {
         id: "hero",
         label: "Hero",
-        icon: "sparkles",
+        icon: "presentation",
         accent: "#29B9F2",
         files: [
           {
@@ -337,7 +337,7 @@ export const desktopFolders: OSFolder[] = [
           },
           {
             id: "innovation",
-            icon: "sparkles",
+            icon: "lightbulb",
             title: "Innovation",
             tag: "Core Value",
             summary: "Innovation",
@@ -578,7 +578,7 @@ export const desktopFolders: OSFolder[] = [
           },
           {
             id: "about-mission",
-            icon: "sparkles",
+            icon: "target",
             title: "Mission & Vision",
             tag: "Brand Identity",
             summary:
@@ -653,7 +653,7 @@ export const desktopFolders: OSFolder[] = [
         files: [
           {
             id: "awards",
-            icon: "sparkles",
+            icon: "award",
             title: "Awards & Recognition",
             tag: "Needs Client Input",
             summary:
@@ -845,7 +845,7 @@ export const desktopFolders: OSFolder[] = [
       {
         id: "gallery-events",
         label: "Events & Exhibitions",
-        icon: "sparkles",
+        icon: "calendarDays",
         accent: "#29B9F2",
         files: [
           {
@@ -962,7 +962,7 @@ export const desktopFolders: OSFolder[] = [
       {
         id: "careers-culture",
         label: "Life at Vectrae",
-        icon: "sparkles",
+        icon: "users",
         accent: "#B6D93B",
         files: [
           {

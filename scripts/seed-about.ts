@@ -2,12 +2,9 @@
  * Seeds the gallery categories, gallery images, and certifications tables from
  * the existing static data on the About page.
  *
- * Gallery: 37 images split across two categories — "Events" (imgs 1-18) and
- * "Projects" (imgs 19-37) — mirroring the two groups the client mentioned.
- *
- * Certifications: the four placeholder entries currently hard-coded in
- * AboutCertifications.tsx are inserted with no image (fileUrl left empty)
- * so the admin can upload the real logos/PDFs afterwards.
+ * Uses the current category folders and the same public R2 assets as the site.
+ * Repairs legacy flat gallery paths and replaces untouched empty certificate
+ * placeholders with the actual certificate images. Uploaded content is kept.
  *
  * Safe to re-run: existing slugs / duplicate urls are skipped by default.
  * Pass --force to clear and re-insert everything from scratch.
@@ -18,7 +15,8 @@
 
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { r2Asset } from "../src/lib/site-images";
 import {
   certifications as certificationsTable,
   galleryCategories as galleryCategoriesTable,
@@ -31,25 +29,38 @@ const force = process.argv.includes("--force");
 // Source data
 // ─────────────────────────────────────────────────────────────────────────────
 
-const GALLERY_CATEGORIES: { name: string; slug: string; images: string[] }[] = [
+const GALLERY_CATEGORIES = [
   {
     name: "Events",
     slug: "events",
-    images: Array.from({ length: 18 }, (_, i) => `/images/gallery/img (${i + 1}).png`),
+    images: Array.from({ length: 19 }, (_, i) => ({
+      url: r2Asset(encodeURI(`/images/gallery/events/img (${i + 1}).png`)),
+      legacyUrl: `/images/gallery/img (${i + 1}).png`,
+    })),
   },
   {
     name: "Projects",
     slug: "projects",
-    images: Array.from({ length: 19 }, (_, i) => `/images/gallery/img (${i + 19}).png`),
+    images: Array.from({ length: 18 }, (_, i) => ({
+      url: r2Asset(encodeURI(`/images/gallery/projects/img (${i + 1}).png`)),
+      legacyUrl: `/images/gallery/img (${i + 20}).png`,
+    })),
   },
 ];
 
-const CERTIFICATIONS: { name: string; issuingOrg: string; description: string }[] = [
+const LEGACY_CERTIFICATIONS = [
   { name: "ISO Certification",       issuingOrg: "", description: "Quality Management" },
   { name: "OEM Certification",       issuingOrg: "", description: "Technology Partner" },
   { name: "Industry Certification",  issuingOrg: "", description: "Enterprise Technology" },
   { name: "Industry Recognition",    issuingOrg: "", description: "Excellence & Innovation" },
 ];
+
+// The image files don't provide reliable titles; admins can name them after
+// inspecting the documents rather than inheriting the old placeholder labels.
+const CERTIFICATIONS = Array.from({ length: 17 }, (_, i) => ({
+  name: `Certificate ${i + 1}`,
+  fileUrl: r2Asset(`/images/certificates/${i === 0 ? "img" : `img${i}`}.${i === 16 ? "jpg" : "webp"}`),
+}));
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers — retry on transient Neon fetch failures
@@ -96,20 +107,23 @@ async function main() {
 
   let imgInserted = 0;
   let imgSkipped = 0;
+  let imgRepaired = 0;
+  const existingImages = await withRetry(() => db.select().from(galleryImagesTable));
 
   for (let catIndex = 0; catIndex < GALLERY_CATEGORIES.length; catIndex++) {
     const { name, slug, images } = GALLERY_CATEGORIES[catIndex];
 
-    // Upsert category (idempotent by slug).
-    const [catRow] = await withRetry(() =>
+    // Keep existing category names and ordering when re-running the seed.
+    await withRetry(() =>
       db
         .insert(galleryCategoriesTable)
         .values({ name, slug, sortOrder: catIndex })
-        .onConflictDoUpdate({
-          target: galleryCategoriesTable.slug,
-          set: { name, sortOrder: catIndex, updatedAt: new Date() },
-        })
-        .returning({ id: galleryCategoriesTable.id }),
+        .onConflictDoNothing({ target: galleryCategoriesTable.slug }),
+    );
+
+    const [catRow] = await withRetry(() =>
+      db.select({ id: galleryCategoriesTable.id }).from(galleryCategoriesTable)
+        .where(eq(galleryCategoriesTable.slug, slug)),
     );
 
     if (!catRow) {
@@ -129,7 +143,18 @@ async function main() {
     const existingUrls = new Set(existing.map((r) => r.url));
 
     for (let imgIndex = 0; imgIndex < images.length; imgIndex++) {
-      const url = images[imgIndex];
+      const { url, legacyUrl } = images[imgIndex];
+      const legacyImages = existingImages.filter((image) => image.url === legacyUrl);
+
+      // Repair in place, retaining IDs, captions and any edited alt text.
+      for (const image of legacyImages) {
+        await withRetry(() => db.update(galleryImagesTable)
+          .set({ url, categoryId: catRow.id, sortOrder: imgIndex })
+          .where(and(eq(galleryImagesTable.id, image.id), eq(galleryImagesTable.url, legacyUrl))));
+        imgRepaired++;
+      }
+
+      if (legacyImages.length > 0) existingUrls.add(url);
 
       if (!force && existingUrls.has(url)) {
         imgSkipped++;
@@ -151,7 +176,7 @@ async function main() {
     }
   }
 
-  console.log(`\n  Gallery done: ${imgInserted} images written, ${imgSkipped} skipped.`);
+  console.log(`\n  Gallery done: ${imgInserted} images written, ${imgRepaired} repaired, ${imgSkipped} skipped.`);
 
   // ── 2. Certifications ─────────────────────────────────────────────────────
 
@@ -163,38 +188,58 @@ async function main() {
   }
 
   const existingCerts = await withRetry(() =>
-    db.select({ name: certificationsTable.name }).from(certificationsTable),
+    db.select().from(certificationsTable),
   );
-  const existingNames = new Set(existingCerts.map((r) => r.name));
+  const existingFiles = new Set(existingCerts.map((r) => r.fileUrl));
 
   let certInserted = 0;
   let certSkipped = 0;
+  let certRepaired = 0;
 
   for (let i = 0; i < CERTIFICATIONS.length; i++) {
-    const { name, issuingOrg, description } = CERTIFICATIONS[i];
+    const { name, fileUrl } = CERTIFICATIONS[i];
 
-    if (!force && existingNames.has(name)) {
+    if (!force && existingFiles.has(fileUrl)) {
       certSkipped++;
       console.log(`  = "${name}" (already present)`);
+      continue;
+    }
+
+    const legacy = LEGACY_CERTIFICATIONS[i];
+    const placeholder = legacy && existingCerts.find((cert) =>
+      cert.name === legacy.name && cert.description === legacy.description &&
+      !cert.fileUrl && !cert.thumbnailUrl && !cert.issuingOrg && !cert.issueDate,
+    );
+
+    if (placeholder) {
+      await withRetry(() => db.update(certificationsTable)
+        .set({ name, description: "", fileUrl, thumbnailUrl: fileUrl, updatedAt: new Date() })
+        .where(and(
+          eq(certificationsTable.id, placeholder.id),
+          eq(certificationsTable.fileUrl, ""),
+          eq(certificationsTable.thumbnailUrl, ""),
+        )));
+      existingFiles.add(fileUrl);
+      certRepaired++;
+      console.log(`  ✓ "${name}" (linked image to empty placeholder)`);
       continue;
     }
 
     await withRetry(() =>
       db.insert(certificationsTable).values({
         name,
-        issuingOrg,
-        description,
-        fileUrl: "",
-        thumbnailUrl: "",
+        fileUrl,
+        thumbnailUrl: fileUrl,
         sortOrder: i,
       }),
     );
 
     certInserted++;
+    existingFiles.add(fileUrl);
     console.log(`  + "${name}"`);
   }
 
-  console.log(`\n  Certifications done: ${certInserted} written, ${certSkipped} skipped.`);
+  console.log(`\n  Certifications done: ${certInserted} written, ${certRepaired} repaired, ${certSkipped} skipped.`);
   console.log("\n✓ All done.");
 }
 

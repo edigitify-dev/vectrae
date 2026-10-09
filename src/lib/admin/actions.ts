@@ -5,12 +5,13 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { eq, sql } from "drizzle-orm";
 import { getDb, withRetry } from "@/db";
-import { adminUsers, blogPosts, contactEnquiries, jobApplications, jobOpenings } from "@/db/schema";
+import { adminUsers, blogPosts, certifications, contactEnquiries, galleryCategories, galleryImages, jobApplications, jobOpenings } from "@/db/schema";
 import { requireAdmin, requireWriteAccess } from "./auth";
 import { describePasswordProblem, hashPassword, verifyPassword } from "./password";
 import {
   SESSION_COOKIE,
   createSessionToken,
+  deleteSessionToken,
   sessionCookieOptions,
   type AdminRole,
 } from "./session";
@@ -77,13 +78,20 @@ export async function signIn(_prev: ActionState, form: FormData): Promise<Action
     return { error: "That password is incorrect." };
   }
 
-  const token = await createSessionToken({
-    userId: user.id,
-    email: user.email,
-    name: user.name,
-    role: (user.role as AdminRole) ?? "admin",
-    sessionVersion: user.sessionVersion,
-  });
+  let token: string;
+
+  try {
+    token = await createSessionToken({
+      userId: user.id,
+      email: user.email,
+      name: user.name,
+      role: (user.role as AdminRole) ?? "admin",
+      sessionVersion: user.sessionVersion,
+    });
+  } catch (error) {
+    console.error("[admin/signIn] Could not create session:", error);
+    return { error: "We couldn't start your session. Please try again." };
+  }
 
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE, token, sessionCookieOptions);
@@ -100,6 +108,7 @@ export async function signIn(_prev: ActionState, form: FormData): Promise<Action
 
 export async function signOut(): Promise<void> {
   const cookieStore = await cookies();
+  await deleteSessionToken(cookieStore.get(SESSION_COOKIE)?.value);
   cookieStore.delete(SESSION_COOKIE);
   redirect("/admin/login");
 }
@@ -623,4 +632,206 @@ export async function deleteJob(form: FormData): Promise<void> {
 
   revalidateCareers(existing?.slug);
   redirect("/admin/careers");
+}
+
+// ---------------------------------------------------------------- gallery categories
+
+function revalidateAbout() {
+  revalidatePath("/about");
+  revalidatePath("/admin/about");
+}
+
+export async function createGalleryCategory(_prev: ActionState, form: FormData): Promise<ActionState> {
+  await requireWriteAccess();
+
+  if (!(form instanceof FormData)) {
+    return { error: "Malformed submission." };
+  }
+
+  const name = text(form, "name");
+  if (!name) return { error: "Give the category a name." };
+
+  const { slugifyTitle } = await import("@/lib/slug");
+  const slug = slugifyTitle(name);
+  if (!slug) return { error: "That name doesn't produce a usable slug." };
+
+  try {
+    const db = getDb();
+    const [row] = await withRetry(() =>
+      db.insert(galleryCategories).values({ name, slug }).returning({ id: galleryCategories.id }),
+    );
+    revalidateAbout();
+    return { success: row.id };
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    if (msg.includes("gallery_categories_slug_key")) {
+      return { error: `A category named "${name}" already exists.` };
+    }
+    console.error("[admin/createGalleryCategory] failed:", error);
+    return { error: "We couldn't create the category." };
+  }
+}
+
+export async function renameGalleryCategory(_prev: ActionState, form: FormData): Promise<ActionState> {
+  await requireWriteAccess();
+
+  if (!(form instanceof FormData)) {
+    return { error: "Malformed submission." };
+  }
+
+  const id = text(form, "id");
+  const name = text(form, "name");
+  if (!name) return { error: "Enter a name." };
+
+  const { slugifyTitle } = await import("@/lib/slug");
+  const slug = slugifyTitle(name);
+  if (!slug) return { error: "That name doesn't produce a usable slug." };
+
+  try {
+    await withRetry(() =>
+      getDb()
+        .update(galleryCategories)
+        .set({ name, slug, updatedAt: new Date() })
+        .where(eq(galleryCategories.id, id)),
+    );
+    revalidateAbout();
+    return { success: "Renamed." };
+  } catch (error: unknown) {
+    const msg = error instanceof Error ? error.message : String(error);
+    if (msg.includes("gallery_categories_slug_key")) {
+      return { error: `A category named "${name}" already exists.` };
+    }
+    console.error("[admin/renameGalleryCategory] failed:", error);
+    return { error: "We couldn't rename the category." };
+  }
+}
+
+export async function deleteGalleryCategory(form: FormData): Promise<void> {
+  await requireWriteAccess();
+  const id = text(form, "id");
+  await getDb().delete(galleryCategories).where(eq(galleryCategories.id, id));
+  revalidateAbout();
+  redirect("/admin/about?tab=gallery");
+}
+
+// ---------------------------------------------------------------- gallery images
+
+export async function addGalleryImage(_prev: ActionState, form: FormData): Promise<ActionState> {
+  await requireWriteAccess();
+
+  if (!(form instanceof FormData)) {
+    return { error: "Malformed submission." };
+  }
+
+  const categoryId = text(form, "categoryId");
+  const url = text(form, "url");
+  const alt = text(form, "alt");
+  const caption = text(form, "caption");
+
+  if (!categoryId) return { error: "Choose a category." };
+  if (!url) return { error: "Upload an image first." };
+
+  try {
+    const db = getDb();
+    const [row] = await withRetry(() =>
+      db
+        .insert(galleryImages)
+        .values({ categoryId, url, alt, caption })
+        .returning({ id: galleryImages.id }),
+    );
+    revalidateAbout();
+    return { success: row.id };
+  } catch (error) {
+    console.error("[admin/addGalleryImage] failed:", error);
+    return { error: "We couldn't add the image." };
+  }
+}
+
+export async function deleteGalleryImage(form: FormData): Promise<void> {
+  await requireWriteAccess();
+  const id = text(form, "id");
+  await getDb().delete(galleryImages).where(eq(galleryImages.id, id));
+  revalidateAbout();
+}
+
+// ---------------------------------------------------------------- certifications
+
+export async function createCertification(_prev: ActionState, form: FormData): Promise<ActionState> {
+  await requireWriteAccess();
+
+  if (!(form instanceof FormData)) {
+    return { error: "Malformed submission." };
+  }
+
+  const name = text(form, "name");
+  if (!name) return { error: "Enter a certification name." };
+
+  const fileUrl = text(form, "fileUrl");
+  if (!fileUrl) return { error: "Upload a certificate file first." };
+
+  try {
+    const db = getDb();
+    const [row] = await withRetry(() =>
+      db
+        .insert(certifications)
+        .values({
+          name,
+          issuingOrg: text(form, "issuingOrg"),
+          issueDate: text(form, "issueDate"),
+          description: text(form, "description"),
+          fileUrl,
+          thumbnailUrl: text(form, "thumbnailUrl"),
+        })
+        .returning({ id: certifications.id }),
+    );
+    revalidateAbout();
+    return { success: row.id };
+  } catch (error) {
+    console.error("[admin/createCertification] failed:", error);
+    return { error: "We couldn't save the certification." };
+  }
+}
+
+export async function updateCertification(_prev: ActionState, form: FormData): Promise<ActionState> {
+  await requireWriteAccess();
+
+  if (!(form instanceof FormData)) {
+    return { error: "Malformed submission." };
+  }
+
+  const id = text(form, "id");
+  const name = text(form, "name");
+  if (!name) return { error: "Enter a certification name." };
+
+  const fileUrl = text(form, "fileUrl");
+  if (!fileUrl) return { error: "Upload a certificate file first." };
+
+  try {
+    await withRetry(() =>
+      getDb()
+        .update(certifications)
+        .set({
+          name,
+          issuingOrg: text(form, "issuingOrg"),
+          issueDate: text(form, "issueDate"),
+          description: text(form, "description"),
+          fileUrl,
+          thumbnailUrl: text(form, "thumbnailUrl"),
+          updatedAt: new Date(),
+        })
+        .where(eq(certifications.id, id)),
+    );
+    revalidateAbout();
+    return { success: "Saved." };
+  } catch (error) {
+    console.error("[admin/updateCertification] failed:", error);
+    return { error: "We couldn't update the certification." };
+  }
+}
+
+export async function deleteCertification(form: FormData): Promise<void> {
+  await requireWriteAccess();
+  const id = text(form, "id");
+  await getDb().delete(certifications).where(eq(certifications.id, id));
+  revalidateAbout();
 }

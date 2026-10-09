@@ -3,9 +3,6 @@ import "server-only";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { eq } from "drizzle-orm";
-import { getDb, withRetry } from "@/db";
-import { adminUsers, type AdminUser } from "@/db/schema";
 import { SESSION_COOKIE, readSessionToken, type AdminRole } from "./session";
 
 export type CurrentAdmin = {
@@ -31,26 +28,11 @@ export const getCurrentAdmin = cache(async (): Promise<CurrentAdmin | null> => {
     return null;
   }
 
-  let user: AdminUser | undefined;
-
-  try {
-    [user] = await withRetry(() =>
-      getDb().select().from(adminUsers).where(eq(adminUsers.id, session.userId)).limit(1),
-    );
-  } catch (error) {
-    console.error("[admin/auth] Failed to load the signed-in user:", error);
-    return null;
-  }
-
-  if (!user || user.sessionVersion !== session.sessionVersion) {
-    return null;
-  }
-
   return {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    role: normaliseRole(user.role),
+    id: session.userId,
+    email: session.email,
+    name: session.name,
+    role: session.role,
   };
 });
 
@@ -74,8 +56,4 @@ export async function requireWriteAccess(): Promise<CurrentAdmin> {
   }
 
   return admin;
-}
-
-function normaliseRole(role: string): AdminRole {
-  return role === "owner" || role === "editor" ? role : "admin";
 }

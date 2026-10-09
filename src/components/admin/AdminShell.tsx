@@ -9,6 +9,7 @@ import {
   ClipboardList,
   ExternalLink,
   FileText,
+  Image as ImageIcon,
   LayoutDashboard,
   LogOut,
   Mail,
@@ -76,6 +77,7 @@ export default function AdminShell({
     { href: "/admin/applications", label: "Applications", icon: Briefcase, badge: counts.applications },
     { href: "/admin/careers", label: "Careers", icon: ClipboardList },
     { href: "/admin/blog", label: "Blog", icon: FileText },
+    { href: "/admin/about", label: "About page", icon: ImageIcon },
     { href: "/admin/settings", label: "Settings", icon: Settings },
   ];
 

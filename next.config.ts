@@ -1,20 +1,22 @@
 import path from "path";
 import type { NextConfig } from "next";
+import { siteImages } from "./src/lib/site-images";
 
 type RemotePattern = NonNullable<
   NonNullable<NextConfig["images"]>["remotePatterns"]
 >[number];
 
 // Blog cover images uploaded through the admin panel live in Cloudflare R2.
-// Always allow the default `r2.dev` dev subdomain, plus the exact host from
-// R2_PUBLIC_URL when a custom domain is configured instead.
+// Allow only the site's asset bucket and the explicitly configured R2 host.
+// A wildcard would let anyone ask our optimizer to fetch arbitrary R2 buckets.
 const r2RemotePatterns: RemotePattern[] = [
-  { protocol: "https", hostname: "*.r2.dev" },
+  { protocol: "https", hostname: new URL(siteImages.aboutBg).hostname },
 ];
 
 if (process.env.R2_PUBLIC_URL) {
   try {
     const { protocol, hostname } = new URL(process.env.R2_PUBLIC_URL);
+    if (protocol !== "https:") throw new Error("R2 images require HTTPS.");
     r2RemotePatterns.push({
       protocol: protocol.replace(":", "") as "https" | "http",
       hostname,
@@ -27,6 +29,20 @@ if (process.env.R2_PUBLIC_URL) {
 }
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  async headers() {
+    const adminHeaders = [
+      { key: "X-Frame-Options", value: "DENY" },
+      { key: "Content-Security-Policy", value: "frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'" },
+      { key: "Referrer-Policy", value: "no-referrer" },
+      { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
+    ];
+    return [
+      { source: "/:path*", headers: [{ key: "X-Content-Type-Options", value: "nosniff" }] },
+      { source: "/admin/:path*", headers: adminHeaders },
+      { source: "/api/admin/:path*", headers: adminHeaders },
+    ];
+  },
   turbopack: {
     root: path.join(__dirname),
   },

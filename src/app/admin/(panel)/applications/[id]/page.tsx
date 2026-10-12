@@ -1,3 +1,4 @@
+import { isUuid, safeExternalUrl } from "@/lib/security";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
@@ -40,6 +41,7 @@ export default async function ApplicationDetailPage({ params }: Props) {
   const readOnly = admin?.role === "editor";
 
   const { id } = await params;
+  if (!isUuid(id)) notFound();
 
   let row: typeof jobApplications.$inferSelect | undefined;
 
@@ -166,13 +168,13 @@ export default async function ApplicationDetailPage({ params }: Props) {
               <p className="mt-4 text-sm text-white/40">No file was uploaded.</p>
             )}
 
-            {row.resumeLink && (
+            {safeExternalUrl(row.resumeLink) && (
               <div className="mt-4">
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-white/40">
                   Portfolio / external link
                 </p>
                 <a
-                  href={row.resumeLink}
+                  href={safeExternalUrl(row.resumeLink)!}
                   target="_blank"
                   rel="noreferrer noopener"
                   className="mt-1.5 inline-flex max-w-full items-center gap-2 truncate text-sm text-[#7bd4f7] underline-offset-4 hover:underline"

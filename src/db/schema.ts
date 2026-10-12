@@ -55,6 +55,13 @@ export const adminSessions = pgTable(
   (table) => [index("admin_sessions_expires_at_idx").on(table.expiresAt)],
 );
 
+/** Shared across serverless instances; keys are hashes of the limited identifier. */
+export const requestLimits = pgTable("request_limits", {
+  key: text("key").primaryKey(),
+  attempts: integer("attempts").notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+}, (table) => [index("request_limits_expiry_idx").on(table.expiresAt)]);
+
 export const contactEnquiries = pgTable(
   "contact_enquiries",
   {

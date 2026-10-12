@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useAdminListTransition } from "./AdminListView";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Loader2, Search, X } from "lucide-react";
 
@@ -20,7 +21,7 @@ export default function AdminFilters({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [pending, startTransition] = useTransition();
+  const { pending, startTransition } = useAdminListTransition();
 
   const activeStatus = searchParams.get("status") ?? "all";
   const activeQuery = searchParams.get("q") ?? "";

@@ -3,6 +3,7 @@ import { getDb } from "@/db";
 import { jobApplications } from "@/db/schema";
 import { getCurrentAdmin } from "@/lib/admin/auth";
 import { readResume } from "@/lib/resume";
+import { isUuid } from "@/lib/security";
 
 /**
  * Streams a candidate's CV back to a signed-in admin.
@@ -20,8 +21,8 @@ export async function GET(request: Request) {
 
   const id = new URL(request.url).searchParams.get("id");
 
-  if (!id) {
-    return new Response("Missing application id", { status: 400 });
+  if (!isUuid(id)) {
+    return new Response("Invalid application id", { status: 400 });
   }
 
   let row: { resumeUrl: string | null; resumeFilename: string | null } | undefined;
@@ -52,13 +53,14 @@ export async function GET(request: Request) {
     }
 
     // Quote-escape the filename so a comma or quote can't break the header.
-    const filename = (row.resumeFilename ?? "resume").replace(/["\\]/g, "");
+    const filename = (row.resumeFilename ?? "resume").replace(/[^\x20-\x7e]|["\\/;]/g, "_").slice(0, 180) || "resume";
 
     return new Response(result.stream, {
       headers: {
         "Content-Type": result.blob.contentType ?? "application/octet-stream",
         "Content-Disposition": `attachment; filename="${filename}"`,
         "Cache-Control": "private, no-store",
+        "X-Content-Type-Options": "nosniff",
       },
     });
   } catch (error) {

@@ -23,15 +23,15 @@ import { signOut } from "@/lib/admin/actions";
 import { BRAND_GRADIENT } from "@/lib/brand";
 
 export type ShellCounts = {
-  enquiries: number;
-  applications: number;
+  enquiries: React.ReactNode;
+  applications: React.ReactNode;
 };
 
 type NavItem = {
   href: string;
   label: string;
   icon: LucideIcon;
-  badge?: number;
+  badge?: React.ReactNode;
 };
 
 export type ShellUser = {
@@ -103,12 +103,7 @@ export default function AdminShell({
           >
             <item.icon className="h-4 w-4 shrink-0" aria-hidden />
             <span className="flex-1">{item.label}</span>
-            {item.badge ? (
-              <span className="rounded-full bg-[#29B9F2]/15 px-2 py-0.5 text-[11px] font-semibold tabular-nums text-[#7bd4f7]">
-                {item.badge > 99 ? "99+" : item.badge}
-                <span className="sr-only"> new</span>
-              </span>
-            ) : null}
+            {item.badge}
           </Link>
         );
       })}

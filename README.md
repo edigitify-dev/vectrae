@@ -40,6 +40,11 @@ development only.
 
 ## Admin usernames
 
+See [the admin security and feature review](ADMIN_SECURITY_REVIEW.md) for the
+completed security fixes, validation results and remaining feature priorities.
+Before deploying to another environment, run `npm run db:setup-security` against
+its database. This additive migration enables shared login and submission limits.
+
 Admins sign in using a username and password. The dashboard shows the account's
 display name and username instead of a personal email when a username is assigned.
 

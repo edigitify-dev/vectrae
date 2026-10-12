@@ -1,3 +1,4 @@
+import { isUuid } from "@/lib/security";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
@@ -60,6 +61,7 @@ export default async function EnquiryDetailPage({ params }: Props) {
   const readOnly = admin?.role === "editor";
 
   const { id } = await params;
+  if (!isUuid(id)) notFound();
 
   let row: typeof contactEnquiries.$inferSelect | undefined;
 

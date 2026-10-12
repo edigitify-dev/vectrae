@@ -1,3 +1,4 @@
+import { isUuid } from "@/lib/security";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
@@ -23,6 +24,7 @@ export default async function EditJobPage({ params, searchParams }: Props) {
   const readOnly = admin?.role === "editor";
 
   const { id } = await params;
+  if (!isUuid(id)) notFound();
   const { saved } = await searchParams;
 
   let row: typeof jobOpenings.$inferSelect | undefined;

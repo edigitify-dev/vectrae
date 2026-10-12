@@ -1,3 +1,4 @@
+import { isUuid } from "@/lib/security";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
@@ -23,14 +24,19 @@ export default async function EditPostPage({ params, searchParams }: Props) {
   const readOnly = admin?.role === "editor";
 
   const { id } = await params;
+  if (!isUuid(id)) notFound();
   const { saved } = await searchParams;
 
   let row: typeof blogPosts.$inferSelect | undefined;
+  let categories: string[] = [];
 
   try {
-    [row] = await withRetry(() =>
-      getDb().select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1),
-    );
+    const [posts, loadedCategories] = await Promise.all([
+      withRetry(() => getDb().select().from(blogPosts).where(eq(blogPosts.id, id)).limit(1)),
+      getBlogCategories(),
+    ]);
+    [row] = posts;
+    categories = loadedCategories;
   } catch (error) {
     console.error("[admin/blog] Load failed:", error);
   }
@@ -38,8 +44,6 @@ export default async function EditPostPage({ params, searchParams }: Props) {
   if (!row) {
     notFound();
   }
-
-  const categories = await getBlogCategories();
 
   const draft: PostDraft = {
     id: row.id,

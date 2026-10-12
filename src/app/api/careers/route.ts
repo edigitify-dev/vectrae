@@ -3,6 +3,9 @@ import { getDb, withRetry } from "@/db";
 import { jobApplications } from "@/db/schema";
 import { describeResumeProblem, uploadResume } from "@/lib/resume";
 import { sendMail, HR_EMAIL } from "@/lib/mailer";
+import { escapeHtml, safeExternalUrl } from "@/lib/security";
+import { fileHasExpectedSignature } from "@/lib/file-signature";
+import { takeRateLimit, trustedClientIp } from "@/lib/rate-limit";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_FIELD_LENGTH = 2000;
@@ -46,6 +49,9 @@ export async function POST(request: Request) {
 
   const resume = form.get("resume");
   const resumeLink = clean(form.get("resumeLink"));
+  if (resumeLink && !safeExternalUrl(resumeLink)) {
+    return NextResponse.json({ ok: false, error: "Use a valid HTTP or HTTPS resume link." }, { status: 400 });
+  }
   const hasFile = resume instanceof File && resume.size > 0;
 
   if (!hasFile && !resumeLink) {
@@ -57,11 +63,24 @@ export async function POST(request: Request) {
 
   let stored: Awaited<ReturnType<typeof uploadResume>> | null = null;
 
+  try {
+    const ip = trustedClientIp(request.headers);
+    if ((ip && !(await takeRateLimit("careers-ip", ip, 20))) || !(await takeRateLimit("careers-email", email.toLowerCase(), 5))) {
+      return NextResponse.json({ ok: false, error: "Too many applications. Please try again in 15 minutes." }, { status: 429 });
+    }
+  } catch {
+    return NextResponse.json({ ok: false, error: "We couldn't process your request. Please try again shortly." }, { status: 503 });
+  }
+
   if (hasFile) {
     const problem = describeResumeProblem(resume);
 
     if (problem) {
       return NextResponse.json({ ok: false, error: problem }, { status: 400 });
+    }
+
+    if (!(await fileHasExpectedSignature(resume))) {
+      return NextResponse.json({ ok: false, error: "Resume content does not match its selected file type." }, { status: 400 });
     }
 
     try {
@@ -104,9 +123,9 @@ export async function POST(request: Request) {
   const experience = clean(form.get("experience"));
   const message = clean(form.get("message"));
   const resumeDisplay = stored
-    ? `<a href="${stored.url}" style="color:#29B9F2">${stored.filename}</a> (${(stored.size / 1024).toFixed(0)} KB)`
+    ? `${escapeHtml(stored.filename)} (${(stored.size / 1024).toFixed(0)} KB) — download from the authenticated admin dashboard`
     : resumeLink
-      ? `<a href="${resumeLink}" style="color:#29B9F2">${resumeLink}</a>`
+      ? `<a href="${escapeHtml(resumeLink)}" style="color:#29B9F2">${escapeHtml(resumeLink)}</a>`
       : "—";
 
   after(async () => {
@@ -118,17 +137,17 @@ export async function POST(request: Request) {
         <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;color:#1a1a1a">
           <div style="background:linear-gradient(135deg,#0f9ac9,#25D9C7);padding:28px 32px;border-radius:12px 12px 0 0">
             <h1 style="margin:0;font-size:22px;color:#fff">New Job Application</h1>
-            <p style="margin:6px 0 0;color:rgba(255,255,255,0.85);font-size:14px">${roleApplyingFor}</p>
+            <p style="margin:6px 0 0;color:rgba(255,255,255,0.85);font-size:14px">${escapeHtml(roleApplyingFor)}</p>
           </div>
           <div style="background:#f9f9f9;padding:28px 32px;border-radius:0 0 12px 12px;border:1px solid #e5e5e5">
             <table style="width:100%;border-collapse:collapse;font-size:14px">
-              <tr><td style="padding:8px 0;color:#666;width:160px">Full Name</td><td style="padding:8px 0;font-weight:600">${fullName}</td></tr>
-              <tr><td style="padding:8px 0;color:#666">Email</td><td style="padding:8px 0"><a href="mailto:${email}" style="color:#0f9ac9">${email}</a></td></tr>
-              <tr><td style="padding:8px 0;color:#666">Phone</td><td style="padding:8px 0">${phone}</td></tr>
-              <tr><td style="padding:8px 0;color:#666">Role Applied For</td><td style="padding:8px 0">${roleApplyingFor}</td></tr>
-              ${experience ? `<tr><td style="padding:8px 0;color:#666">Experience</td><td style="padding:8px 0">${experience}</td></tr>` : ""}
+              <tr><td style="padding:8px 0;color:#666;width:160px">Full Name</td><td style="padding:8px 0;font-weight:600">${escapeHtml(fullName)}</td></tr>
+              <tr><td style="padding:8px 0;color:#666">Email</td><td style="padding:8px 0"><a href="mailto:${escapeHtml(email)}" style="color:#0f9ac9">${escapeHtml(email)}</a></td></tr>
+              <tr><td style="padding:8px 0;color:#666">Phone</td><td style="padding:8px 0">${escapeHtml(phone)}</td></tr>
+              <tr><td style="padding:8px 0;color:#666">Role Applied For</td><td style="padding:8px 0">${escapeHtml(roleApplyingFor)}</td></tr>
+              ${experience ? `<tr><td style="padding:8px 0;color:#666">Experience</td><td style="padding:8px 0">${escapeHtml(experience)}</td></tr>` : ""}
               <tr><td style="padding:8px 0;color:#666">Resume</td><td style="padding:8px 0">${resumeDisplay}</td></tr>
-              ${message ? `<tr><td style="padding:8px 0;color:#666;vertical-align:top">Cover Note</td><td style="padding:8px 0;white-space:pre-wrap">${message}</td></tr>` : ""}
+              ${message ? `<tr><td style="padding:8px 0;color:#666;vertical-align:top">Cover Note</td><td style="padding:8px 0;white-space:pre-wrap">${escapeHtml(message)}</td></tr>` : ""}
             </table>
             <p style="margin:24px 0 0;font-size:12px;color:#999">Submitted via Vectrae careers page · ${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST</p>
           </div>

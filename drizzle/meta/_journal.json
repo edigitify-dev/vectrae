@@ -29,6 +29,13 @@
       "when": 1791803760204,
       "tag": "0003_admin_usernames",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791804669683,
+      "tag": "0004_security_rate_limits",
+      "breakpoints": true
     }
   ]
 }

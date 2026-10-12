@@ -18,12 +18,14 @@ const ROLE_DESCRIPTIONS: Record<string, string> = {
 export default async function SettingsPage() {
   const admin = await requireAdmin();
 
-  let team: (typeof adminUsers.$inferSelect)[] = [];
+  let team: Pick<typeof adminUsers.$inferSelect, "id" | "name" | "username" | "email" | "role" | "createdAt" | "lastLoginAt">[] = [];
 
   if (admin.role === "owner") {
     try {
       team = await withRetry(() =>
-        getDb().select().from(adminUsers).orderBy(desc(adminUsers.createdAt)),
+        getDb().select({ id: adminUsers.id, name: adminUsers.name, username: adminUsers.username,
+          email: adminUsers.email, role: adminUsers.role, createdAt: adminUsers.createdAt,
+          lastLoginAt: adminUsers.lastLoginAt }).from(adminUsers).orderBy(desc(adminUsers.createdAt)),
       );
     } catch (error) {
       console.error("[admin/settings] Failed to load team:", error);

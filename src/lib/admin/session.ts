@@ -5,6 +5,7 @@ import { and, eq, gt, lte } from "drizzle-orm";
 import { getDb, withRetry } from "@/db";
 import { adminSessions, adminUsers } from "@/db/schema";
 import { isSessionToken, SESSION_MAX_AGE_SECONDS, type AdminRole } from "./session-cookie";
+import { isAdminRole } from "./security";
 
 export { SESSION_COOKIE, sessionCookieOptions, type AdminRole } from "./session-cookie";
 
@@ -61,12 +62,11 @@ export async function readSessionToken(token: string | undefined): Promise<Sessi
       ))
       .limit(1));
 
-    if (!user) {
+    if (!user || !isAdminRole(user.role)) {
       return null;
     }
 
-    const role = user.role === "owner" || user.role === "editor" ? user.role : "admin";
-    return { ...user, role };
+    return { ...user, role: user.role };
   } catch (error) {
     console.error("[admin/session] Failed to load session:", error);
     return null;

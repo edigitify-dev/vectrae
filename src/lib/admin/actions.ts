@@ -2,42 +2,42 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { and, eq, isNull, or, sql } from "drizzle-orm";
 import { getDb, withRetry } from "@/db";
 import { adminUsers, blogPosts, certifications, contactEnquiries, galleryCategories, galleryImages, jobApplications, jobOpenings } from "@/db/schema";
 import { requireAdmin, requireWriteAccess } from "./auth";
-import { describePasswordProblem, hashPassword, verifyPassword } from "./password";
+import { describePasswordProblem, hashPassword, MAX_PASSWORD_LENGTH, verifyPassword } from "./password";
 import {
   SESSION_COOKIE,
   createSessionToken,
   deleteSessionToken,
   sessionCookieOptions,
-  type AdminRole,
 } from "./session";
 import { isApplicationStatus, isEnquiryStatus } from "./statuses";
-import { estimateReadTime, type BlogBlock } from "@/lib/blog-types";
+import { estimateReadTime } from "@/lib/blog-types";
 import { slugifyTitle } from "@/lib/slug";
 import { isDepartment, isJobType } from "@/lib/careers-types";
 import { deleteResume } from "@/lib/resume";
 import { normalizeUsername } from "./username";
+import { isAdminRole, safeAdminPath } from "./security";
+import { isSafeAssetUrl, isUuid } from "@/lib/security";
+import { takeRateLimit, trustedClientIp } from "@/lib/rate-limit";
+import { parseBlogContent } from "./content";
 
 export type ActionState = { error?: string; success?: string };
-
-/** Only ever allow redirects back into the panel, never to an attacker's URL. */
-function safeNextPath(value: FormDataEntryValue | null): string {
-  if (typeof value !== "string" || !value.startsWith("/admin") || value.startsWith("//")) {
-    return "/admin";
-  }
-
-  return value;
-}
 
 function text(form: FormData, key: string): string {
   // Server actions are callable endpoints, so a malformed payload must produce
   // a handled error rather than an unguarded crash.
   const value = form?.get?.(key);
   return typeof value === "string" ? value.trim() : "";
+}
+
+function recordId(form: FormData): string {
+  const id = text(form, "id");
+  if (!isUuid(id)) throw new Error("Invalid record id.");
+  return id;
 }
 
 // ---------------------------------------------------------------- auth
@@ -50,15 +50,20 @@ export async function signIn(_prev: ActionState, form: FormData): Promise<Action
   const username = normalizeUsername(text(form, "username"));
   const passwordValue = form.get("password");
   const password = typeof passwordValue === "string" ? passwordValue : "";
-  const next = safeNextPath(form.get("next"));
+  const next = safeAdminPath(form.get("next"));
 
-  if (!username || username.length > 254 || !password) {
+  if (!username || username.length > 254 || !password || password.length > MAX_PASSWORD_LENGTH) {
     return { error: "Enter your username and password." };
   }
 
   let user: typeof adminUsers.$inferSelect | undefined;
 
   try {
+    const ip = trustedClientIp(await headers());
+    if ((ip && !(await takeRateLimit("login-ip", ip, 30))) ||
+      !(await takeRateLimit("login-username", username, 5))) {
+      return { error: "Too many sign-in attempts. Wait 15 minutes and try again." };
+    }
     [user] = await withRetry(() => getDb().select().from(adminUsers).where(or(
       eq(adminUsers.username, username),
       // Existing accounts without a username can use their email until assigned one.
@@ -74,7 +79,7 @@ export async function signIn(_prev: ActionState, form: FormData): Promise<Action
     password,
     user?.passwordHash ?? `scrypt$${"0".repeat(32)}$${"0".repeat(128)}`,
   );
-  if (!user || !passwordMatches) {
+  if (!user || !passwordMatches || !isAdminRole(user.role)) {
     return { error: "Your username or password is incorrect." };
   }
 
@@ -86,7 +91,7 @@ export async function signIn(_prev: ActionState, form: FormData): Promise<Action
       email: user.email,
       name: user.name,
       username: user.username,
-      role: (user.role as AdminRole) ?? "admin",
+      role: user.role,
       sessionVersion: user.sessionVersion,
     });
   } catch (error) {
@@ -121,9 +126,15 @@ export async function changePassword(_prev: ActionState, form: FormData): Promis
     return { error: "Malformed submission. Please reload the page and try again." };
   }
 
-  const current = String(form.get("currentPassword") ?? "");
-  const next = String(form.get("newPassword") ?? "");
-  const confirm = String(form.get("confirmPassword") ?? "");
+  const currentValue = form.get("currentPassword");
+  const nextValue = form.get("newPassword");
+  const confirmValue = form.get("confirmPassword");
+  if (typeof currentValue !== "string" || typeof nextValue !== "string" || typeof confirmValue !== "string") {
+    return { error: "Enter your current password and confirm a new password." };
+  }
+  const current = currentValue;
+  const next = nextValue;
+  const confirm = confirmValue;
 
   if (next !== confirm) {
     return { error: "The new passwords don't match." };
@@ -133,6 +144,14 @@ export async function changePassword(_prev: ActionState, form: FormData): Promis
 
   if (problem) {
     return { error: problem };
+  }
+
+  try {
+    if (!(await takeRateLimit("password-change", admin.id, 5))) {
+      return { error: "Too many password-change attempts. Wait 15 minutes and try again." };
+    }
+  } catch {
+    return { error: "We couldn't verify this request. Please try again." };
   }
 
   const db = getDb();
@@ -161,6 +180,7 @@ export async function changePassword(_prev: ActionState, form: FormData): Promis
 
 export async function updateEnquiryStatus(id: string, status: string): Promise<void> {
   await requireWriteAccess();
+  if (!isUuid(id)) throw new Error("Invalid record id.");
 
   if (!isEnquiryStatus(status)) {
     throw new Error(`Unknown enquiry status "${status}".`);
@@ -180,6 +200,8 @@ export async function updateEnquiryStatus(id: string, status: string): Promise<v
 
 export async function saveEnquiryNotes(id: string, notes: string): Promise<void> {
   await requireWriteAccess();
+  if (!isUuid(id)) throw new Error("Invalid record id.");
+  if (typeof notes !== "string" || notes.length > 50_000) throw new Error("Invalid notes.");
 
   await withRetry(() =>
     getDb()
@@ -193,7 +215,7 @@ export async function saveEnquiryNotes(id: string, notes: string): Promise<void>
 
 export async function deleteEnquiry(form: FormData): Promise<void> {
   await requireWriteAccess();
-  const id = text(form, "id");
+  const id = recordId(form);
 
   await getDb().delete(contactEnquiries).where(eq(contactEnquiries.id, id));
 
@@ -206,6 +228,7 @@ export async function deleteEnquiry(form: FormData): Promise<void> {
 
 export async function updateApplicationStatus(id: string, status: string): Promise<void> {
   await requireWriteAccess();
+  if (!isUuid(id)) throw new Error("Invalid record id.");
 
   if (!isApplicationStatus(status)) {
     throw new Error(`Unknown application status "${status}".`);
@@ -225,6 +248,8 @@ export async function updateApplicationStatus(id: string, status: string): Promi
 
 export async function saveApplicationNotes(id: string, notes: string): Promise<void> {
   await requireWriteAccess();
+  if (!isUuid(id)) throw new Error("Invalid record id.");
+  if (typeof notes !== "string" || notes.length > 50_000) throw new Error("Invalid notes.");
 
   await withRetry(() =>
     getDb()
@@ -238,7 +263,7 @@ export async function saveApplicationNotes(id: string, notes: string): Promise<v
 
 export async function deleteApplication(form: FormData): Promise<void> {
   await requireWriteAccess();
-  const id = text(form, "id");
+  const id = recordId(form);
   const db = getDb();
 
   const [row] = await db
@@ -265,19 +290,6 @@ export async function deleteApplication(form: FormData): Promise<void> {
 
 // ---------------------------------------------------------------- blog
 
-function parseContent(raw: string): BlogBlock[] {
-  if (!raw) {
-    return [];
-  }
-
-  try {
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as BlogBlock[]) : [];
-  } catch {
-    return [];
-  }
-}
-
 function parseTags(raw: string): string[] {
   return raw
     .split(",")
@@ -294,13 +306,15 @@ async function readPostForm(form: FormData, existingId?: string) {
     return { error: "Give the post a title." as const };
   }
 
-  const content = parseContent(text(form, "content"));
+  const content = parseBlogContent(text(form, "content"));
 
   if (content.length === 0) {
-    return { error: "Add at least one content block." as const };
+    return { error: "Add valid content blocks (up to 100 blocks)." as const };
   }
 
   const status = text(form, "status") === "published" ? "published" : "draft";
+  const image = text(form, "image");
+  if (image && !isSafeAssetUrl(image)) return { error: "Use a valid HTTPS image URL or a local image path." as const };
   const slug = slugifyTitle(text(form, "slug") || title);
 
   if (!slug) {
@@ -324,7 +338,7 @@ async function readPostForm(form: FormData, existingId?: string) {
       category: text(form, "category") || "Insights",
       readTime: text(form, "readTime") || estimateReadTime(content),
       color: text(form, "color") || "#29B9F2",
-      image: text(form, "image"),
+      image,
       featured: form.get("featured") === "on",
       status,
       authorName: text(form, "authorName"),
@@ -392,7 +406,7 @@ export async function updatePost(_prev: ActionState, form: FormData): Promise<Ac
     return { error: "Malformed submission. Please reload the page and try again." };
   }
 
-  const id = text(form, "id");
+  const id = recordId(form);
   const parsed = await readPostForm(form, id);
 
   if ("error" in parsed) {
@@ -439,7 +453,7 @@ export async function updatePost(_prev: ActionState, form: FormData): Promise<Ac
 export async function deletePost(form: FormData): Promise<void> {
   await requireWriteAccess();
 
-  const id = text(form, "id");
+  const id = recordId(form);
   const db = getDb();
 
   const [existing] = await db
@@ -571,7 +585,7 @@ export async function updateJob(_prev: ActionState, form: FormData): Promise<Act
     return { error: "Malformed submission. Please reload the page and try again." };
   }
 
-  const id = text(form, "id");
+  const id = recordId(form);
   const parsed = await readJobForm(form, id);
 
   if ("error" in parsed) {
@@ -622,7 +636,7 @@ export async function updateJob(_prev: ActionState, form: FormData): Promise<Act
 export async function deleteJob(form: FormData): Promise<void> {
   await requireWriteAccess();
 
-  const id = text(form, "id");
+  const id = recordId(form);
   const db = getDb();
 
   const [existing] = await withRetry(() =>
@@ -680,7 +694,7 @@ export async function renameGalleryCategory(_prev: ActionState, form: FormData):
     return { error: "Malformed submission." };
   }
 
-  const id = text(form, "id");
+  const id = recordId(form);
   const name = text(form, "name");
   if (!name) return { error: "Enter a name." };
 
@@ -709,7 +723,7 @@ export async function renameGalleryCategory(_prev: ActionState, form: FormData):
 
 export async function deleteGalleryCategory(form: FormData): Promise<void> {
   await requireWriteAccess();
-  const id = text(form, "id");
+  const id = recordId(form);
   await getDb().delete(galleryCategories).where(eq(galleryCategories.id, id));
   revalidateAbout();
   redirect("/admin/about?tab=gallery");
@@ -729,8 +743,8 @@ export async function addGalleryImage(_prev: ActionState, form: FormData): Promi
   const alt = text(form, "alt");
   const caption = text(form, "caption");
 
-  if (!categoryId) return { error: "Choose a category." };
-  if (!url) return { error: "Upload an image first." };
+  if (!isUuid(categoryId)) return { error: "Choose a valid category." };
+  if (!isSafeAssetUrl(url)) return { error: "Upload an image or use a valid HTTPS image URL." };
 
   try {
     const db = getDb();
@@ -750,7 +764,7 @@ export async function addGalleryImage(_prev: ActionState, form: FormData): Promi
 
 export async function deleteGalleryImage(form: FormData): Promise<void> {
   await requireWriteAccess();
-  const id = text(form, "id");
+  const id = recordId(form);
   await getDb().delete(galleryImages).where(eq(galleryImages.id, id));
   revalidateAbout();
 }
@@ -768,7 +782,9 @@ export async function createCertification(_prev: ActionState, form: FormData): P
   if (!name) return { error: "Enter a certification name." };
 
   const fileUrl = text(form, "fileUrl");
-  if (!fileUrl) return { error: "Upload a certificate file first." };
+  if (!isSafeAssetUrl(fileUrl)) return { error: "Upload a certificate file or use a valid HTTPS file URL." };
+  const thumbnailUrl = text(form, "thumbnailUrl");
+  if (thumbnailUrl && !isSafeAssetUrl(thumbnailUrl)) return { error: "Use a valid HTTPS thumbnail URL or a local path." };
 
   try {
     const db = getDb();
@@ -781,7 +797,7 @@ export async function createCertification(_prev: ActionState, form: FormData): P
           issueDate: text(form, "issueDate"),
           description: text(form, "description"),
           fileUrl,
-          thumbnailUrl: text(form, "thumbnailUrl"),
+          thumbnailUrl,
         })
         .returning({ id: certifications.id }),
     );
@@ -800,12 +816,14 @@ export async function updateCertification(_prev: ActionState, form: FormData): P
     return { error: "Malformed submission." };
   }
 
-  const id = text(form, "id");
+  const id = recordId(form);
   const name = text(form, "name");
   if (!name) return { error: "Enter a certification name." };
 
   const fileUrl = text(form, "fileUrl");
-  if (!fileUrl) return { error: "Upload a certificate file first." };
+  if (!isSafeAssetUrl(fileUrl)) return { error: "Upload a certificate file or use a valid HTTPS file URL." };
+  const thumbnailUrl = text(form, "thumbnailUrl");
+  if (thumbnailUrl && !isSafeAssetUrl(thumbnailUrl)) return { error: "Use a valid HTTPS thumbnail URL or a local path." };
 
   try {
     await withRetry(() =>
@@ -817,7 +835,7 @@ export async function updateCertification(_prev: ActionState, form: FormData): P
           issueDate: text(form, "issueDate"),
           description: text(form, "description"),
           fileUrl,
-          thumbnailUrl: text(form, "thumbnailUrl"),
+          thumbnailUrl,
           updatedAt: new Date(),
         })
         .where(eq(certifications.id, id)),
@@ -832,7 +850,7 @@ export async function updateCertification(_prev: ActionState, form: FormData): P
 
 export async function deleteCertification(form: FormData): Promise<void> {
   await requireWriteAccess();
-  const id = text(form, "id");
+  const id = recordId(form);
   await getDb().delete(certifications).where(eq(certifications.id, id));
   revalidateAbout();
 }

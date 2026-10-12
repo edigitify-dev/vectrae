@@ -4,6 +4,7 @@ import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE, readSessionToken, type AdminRole } from "./session";
+import { canWriteAdmin } from "./security";
 
 export type CurrentAdmin = {
   id: string;
@@ -53,7 +54,7 @@ export async function requireAdmin(): Promise<CurrentAdmin> {
 export async function requireWriteAccess(): Promise<CurrentAdmin> {
   const admin = await requireAdmin();
 
-  if (admin.role === "editor") {
+  if (!canWriteAdmin(admin.role)) {
     throw new Error("Your account has read-only access.");
   }
 

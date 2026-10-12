@@ -6,6 +6,7 @@ import { CheckCircle2 } from "lucide-react";
 import LoginForm from "@/components/admin/LoginForm";
 import { getCurrentAdmin } from "@/lib/admin/auth";
 import { BRAND_GRADIENT, NOISE_BG_URL } from "@/lib/brand";
+import { safeAdminPath } from "@/lib/admin/security";
 
 type Props = {
   searchParams: Promise<{ next?: string; changed?: string }>;
@@ -19,7 +20,7 @@ export default async function AdminLoginPage({ searchParams }: Props) {
   const admin = await getCurrentAdmin();
 
   if (admin) {
-    redirect(next && next.startsWith("/admin") ? next : "/admin");
+    redirect(safeAdminPath(next));
   }
 
   return (
@@ -65,7 +66,7 @@ export default async function AdminLoginPage({ searchParams }: Props) {
         </div>
 
         <p className="mt-6 text-center text-xs text-white/35">
-          Authorised personnel only. All actions are attributed to your account.
+          Authorised personnel only. Use your assigned admin credentials.
         </p>
       </div>
     </main>

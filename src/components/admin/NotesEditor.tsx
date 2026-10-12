@@ -16,11 +16,12 @@ export default function NotesEditor({
   disabled?: boolean;
 }) {
   const [value, setValue] = useState(initialValue);
+  const [savedValue, setSavedValue] = useState(initialValue);
   const [pending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const dirty = value !== initialValue;
+  const dirty = value !== savedValue;
 
   function save() {
     setError(null);
@@ -28,6 +29,7 @@ export default function NotesEditor({
     startTransition(async () => {
       try {
         await action(id, value);
+        setSavedValue(value);
         setSaved(true);
         setTimeout(() => setSaved(false), 2500);
       } catch {
@@ -46,7 +48,7 @@ export default function NotesEditor({
         rows={5}
         value={value}
         disabled={disabled || pending}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => { setValue(event.target.value); setSaved(false); }}
         placeholder="Internal notes — who followed up, what was agreed, next step…"
         className={`${INPUT} resize-y leading-relaxed`}
       />

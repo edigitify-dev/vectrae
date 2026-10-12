@@ -22,6 +22,7 @@ const SALT_LENGTH = 16;
 const SCRYPT_OPTIONS = { N: 16384, r: 8, p: 1, maxmem: 64 * 1024 * 1024 } as const;
 
 export const MIN_PASSWORD_LENGTH = 8;
+export const MAX_PASSWORD_LENGTH = 128;
 
 /** Produces `scrypt$<saltHex>$<keyHex>`. */
 export async function hashPassword(password: string): Promise<string> {
@@ -32,9 +33,10 @@ export async function hashPassword(password: string): Promise<string> {
 }
 
 export async function verifyPassword(password: string, stored: string): Promise<boolean> {
+  if (password.length > MAX_PASSWORD_LENGTH) return false;
   const [scheme, saltHex, keyHex] = stored.split("$");
 
-  if (scheme !== "scrypt" || !saltHex || !keyHex) {
+  if (scheme !== "scrypt" || !/^[0-9a-f]{32}$/i.test(saltHex ?? "") || !/^[0-9a-f]{128}$/i.test(keyHex ?? "")) {
     return false;
   }
 
@@ -50,6 +52,7 @@ export async function verifyPassword(password: string, stored: string): Promise<
 }
 
 export function describePasswordProblem(password: string): string | null {
+  if (password.length > MAX_PASSWORD_LENGTH) return `Password must be ${MAX_PASSWORD_LENGTH} characters or fewer.`;
   if (password.length < MIN_PASSWORD_LENGTH) {
     return `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`;
   }

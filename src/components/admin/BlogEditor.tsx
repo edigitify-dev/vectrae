@@ -190,7 +190,7 @@ export default function BlogEditor({
 
               <div className="space-y-2">
                 <label className={LABEL} htmlFor="excerpt">
-                  Excerpt
+                  Short Description
                 </label>
                 <textarea
                   id="excerpt"

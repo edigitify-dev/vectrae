@@ -36,7 +36,6 @@ type NavItem = {
 
 export type ShellUser = {
   name: string;
-  email: string;
   role: string;
 };
 

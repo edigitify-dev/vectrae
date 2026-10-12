@@ -27,6 +27,7 @@ export const adminUsers = pgTable(
   {
     id: uuid("id").defaultRandom().primaryKey(),
     email: text("email").notNull(),
+    username: text("username"),
     name: text("name").notNull(),
     passwordHash: text("password_hash").notNull(),
     // "owner" can manage other admin users; "editor" is read-only on people data.
@@ -36,7 +37,10 @@ export const adminUsers = pgTable(
     lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
-  (table) => [uniqueIndex("admin_users_email_key").on(table.email)],
+  (table) => [
+    uniqueIndex("admin_users_email_key").on(table.email),
+    uniqueIndex("admin_users_username_key").on(table.username),
+  ],
 );
 
 export const adminSessions = pgTable(

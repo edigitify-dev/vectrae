@@ -12,6 +12,7 @@ export type SessionPayload = {
   userId: string;
   email: string;
   name: string;
+  username: string | null;
   role: AdminRole;
   sessionVersion: number;
 };
@@ -47,6 +48,7 @@ export async function readSessionToken(token: string | undefined): Promise<Sessi
         userId: adminUsers.id,
         email: adminUsers.email,
         name: adminUsers.name,
+        username: adminUsers.username,
         role: adminUsers.role,
         sessionVersion: adminUsers.sessionVersion,
       })

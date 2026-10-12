@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, isNull, or, sql } from "drizzle-orm";
 import { getDb, withRetry } from "@/db";
 import { adminUsers, blogPosts, certifications, contactEnquiries, galleryCategories, galleryImages, jobApplications, jobOpenings } from "@/db/schema";
 import { requireAdmin, requireWriteAccess } from "./auth";
@@ -20,6 +20,7 @@ import { estimateReadTime, type BlogBlock } from "@/lib/blog-types";
 import { slugifyTitle } from "@/lib/slug";
 import { isDepartment, isJobType } from "@/lib/careers-types";
 import { deleteResume } from "@/lib/resume";
+import { normalizeUsername } from "./username";
 
 export type ActionState = { error?: string; success?: string };
 
@@ -46,36 +47,35 @@ export async function signIn(_prev: ActionState, form: FormData): Promise<Action
     return { error: "Malformed submission. Please reload the page and try again." };
   }
 
-  const password = String(form.get("password") ?? "");
+  const username = normalizeUsername(text(form, "username"));
+  const passwordValue = form.get("password");
+  const password = typeof passwordValue === "string" ? passwordValue : "";
   const next = safeNextPath(form.get("next"));
 
-  if (!password) {
-    return { error: "Enter the password." };
+  if (!username || username.length > 254 || !password) {
+    return { error: "Enter your username and password." };
   }
 
-  let candidates: (typeof adminUsers.$inferSelect)[];
+  let user: typeof adminUsers.$inferSelect | undefined;
 
   try {
-    candidates = await withRetry(() => getDb().select().from(adminUsers));
+    [user] = await withRetry(() => getDb().select().from(adminUsers).where(or(
+      eq(adminUsers.username, username),
+      // Existing accounts without a username can use their email until assigned one.
+      and(isNull(adminUsers.username), eq(adminUsers.email, username)),
+    )).limit(1));
   } catch (error) {
     console.error("[admin/signIn] Lookup failed:", error);
     return { error: "We couldn't reach the database. Please try again." };
   }
 
-  // No email to key off, so the submitted password is checked against every
-  // account. Fine for a handful of admin users; each check costs ~100ms of
-  // scrypt work, same as before.
-  let user: (typeof candidates)[number] | undefined;
-
-  for (const candidate of candidates) {
-    if (await verifyPassword(password, candidate.passwordHash)) {
-      user = candidate;
-      break;
-    }
-  }
-
-  if (!user) {
-    return { error: "That password is incorrect." };
+  // Do equivalent password work for unknown usernames and use the same error.
+  const passwordMatches = await verifyPassword(
+    password,
+    user?.passwordHash ?? `scrypt$${"0".repeat(32)}$${"0".repeat(128)}`,
+  );
+  if (!user || !passwordMatches) {
+    return { error: "Your username or password is incorrect." };
   }
 
   let token: string;
@@ -85,6 +85,7 @@ export async function signIn(_prev: ActionState, form: FormData): Promise<Action
       userId: user.id,
       email: user.email,
       name: user.name,
+      username: user.username,
       role: (user.role as AdminRole) ?? "admin",
       sessionVersion: user.sessionVersion,
     });

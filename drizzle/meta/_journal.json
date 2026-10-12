@@ -22,6 +22,13 @@
       "when": 1791519141349,
       "tag": "0002_leadership",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791803760204,
+      "tag": "0003_admin_usernames",
+      "breakpoints": true
     }
   ]
 }

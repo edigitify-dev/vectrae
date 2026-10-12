@@ -13,6 +13,7 @@
     "db:studio": "dotenv -e .env.local -- drizzle-kit studio",
     "db:seed": "dotenv -e .env.local -- tsx scripts/seed-blog.ts",
     "admin:create": "dotenv -e .env.local -- tsx scripts/create-admin.ts",
+    "admin:username": "dotenv -e .env.local -- tsx scripts/set-admin-username.ts",
     "db:seed-careers": "dotenv -e .env.local -- tsx scripts/seed-careers.ts",
     "db:seed-about": "dotenv -e .env.local -- tsx scripts/seed-about.ts",
     "db:setup-leadership": "dotenv -e .env.local -- tsx scripts/setup-leadership.ts",

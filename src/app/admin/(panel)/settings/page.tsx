@@ -58,7 +58,7 @@ export default async function SettingsPage() {
             </span>
             <div className="min-w-0">
               <p className="truncate text-base font-semibold text-white">{admin.name}</p>
-              <p className="truncate text-sm text-white/50">{admin.email}</p>
+              <p className="truncate text-sm text-white/50">{admin.username ?? admin.email}</p>
             </div>
           </div>
 
@@ -90,7 +90,7 @@ export default async function SettingsPage() {
             <p className="mt-1 text-xs text-white/45">
               Add or reset accounts from the terminal:{" "}
               <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[11px] text-white/70">
-                npm run admin:create -- --email … --name … --role …
+                npm run admin:create -- --email … --name … --username … --role …
               </code>
             </p>
           </header>
@@ -111,7 +111,7 @@ export default async function SettingsPage() {
                         <span className="ml-2 text-xs font-normal text-white/40">you</span>
                       )}
                     </p>
-                    <p className="truncate text-xs text-white/45">{user.email}</p>
+                    <p className="truncate text-xs text-white/45">{user.username ?? user.email}</p>
                   </div>
                   <span className="rounded-full border border-white/12 px-2.5 py-1 text-[11px] font-semibold capitalize text-white/60">
                     {user.role}

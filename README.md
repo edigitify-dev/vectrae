@@ -38,6 +38,27 @@ For the hosted site, configure the same two secret variables in the Vercel
 project's required environments and redeploy. `.env.local` configures local
 development only.
 
+## Admin usernames
+
+Admins sign in using a username and password. The dashboard shows the account's
+display name and username instead of a personal email when a username is assigned.
+
+Assign a generated username to an existing account without resetting its password:
+
+```bash
+npm run admin:username -- --id ACCOUNT_UUID
+```
+
+This applies the additive username migration, prints the saved username, and can
+be rerun safely. Add `--username chosen-username` to choose a specific username.
+Existing accounts without a username can enter their email in the username field.
+
+After applying the migration, `npm run admin:create` accepts `--username`; omitted
+usernames are generated for new accounts and preserved when resetting existing
+accounts. Recreating an account resets its password and revokes its sessions.
+
+Deploy the updated app for username sign-in to appear on the hosted site.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

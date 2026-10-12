@@ -9,6 +9,7 @@ export type CurrentAdmin = {
   id: string;
   email: string;
   name: string;
+  username: string | null;
   role: AdminRole;
 };
 
@@ -32,6 +33,7 @@ export const getCurrentAdmin = cache(async (): Promise<CurrentAdmin | null> => {
     id: session.userId,
     email: session.email,
     name: session.name,
+    username: session.username,
     role: session.role,
   };
 });

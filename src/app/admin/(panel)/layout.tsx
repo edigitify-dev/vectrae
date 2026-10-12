@@ -35,7 +35,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
 
   return (
     <AdminShell
-      user={{ name: admin.name, email: admin.email, role: admin.role }}
+      user={{ name: admin.name, role: admin.role }}
       counts={{ enquiries, applications }}
     >
       {children}

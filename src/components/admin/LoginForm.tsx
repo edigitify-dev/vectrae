@@ -40,6 +40,25 @@ export default function LoginForm({ next }: { next?: string }) {
       {next && <input type="hidden" name="next" value={next} />}
 
       <div className="space-y-2">
+        <label className={LABEL} htmlFor="username">
+          Username
+        </label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          autoComplete="username"
+          autoCapitalize="none"
+          spellCheck={false}
+          autoFocus
+          required
+          maxLength={254}
+          className={INPUT}
+          placeholder="Your admin username"
+        />
+      </div>
+
+      <div className="space-y-2">
         <label className={LABEL} htmlFor="password">
           Password
         </label>
@@ -48,7 +67,6 @@ export default function LoginForm({ next }: { next?: string }) {
           name="password"
           type="password"
           autoComplete="current-password"
-          autoFocus
           required
           className={INPUT}
           placeholder="••••••••••"

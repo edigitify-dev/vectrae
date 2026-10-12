@@ -174,7 +174,7 @@ export default async function AdminOverviewPage() {
     <div className="space-y-8">
       <PageHeader
         eyebrow="Overview"
-        title={`${greeting()}, ${admin.name.split(" ")[0]}`}
+        title={`${greeting()}, ${admin.name}`}
         description="Everything waiting on the team, in one place."
       />
 

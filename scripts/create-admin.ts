@@ -1,7 +1,7 @@
 /**
  * Creates (or updates the password of) an admin panel user.
  *
- *   npm run admin:create -- --email you@vectrae.com --name "Your Name" --role owner
+ *   npm run admin:create -- --email you@vectrae.com --name "Vectrae Admin" --username vectrae-admin --role owner
  *
  * Omit --password to have a strong one generated and printed once. Re-running
  * for an existing email resets that user's password and revokes their sessions.
@@ -12,6 +12,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { eq, sql } from "drizzle-orm";
 import { adminUsers } from "../src/db/schema";
 import { describePasswordProblem, hashPassword } from "../src/lib/admin/password";
+import { isAdminUsername, normalizeUsername } from "../src/lib/admin/username";
 
 function arg(name: string): string | undefined {
   const index = process.argv.indexOf(`--${name}`);
@@ -33,9 +34,13 @@ async function main() {
   const email = arg("email")?.trim().toLowerCase();
   const name = arg("name")?.trim();
   const role = (arg("role") ?? "owner").trim();
+  const requestedUsername = arg("username");
+  if (requestedUsername !== undefined && !isAdminUsername(normalizeUsername(requestedUsername))) {
+    throw new Error("Username must be 3–64 letters, numbers, dots, underscores or hyphens, starting with a letter or number.");
+  }
 
   if (!email || !name) {
-    throw new Error('Usage: npm run admin:create -- --email you@vectrae.com --name "Your Name" [--role owner|admin|editor] [--password ...]');
+    throw new Error('Usage: npm run admin:create -- --email you@vectrae.com --name "Vectrae Admin" [--username ...] [--role owner|admin|editor] [--password ...]');
   }
 
   if (!["owner", "admin", "editor"].includes(role)) {
@@ -51,24 +56,30 @@ async function main() {
   }
 
   const db = drizzle(neon(connectionString));
+  const [existing] = await db.select({ username: adminUsers.username }).from(adminUsers)
+    .where(eq(adminUsers.email, email)).limit(1);
+  const username = requestedUsername !== undefined
+    ? normalizeUsername(requestedUsername)
+    : existing?.username ?? `vectrae-admin-${randomBytes(3).toString("hex")}`;
   const passwordHash = await hashPassword(password);
 
   const [user] = await db
     .insert(adminUsers)
-    .values({ email, name, role, passwordHash })
+    .values({ email, username, name, role, passwordHash })
     .onConflictDoUpdate({
       target: adminUsers.email,
       set: {
         name,
+        username,
         role,
         passwordHash,
         // Invalidate any session issued against the old password.
         sessionVersion: sql`${adminUsers.sessionVersion} + 1`,
       },
     })
-    .returning({ id: adminUsers.id, email: adminUsers.email, role: adminUsers.role });
+    .returning({ id: adminUsers.id, username: adminUsers.username, role: adminUsers.role });
 
-  console.log(`\n✓ Admin user ready: ${user.email} (${user.role})`);
+  console.log(`\n✓ Admin user ready: ${user.username} (${user.role})`);
 
   if (!provided) {
     console.log(`\n  Password: ${password}`);

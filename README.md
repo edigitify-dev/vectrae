@@ -20,6 +20,24 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Form notification emails
+
+Set `GMAIL_USER` and `GMAIL_APP_PASSWORD` in `.env.local` using the sending Gmail
+account and its Google app password. Spaces in the app password are removed
+automatically. Keep these values server-only and out of Git.
+
+Careers submissions notify `Hr@vectrae.com`; contact enquiries notify
+`enquiry@vectrae.com`. Replies go to the applicant or enquirer. Submissions are
+saved to the database before Next.js schedules the email with `after`. SMTP
+failures are logged without rejecting a saved submission.
+
+Run `npm run email:verify` to check Gmail connectivity and authentication without
+sending a message. This does not confirm recipient existence or inbox delivery.
+
+For the hosted site, configure the same two secret variables in the Vercel
+project's required environments and redeploy. `.env.local` configures local
+development only.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

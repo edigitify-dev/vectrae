@@ -18,8 +18,9 @@ export const ENQUIRY_EMAIL = "enquiry@vectrae.com";
  *                        Generate one at: https://myaccount.google.com/apppasswords
  */
 function createTransporter() {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD;
+  const user = process.env.GMAIL_USER?.trim();
+  // Google displays app passwords in groups separated by spaces.
+  const pass = process.env.GMAIL_APP_PASSWORD?.replace(/\s/g, "");
 
   if (!user || !pass) {
     throw new Error(
@@ -30,6 +31,9 @@ function createTransporter() {
   return nodemailer.createTransport({
     service: "gmail",
     auth: { user, pass },
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 20_000,
   });
 }
 
@@ -43,13 +47,25 @@ function getTransporter() {
 }
 
 // ─── Send helper ─────────────────────────────────────────────────────────────
+/** Checks the SMTP connection and authentication without sending a message. */
+export async function verifyMailConfiguration() {
+  await getTransporter().verify();
+}
+
 export async function sendMail(options: {
   to: string;
   subject: string;
   html: string;
   /** Optional plain-text fallback */
   text?: string;
+  /** Replies go to the person who submitted the form. */
+  replyTo?: string;
 }) {
-  const from = `"Vectrae Website" <${process.env.GMAIL_USER}>`;
-  await getTransporter().sendMail({ from, ...options });
+  const transporter = getTransporter();
+  const from = { name: "Vectrae Website", address: process.env.GMAIL_USER!.trim() };
+  const result = await transporter.sendMail({ from, ...options });
+
+  if (result.rejected.length > 0 || result.accepted.length === 0) {
+    throw new Error("SMTP did not accept the notification recipient.");
+  }
 }

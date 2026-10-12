@@ -211,9 +211,14 @@ export default function AboutGallery() {
             type="button"
             onClick={closeLightbox}
             aria-label="Close preview"
-            className="absolute right-4 top-[calc(env(safe-area-inset-top)+1rem)] z-[10000] flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-white/70 backdrop-blur-md transition-all duration-300 hover:border-white/20 hover:bg-white/[0.1] hover:text-white sm:right-5 sm:top-5 sm:h-11 sm:w-11"
+            className="group absolute right-4 top-[calc(env(safe-area-inset-top)+1rem)] z-[10000] flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:border-transparent hover:text-black hover:shadow-[0_8px_24px_-8px_rgba(41,185,242,0.55)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#29B9F2]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-5 sm:top-5 sm:h-12 sm:w-12"
           >
-            <X className="h-5 w-5" />
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ backgroundImage: BRAND_GRADIENT }}
+            />
+            <X className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:rotate-90" />
           </button>
 
           {/* Counter */}
@@ -233,9 +238,14 @@ export default function AboutGallery() {
               previousLightboxImage();
             }}
             aria-label="Previous image"
-            className="absolute left-3 top-1/2 z-[10000] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/60 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white sm:left-6"
+            className="group absolute left-3 top-1/2 z-[10000] flex h-12 w-12 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:border-transparent hover:text-black hover:shadow-[0_8px_24px_-8px_rgba(41,185,242,0.55)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#29B9F2]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-6 sm:h-14 sm:w-14"
           >
-            <ChevronLeft className="h-5 w-5" />
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ backgroundImage: BRAND_GRADIENT }}
+            />
+            <ChevronLeft className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:-translate-x-0.5 sm:h-6 sm:w-6" />
           </button>
 
           {/* Next */}
@@ -246,9 +256,14 @@ export default function AboutGallery() {
               nextLightboxImage();
             }}
             aria-label="Next image"
-            className="absolute right-3 top-1/2 z-[10000] flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/60 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white sm:right-6"
+            className="group absolute right-3 top-1/2 z-[10000] flex h-12 w-12 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition-all duration-300 hover:border-transparent hover:text-black hover:shadow-[0_8px_24px_-8px_rgba(41,185,242,0.55)] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#29B9F2]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-6 sm:h-14 sm:w-14"
           >
-            <ChevronRight className="h-5 w-5" />
+            <span
+              aria-hidden
+              className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{ backgroundImage: BRAND_GRADIENT }}
+            />
+            <ChevronRight className="relative z-10 h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 sm:h-6 sm:w-6" />
           </button>
 
           {/* Image */}
@@ -436,23 +451,33 @@ export default function AboutGallery() {
             </div>
 
             {/* Previous / Next */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <button
                 type="button"
                 onClick={previousSlide}
                 aria-label="Previous gallery slide"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-white/45 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
+                className="group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/[0.04] text-white/80 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:text-black hover:shadow-[0_8px_24px_-8px_rgba(41,185,242,0.55)] active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#29B9F2]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                <ChevronLeft className="h-4 w-4" />
+                <span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{ backgroundImage: BRAND_GRADIENT }}
+                />
+                <ChevronLeft className="relative z-10 h-[20px] w-[20px] transition-transform duration-300 group-hover:-translate-x-0.5" />
               </button>
 
               <button
                 type="button"
                 onClick={nextSlide}
                 aria-label="Next gallery slide"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.02] text-white/45 transition-all duration-300 hover:border-[#29B9F2]/30 hover:bg-[#29B9F2]/5 hover:text-[#29B9F2]"
+                className="group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/[0.04] text-white/80 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-transparent hover:text-black hover:shadow-[0_8px_24px_-8px_rgba(41,185,242,0.55)] active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#29B9F2]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                <ChevronRight className="h-4 w-4" />
+                <span
+                  aria-hidden
+                  className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{ backgroundImage: BRAND_GRADIENT }}
+                />
+                <ChevronRight className="relative z-10 h-[20px] w-[20px] transition-transform duration-300 group-hover:translate-x-0.5" />
               </button>
             </div>
           </div>

@@ -350,6 +350,195 @@ export const solutions: Solution[] = [
     ],
   },
   {
+    slug: "end-computing",
+    title: "End Computing Solutions",
+    tagline: "Equip every desk, every workstation, every employee.",
+    icon: Laptop,
+    pointers: [
+      "Laptops, Desktops & Workstations",
+      "Thin Client Deployment",
+      "Monitors & Peripherals",
+      "Bulk Imaging & Configuration",
+      "Asset Lifecycle Management",
+      "Warranty & AMC Support",
+    ],
+    heroImage: r2Asset("/images/products/laptop.png"),
+    cardImage: r2Asset("/images/products/laptop.png"),
+    description:
+      "From laptops to thin clients, we procure, configure, and manage the devices your workforce uses every day, with lifecycle support that keeps IT overhead low.",
+    capabilities: [
+      {
+        icon: Laptop,
+        title: "Laptops & Desktops",
+        description:
+          "Bulk procurement of Dell, HP & Microsoft devices at enterprise pricing.",
+      },
+      {
+        icon: MonitorCog,
+        title: "Thin Client Deployment",
+        description:
+          "Centralized, secure thin-client environments for cost-efficient computing.",
+      },
+      {
+        icon: LayoutGrid,
+        title: "Monitors & Peripherals",
+        description:
+          "Standardized workstation rollouts across offices and branches.",
+      },
+      {
+        icon: Settings2,
+        title: "Bulk Imaging & Configuration",
+        description: "Pre-configured, ready-to-deploy devices out of the box.",
+      },
+      {
+        icon: Boxes,
+        title: "Asset Lifecycle Management",
+        description:
+          "Tracking, refresh cycles, and end-of-life disposal, managed for you.",
+      },
+      {
+        icon: Users,
+        title: "Warranty & AMC Support",
+        description:
+          "Doorstep support and annual maintenance contracts, PAN-India.",
+      },
+    ],
+    benefits: [
+      "Direct partnerships with Dell, HP & Microsoft",
+      "Volume pricing for large enterprise rollouts",
+      "PAN-India delivery and doorstep support",
+      "Full asset lifecycle tracking and reporting",
+    ],
+    oems: [
+      { name: "Lenovo", logo: r2Asset("/images/oem/endCom/lenovo.webp") },
+      { name: "Dell", logo: r2Asset("/images/oem/endCom/dell.webp") },
+      { name: "HP", logo: r2Asset("/images/oem/endCom/hp.webp") },
+      { name: "Acer", logo: r2Asset("/images/oem/endCom/acer.webp") },
+      { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
+      { name: "Samsung", logo: r2Asset("/images/oem/endCom/samsung.webp") },
+      { name: "LG", logo: r2Asset("/images/oem/endCom/lg.webp") },
+      { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
+      {
+        name: "Kensington",
+        logo: r2Asset("/images/oem/endCom/kensington.webp"),
+      },
+      { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
+    ],
+    subServices: [
+      {
+        slug: "laptops-desktops-workstations",
+        title: "Laptops, Desktops & Workstations",
+        tagline: "Enterprise devices, procured at scale.",
+        icon: Laptop,
+        pointers: [
+          "Bulk Device Procurement",
+          "High-Performance Workstations",
+          "Pre-Configured Imaging",
+        ],
+        description:
+          "Bulk procurement of Dell, HP, and Microsoft laptops, desktops, and high-performance workstations, pre-configured and ready to deploy at enterprise pricing.",
+        capabilities: [
+          {
+            icon: Laptop,
+            title: "Bulk Device Procurement",
+            description:
+              "Volume procurement of enterprise laptops and desktops.",
+          },
+          {
+            icon: Gauge,
+            title: "High-Performance Workstations",
+            description:
+              "Workstation-class hardware for engineering and design teams.",
+          },
+          {
+            icon: Settings2,
+            title: "Pre-Configured Imaging",
+            description:
+              "Devices imaged and ready to deploy straight out of the box.",
+          },
+        ],
+        benefits: [
+          "Direct Dell, HP & Microsoft partnerships",
+          "Volume pricing for large rollouts",
+        ],
+      },
+      {
+        slug: "thin-clients-collaboration-devices",
+        title: "Thin Clients & Collaboration Devices",
+        tagline: "Centralized, secure, cost-efficient computing.",
+        icon: Monitor,
+        pointers: [
+          "Thin Client Deployment",
+          "Centralized Endpoint Management",
+          "Collaboration Device Rollout",
+        ],
+        description:
+          "We deploy thin-client environments and collaboration devices that centralize management, reduce endpoint cost, and simplify enterprise IT operations.",
+        capabilities: [
+          {
+            icon: Monitor,
+            title: "Thin Client Deployment",
+            description:
+              "Centralized, secure thin-client environments at lower endpoint cost.",
+          },
+          {
+            icon: Settings2,
+            title: "Centralized Endpoint Management",
+            description:
+              "Single-console management across every deployed device.",
+          },
+          {
+            icon: Users,
+            title: "Collaboration Device Rollout",
+            description:
+              "Standardized collaboration hardware deployed across teams.",
+          },
+        ],
+        benefits: [
+          "Lower total cost of endpoint ownership",
+          "Centralized, secure management",
+        ],
+      },
+      {
+        slug: "monitors-docking-peripherals",
+        title: "Monitors, Docking & Peripherals",
+        tagline: "Standardized workstations, every desk, every branch.",
+        icon: LayoutGrid,
+        pointers: [
+          "Monitor & Display Rollout",
+          "Docking Station Deployment",
+          "Peripheral Standardization",
+        ],
+        description:
+          "From monitors to docking stations, we standardize workstation rollouts across offices and branches, consistent hardware, consistent experience.",
+        capabilities: [
+          {
+            icon: LayoutGrid,
+            title: "Monitor & Display Rollout",
+            description:
+              "Standardized display hardware across every workstation.",
+          },
+          {
+            icon: Cable,
+            title: "Docking Station Deployment",
+            description:
+              "Universal docking rolled out for consistent desk setups.",
+          },
+          {
+            icon: Boxes,
+            title: "Peripheral Standardization",
+            description:
+              "A single peripheral catalog, managed across every site.",
+          },
+        ],
+        benefits: [
+          "Consistent hardware across every branch",
+          "Standardized peripheral catalog",
+        ],
+      },
+    ],
+  },
+  {
     slug: "networking-security",
     title: "Cyber Security & Networking",
     tagline: "Resilent Security for all Enterprise Networks.",
@@ -757,195 +946,6 @@ export const solutions: Solution[] = [
     ],
   },
   {
-    slug: "end-computing",
-    title: "End Computing Solutions",
-    tagline: "Equip every desk, every workstation, every employee.",
-    icon: Laptop,
-    pointers: [
-      "Laptops, Desktops & Workstations",
-      "Thin Client Deployment",
-      "Monitors & Peripherals",
-      "Bulk Imaging & Configuration",
-      "Asset Lifecycle Management",
-      "Warranty & AMC Support",
-    ],
-    heroImage: r2Asset("/images/products/laptop.png"),
-    cardImage: r2Asset("/images/products/laptop.png"),
-    description:
-      "From laptops to thin clients, we procure, configure, and manage the devices your workforce uses every day, with lifecycle support that keeps IT overhead low.",
-    capabilities: [
-      {
-        icon: Laptop,
-        title: "Laptops & Desktops",
-        description:
-          "Bulk procurement of Dell, HP & Microsoft devices at enterprise pricing.",
-      },
-      {
-        icon: MonitorCog,
-        title: "Thin Client Deployment",
-        description:
-          "Centralized, secure thin-client environments for cost-efficient computing.",
-      },
-      {
-        icon: LayoutGrid,
-        title: "Monitors & Peripherals",
-        description:
-          "Standardized workstation rollouts across offices and branches.",
-      },
-      {
-        icon: Settings2,
-        title: "Bulk Imaging & Configuration",
-        description: "Pre-configured, ready-to-deploy devices out of the box.",
-      },
-      {
-        icon: Boxes,
-        title: "Asset Lifecycle Management",
-        description:
-          "Tracking, refresh cycles, and end-of-life disposal, managed for you.",
-      },
-      {
-        icon: Users,
-        title: "Warranty & AMC Support",
-        description:
-          "Doorstep support and annual maintenance contracts, PAN-India.",
-      },
-    ],
-    benefits: [
-      "Direct partnerships with Dell, HP & Microsoft",
-      "Volume pricing for large enterprise rollouts",
-      "PAN-India delivery and doorstep support",
-      "Full asset lifecycle tracking and reporting",
-    ],
-    oems: [
-      { name: "Lenovo", logo: r2Asset("/images/oem/endCom/lenovo.webp") },
-      { name: "Dell", logo: r2Asset("/images/oem/endCom/dell.webp") },
-      { name: "HP", logo: r2Asset("/images/oem/endCom/hp.webp") },
-      { name: "Acer", logo: r2Asset("/images/oem/endCom/acer.webp") },
-      { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
-      { name: "Samsung", logo: r2Asset("/images/oem/endCom/samsung.webp") },
-      { name: "LG", logo: r2Asset("/images/oem/endCom/lg.webp") },
-      { name: "Targus", logo: r2Asset("/images/oem/endCom/targus.webp") },
-      {
-        name: "Kensington",
-        logo: r2Asset("/images/oem/endCom/kensington.webp"),
-      },
-      { name: "Logitech", logo: r2Asset("/images/oem/endCom/logitech.webp") },
-    ],
-    subServices: [
-      {
-        slug: "laptops-desktops-workstations",
-        title: "Laptops, Desktops & Workstations",
-        tagline: "Enterprise devices, procured at scale.",
-        icon: Laptop,
-        pointers: [
-          "Bulk Device Procurement",
-          "High-Performance Workstations",
-          "Pre-Configured Imaging",
-        ],
-        description:
-          "Bulk procurement of Dell, HP, and Microsoft laptops, desktops, and high-performance workstations, pre-configured and ready to deploy at enterprise pricing.",
-        capabilities: [
-          {
-            icon: Laptop,
-            title: "Bulk Device Procurement",
-            description:
-              "Volume procurement of enterprise laptops and desktops.",
-          },
-          {
-            icon: Gauge,
-            title: "High-Performance Workstations",
-            description:
-              "Workstation-class hardware for engineering and design teams.",
-          },
-          {
-            icon: Settings2,
-            title: "Pre-Configured Imaging",
-            description:
-              "Devices imaged and ready to deploy straight out of the box.",
-          },
-        ],
-        benefits: [
-          "Direct Dell, HP & Microsoft partnerships",
-          "Volume pricing for large rollouts",
-        ],
-      },
-      {
-        slug: "thin-clients-collaboration-devices",
-        title: "Thin Clients & Collaboration Devices",
-        tagline: "Centralized, secure, cost-efficient computing.",
-        icon: Monitor,
-        pointers: [
-          "Thin Client Deployment",
-          "Centralized Endpoint Management",
-          "Collaboration Device Rollout",
-        ],
-        description:
-          "We deploy thin-client environments and collaboration devices that centralize management, reduce endpoint cost, and simplify enterprise IT operations.",
-        capabilities: [
-          {
-            icon: Monitor,
-            title: "Thin Client Deployment",
-            description:
-              "Centralized, secure thin-client environments at lower endpoint cost.",
-          },
-          {
-            icon: Settings2,
-            title: "Centralized Endpoint Management",
-            description:
-              "Single-console management across every deployed device.",
-          },
-          {
-            icon: Users,
-            title: "Collaboration Device Rollout",
-            description:
-              "Standardized collaboration hardware deployed across teams.",
-          },
-        ],
-        benefits: [
-          "Lower total cost of endpoint ownership",
-          "Centralized, secure management",
-        ],
-      },
-      {
-        slug: "monitors-docking-peripherals",
-        title: "Monitors, Docking & Peripherals",
-        tagline: "Standardized workstations, every desk, every branch.",
-        icon: LayoutGrid,
-        pointers: [
-          "Monitor & Display Rollout",
-          "Docking Station Deployment",
-          "Peripheral Standardization",
-        ],
-        description:
-          "From monitors to docking stations, we standardize workstation rollouts across offices and branches, consistent hardware, consistent experience.",
-        capabilities: [
-          {
-            icon: LayoutGrid,
-            title: "Monitor & Display Rollout",
-            description:
-              "Standardized display hardware across every workstation.",
-          },
-          {
-            icon: Cable,
-            title: "Docking Station Deployment",
-            description:
-              "Universal docking rolled out for consistent desk setups.",
-          },
-          {
-            icon: Boxes,
-            title: "Peripheral Standardization",
-            description:
-              "A single peripheral catalog, managed across every site.",
-          },
-        ],
-        benefits: [
-          "Consistent hardware across every branch",
-          "Standardized peripheral catalog",
-        ],
-      },
-    ],
-  },
-  {
     slug: "it-spares-accessories",
     title: "IT Spares & Accessories",
     tagline:
@@ -1090,6 +1090,194 @@ export const solutions: Solution[] = [
         benefits: [
           "Hard-to-find legacy parts sourced fast",
           "Emergency dispatch for critical failures",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "software-renewal",
+    title: "Software & Renewal",
+    tagline: "Every license, subscription and renewal, managed in one place.",
+    icon: KeyRound,
+    pointers: [
+      "Enterprise Software Licensing",
+      "Subscription & Renewal Management",
+      "License Audit & Compliance",
+      "Cloud & SaaS Subscriptions",
+      "Security & Backup Software",
+      "Software Asset Management",
+    ],
+    heroImage: r2Asset("/images/products/license_hero.png"),
+    cardImage: r2Asset("/images/products/renewal.png"),
+    description:
+      "From first purchase to every renewal, Vectrae manages the software that runs your enterprise, genuine licensing, subscription tracking, and compliance support, so nothing lapses, nothing is over-bought, and every audit is under control.",
+    capabilities: [
+      {
+        icon: KeyRound,
+        title: "Enterprise Software Licensing",
+        description:
+          "Genuine perpetual and subscription licenses from leading OEMs, sized to your users.",
+      },
+      {
+        icon: BellRing,
+        title: "Subscription & Renewal Management",
+        description:
+          "Renewal calendars and advance alerts so no license or support contract lapses.",
+      },
+      {
+        icon: ClipboardCheck,
+        title: "License Audit & Compliance",
+        description:
+          "Entitlement reviews and audit support to keep your estate compliant and defensible.",
+      },
+      {
+        icon: Cloud,
+        title: "Cloud & SaaS Subscriptions",
+        description:
+          "Microsoft 365, Adobe and other cloud subscriptions, provisioned and managed centrally.",
+      },
+      {
+        icon: ShieldCheck,
+        title: "Security & Backup Software",
+        description:
+          "Endpoint protection, backup and virtualization software, licensed and renewed with your infrastructure.",
+      },
+      {
+        icon: Gauge,
+        title: "Software Asset Management",
+        description:
+          "Usage visibility and right-sizing to cut shelf-ware and reduce software spend.",
+      },
+    ],
+    benefits: [
+      "Authorized reseller relationships with leading software OEMs",
+      "Zero-lapse renewal tracking with advance alerts",
+      "Audit-ready license records and compliance support",
+      "Right-sized subscriptions that cut unused spend",
+    ],
+    oems: [
+      // { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
+      // { name: "Adobe", logo: r2Asset("/images/oem/software/adobe.webp") },
+      // { name: "Autodesk", logo: r2Asset("/images/oem/software/autodesk.webp") },
+      // { name: "Veeam", logo: r2Asset("/images/oem/software/veeam.webp") },
+      // { name: "Red Hat", logo: r2Asset("/images/oem/software/redhat.webp") },
+      // { name: "VMware", logo: r2Asset("/images/oem/software/vmware.webp") },
+      // { name: "Cisco", logo: r2Asset("/images/oem/netSec/cisco.webp") },
+      // {
+      //   name: "Palo Alto Networks",
+      //   logo: r2Asset("/images/oem/netSec/paloalto.webp"),
+      // },
+    ],
+    subServices: [
+      {
+        slug: "software-licensing-procurement",
+        title: "Software Licensing & Procurement",
+        tagline: "Genuine licenses, sized right and delivered fast.",
+        icon: KeyRound,
+        pointers: [
+          "Enterprise Agreement Licensing",
+          "Volume & Bulk Procurement",
+          "License Right-Sizing",
+        ],
+        description:
+          "We source genuine enterprise software from leading OEMs, advising on the right licensing model and volume so you buy what you need, at enterprise pricing.",
+        capabilities: [
+          {
+            icon: FileCheck2,
+            title: "Enterprise Agreement Licensing",
+            description:
+              "Guidance on the licensing program that fits your size and growth plan.",
+          },
+          {
+            icon: PackageCheck,
+            title: "Volume & Bulk Procurement",
+            description:
+              "Volume purchasing for large rollouts, with consolidated invoicing.",
+          },
+          {
+            icon: Gauge,
+            title: "License Right-Sizing",
+            description:
+              "Licenses matched to real user counts, not over- or under-provisioned.",
+          },
+        ],
+        benefits: [
+          "100% genuine licenses, direct from OEM channels",
+          "Volume pricing for large enterprise rollouts",
+        ],
+      },
+      {
+        slug: "subscription-renewal-management",
+        title: "Subscription & Renewal Management",
+        tagline: "Never miss a renewal, never overpay for one.",
+        icon: RefreshCw,
+        pointers: [
+          "Renewal Calendar & Alerts",
+          "Co-Termination & Consolidation",
+          "Cloud & SaaS Management",
+        ],
+        description:
+          "We track every subscription and support contract across your estate, alert you well before expiry, and consolidate renewals so cost and coverage stay predictable.",
+        capabilities: [
+          {
+            icon: BellRing,
+            title: "Renewal Calendar & Alerts",
+            description:
+              "Advance notifications so every renewal is planned, not rushed.",
+          },
+          {
+            icon: RefreshCw,
+            title: "Co-Termination & Consolidation",
+            description:
+              "Aligned renewal dates to simplify budgeting and reduce admin.",
+          },
+          {
+            icon: Cloud,
+            title: "Cloud & SaaS Management",
+            description:
+              "Centralized provisioning and tracking of cloud subscriptions.",
+          },
+        ],
+        benefits: [
+          "Zero-lapse renewal tracking across the estate",
+          "Single point of contact for every renewal",
+        ],
+      },
+      {
+        slug: "license-audit-compliance",
+        title: "License Audit & Compliance",
+        tagline: "Know what you own, prove what you use.",
+        icon: ClipboardCheck,
+        pointers: [
+          "Entitlement & Usage Review",
+          "Audit Readiness Support",
+          "Shelf-Ware Reduction",
+        ],
+        description:
+          "We review your entitlements against actual usage, support you through vendor audits, and identify unused licenses so your estate stays compliant and cost-efficient.",
+        capabilities: [
+          {
+            icon: ClipboardCheck,
+            title: "Entitlement & Usage Review",
+            description:
+              "A clear view of what you own versus what is actually deployed.",
+          },
+          {
+            icon: ShieldCheck,
+            title: "Audit Readiness Support",
+            description:
+              "Documentation and guidance to handle vendor audits with confidence.",
+          },
+          {
+            icon: Gauge,
+            title: "Shelf-Ware Reduction",
+            description:
+              "Unused licenses identified and reclaimed before the next renewal.",
+          },
+        ],
+        benefits: [
+          "Audit-ready license records at all times",
+          "Lower spend through reclaimed, unused licenses",
         ],
       },
     ],
@@ -1300,194 +1488,6 @@ export const solutions: Solution[] = [
     ],
     oems: [],
     subServices: [],
-  },
-  {
-    slug: "software-renewal",
-    title: "Software & Renewal",
-    tagline: "Every license, subscription and renewal, managed in one place.",
-    icon: KeyRound,
-    pointers: [
-      "Enterprise Software Licensing",
-      "Subscription & Renewal Management",
-      "License Audit & Compliance",
-      "Cloud & SaaS Subscriptions",
-      "Security & Backup Software",
-      "Software Asset Management",
-    ],
-    heroImage: r2Asset("/images/products/license_hero.png"),
-    cardImage: r2Asset("/images/products/renewal.png"),
-    description:
-      "From first purchase to every renewal, Vectrae manages the software that runs your enterprise, genuine licensing, subscription tracking, and compliance support, so nothing lapses, nothing is over-bought, and every audit is under control.",
-    capabilities: [
-      {
-        icon: KeyRound,
-        title: "Enterprise Software Licensing",
-        description:
-          "Genuine perpetual and subscription licenses from leading OEMs, sized to your users.",
-      },
-      {
-        icon: BellRing,
-        title: "Subscription & Renewal Management",
-        description:
-          "Renewal calendars and advance alerts so no license or support contract lapses.",
-      },
-      {
-        icon: ClipboardCheck,
-        title: "License Audit & Compliance",
-        description:
-          "Entitlement reviews and audit support to keep your estate compliant and defensible.",
-      },
-      {
-        icon: Cloud,
-        title: "Cloud & SaaS Subscriptions",
-        description:
-          "Microsoft 365, Adobe and other cloud subscriptions, provisioned and managed centrally.",
-      },
-      {
-        icon: ShieldCheck,
-        title: "Security & Backup Software",
-        description:
-          "Endpoint protection, backup and virtualization software, licensed and renewed with your infrastructure.",
-      },
-      {
-        icon: Gauge,
-        title: "Software Asset Management",
-        description:
-          "Usage visibility and right-sizing to cut shelf-ware and reduce software spend.",
-      },
-    ],
-    benefits: [
-      "Authorized reseller relationships with leading software OEMs",
-      "Zero-lapse renewal tracking with advance alerts",
-      "Audit-ready license records and compliance support",
-      "Right-sized subscriptions that cut unused spend",
-    ],
-    oems: [
-      // { name: "Microsoft", logo: r2Asset("/images/oem/endCom/microsoft.webp") },
-      // { name: "Adobe", logo: r2Asset("/images/oem/software/adobe.webp") },
-      // { name: "Autodesk", logo: r2Asset("/images/oem/software/autodesk.webp") },
-      // { name: "Veeam", logo: r2Asset("/images/oem/software/veeam.webp") },
-      // { name: "Red Hat", logo: r2Asset("/images/oem/software/redhat.webp") },
-      // { name: "VMware", logo: r2Asset("/images/oem/software/vmware.webp") },
-      // { name: "Cisco", logo: r2Asset("/images/oem/netSec/cisco.webp") },
-      // {
-      //   name: "Palo Alto Networks",
-      //   logo: r2Asset("/images/oem/netSec/paloalto.webp"),
-      // },
-    ],
-    subServices: [
-      {
-        slug: "software-licensing-procurement",
-        title: "Software Licensing & Procurement",
-        tagline: "Genuine licenses, sized right and delivered fast.",
-        icon: KeyRound,
-        pointers: [
-          "Enterprise Agreement Licensing",
-          "Volume & Bulk Procurement",
-          "License Right-Sizing",
-        ],
-        description:
-          "We source genuine enterprise software from leading OEMs, advising on the right licensing model and volume so you buy what you need, at enterprise pricing.",
-        capabilities: [
-          {
-            icon: FileCheck2,
-            title: "Enterprise Agreement Licensing",
-            description:
-              "Guidance on the licensing program that fits your size and growth plan.",
-          },
-          {
-            icon: PackageCheck,
-            title: "Volume & Bulk Procurement",
-            description:
-              "Volume purchasing for large rollouts, with consolidated invoicing.",
-          },
-          {
-            icon: Gauge,
-            title: "License Right-Sizing",
-            description:
-              "Licenses matched to real user counts, not over- or under-provisioned.",
-          },
-        ],
-        benefits: [
-          "100% genuine licenses, direct from OEM channels",
-          "Volume pricing for large enterprise rollouts",
-        ],
-      },
-      {
-        slug: "subscription-renewal-management",
-        title: "Subscription & Renewal Management",
-        tagline: "Never miss a renewal, never overpay for one.",
-        icon: RefreshCw,
-        pointers: [
-          "Renewal Calendar & Alerts",
-          "Co-Termination & Consolidation",
-          "Cloud & SaaS Management",
-        ],
-        description:
-          "We track every subscription and support contract across your estate, alert you well before expiry, and consolidate renewals so cost and coverage stay predictable.",
-        capabilities: [
-          {
-            icon: BellRing,
-            title: "Renewal Calendar & Alerts",
-            description:
-              "Advance notifications so every renewal is planned, not rushed.",
-          },
-          {
-            icon: RefreshCw,
-            title: "Co-Termination & Consolidation",
-            description:
-              "Aligned renewal dates to simplify budgeting and reduce admin.",
-          },
-          {
-            icon: Cloud,
-            title: "Cloud & SaaS Management",
-            description:
-              "Centralized provisioning and tracking of cloud subscriptions.",
-          },
-        ],
-        benefits: [
-          "Zero-lapse renewal tracking across the estate",
-          "Single point of contact for every renewal",
-        ],
-      },
-      {
-        slug: "license-audit-compliance",
-        title: "License Audit & Compliance",
-        tagline: "Know what you own, prove what you use.",
-        icon: ClipboardCheck,
-        pointers: [
-          "Entitlement & Usage Review",
-          "Audit Readiness Support",
-          "Shelf-Ware Reduction",
-        ],
-        description:
-          "We review your entitlements against actual usage, support you through vendor audits, and identify unused licenses so your estate stays compliant and cost-efficient.",
-        capabilities: [
-          {
-            icon: ClipboardCheck,
-            title: "Entitlement & Usage Review",
-            description:
-              "A clear view of what you own versus what is actually deployed.",
-          },
-          {
-            icon: ShieldCheck,
-            title: "Audit Readiness Support",
-            description:
-              "Documentation and guidance to handle vendor audits with confidence.",
-          },
-          {
-            icon: Gauge,
-            title: "Shelf-Ware Reduction",
-            description:
-              "Unused licenses identified and reclaimed before the next renewal.",
-          },
-        ],
-        benefits: [
-          "Audit-ready license records at all times",
-          "Lower spend through reclaimed, unused licenses",
-        ],
-      },
-    ],
   },
 ];
 

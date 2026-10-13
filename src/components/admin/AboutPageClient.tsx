@@ -5,6 +5,8 @@ import Image from "next/image";
 import GalleryUploadModal from "./GalleryUploadModal";
 import ImageUploadButton from "./ImageUploadButton";
 import LeadershipTab from "./LeadershipTab";
+import CompanyProfileTab from "./CompanyProfileTab";
+import type { CompanyProfile } from "@/lib/company-profile-file";
 import {
   Award,
   Edit2,
@@ -46,8 +48,10 @@ type Props = {
   categories: CategoryWithImages[];
   certifications: Certification[];
   leadership: LeadershipMember[];
+  companyProfile: CompanyProfile | null;
+  companyProfileLoadError: boolean;
   readOnly: boolean;
-  tab: "gallery" | "certifications" | "leadership";
+  tab: "gallery" | "certifications" | "leadership" | "company-profile";
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -683,14 +687,14 @@ function CertificationsTab({
 // Root client component
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function AboutPageClient({ categories, certifications, leadership, readOnly, tab }: Props) {
-  const [activeTab, setActiveTab] = useState<"gallery" | "certifications" | "leadership">(tab);
+export default function AboutPageClient({ categories, certifications, leadership, companyProfile, companyProfileLoadError, readOnly, tab }: Props) {
+  const [activeTab, setActiveTab] = useState<Props["tab"]>(tab);
 
   return (
     <div className="space-y-7">
       {/* Tab bar */}
-      <div className="flex gap-1 rounded-xl border border-white/10 bg-white/[0.025] p-1">
-        {(["gallery", "certifications", "leadership"] as const).map((t) => (
+      <div className="grid grid-cols-2 gap-1 rounded-xl border border-white/10 bg-white/[0.025] p-1 sm:grid-cols-4">
+        {(["gallery", "certifications", "leadership", "company-profile"] as const).map((t) => (
           <button
             key={t}
             type="button"
@@ -701,7 +705,7 @@ export default function AboutPageClient({ categories, certifications, leadership
                 : "text-white/45 hover:text-white/75"
             }`}
           >
-            {t === "gallery" ? "Gallery" : t === "certifications" ? "Certifications" : "Leadership"}
+            {t === "gallery" ? "Gallery" : t === "certifications" ? "Certifications" : t === "leadership" ? "Leadership" : "Company Profile"}
           </button>
         ))}
       </div>
@@ -710,8 +714,10 @@ export default function AboutPageClient({ categories, certifications, leadership
         <GalleryTab categories={categories} readOnly={readOnly} />
       ) : activeTab === "certifications" ? (
         <CertificationsTab certifications={certifications} readOnly={readOnly} />
-      ) : (
+      ) : activeTab === "leadership" ? (
         <LeadershipTab members={leadership} readOnly={readOnly} />
+      ) : (
+        <CompanyProfileTab profile={companyProfile} loadError={companyProfileLoadError} readOnly={readOnly} />
       )}
     </div>
   );

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import CompanyProfileDownload from "@/components/sections/about/CompanyProfileDownload";
 import AboutHero from "@/components/sections/about/AboutHero";
 import AboutStory from "@/components/sections/about/AboutStory";
 import AboutImpact from "@/components/sections/about/AboutImpact";
@@ -26,7 +28,7 @@ export default function AboutPage() {
   return (
     <>
       {/* <AboutHero /> */}
-      <AboutStory />
+      <AboutStory companyProfileDownload={<Suspense fallback={null}><CompanyProfileDownload /></Suspense>} />
       {/* <AboutImpact /> */}
       {/* <AboutCapabilities /> */}
       <AboutPresence />

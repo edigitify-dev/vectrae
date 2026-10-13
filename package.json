@@ -16,6 +16,7 @@
     "admin:username": "dotenv -e .env.local -- tsx scripts/set-admin-username.ts",
     "db:setup-security": "dotenv -e .env.local -- tsx scripts/setup-security.ts",
     "test:security": "node --import tsx --test src/lib/security.test.ts src/lib/admin/security.test.ts src/lib/file-signature.test.ts src/lib/admin/password.test.ts src/lib/admin/content.test.ts",
+    "test:company-profile": "node --conditions=react-server --import tsx --test src/lib/company-profile.test.ts",
     "db:seed-careers": "dotenv -e .env.local -- tsx scripts/seed-careers.ts",
     "db:seed-about": "dotenv -e .env.local -- tsx scripts/seed-about.ts",
     "db:setup-leadership": "dotenv -e .env.local -- tsx scripts/setup-leadership.ts",

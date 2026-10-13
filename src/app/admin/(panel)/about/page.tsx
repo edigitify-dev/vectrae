@@ -4,6 +4,7 @@ import { certifications, galleryCategories, galleryImages, leadershipMembers } f
 import PageHeader from "@/components/admin/PageHeader";
 import AboutPageClient from "@/components/admin/AboutPageClient";
 import { getCurrentAdmin, requireAdmin } from "@/lib/admin/auth";
+import { getCompanyProfile } from "@/lib/r2";
 
 type Props = {
   searchParams: Promise<{ tab?: string }>;
@@ -15,7 +16,13 @@ export default async function AdminAboutPage({ searchParams }: Props) {
   const readOnly = admin?.role === "editor";
 
   const { tab } = await searchParams;
-  const activeTab = tab === "leadership" ? "leadership" : tab === "certifications" ? "certifications" : "gallery";
+  const activeTab = tab === "company-profile" ? "company-profile" : tab === "leadership" ? "leadership" : tab === "certifications" ? "certifications" : "gallery";
+  const profilePromise = getCompanyProfile()
+    .then((profile) => ({ profile, error: false }))
+    .catch((error) => {
+      console.error("[admin/about] Failed to load company profile:", error);
+      return { profile: null, error: true };
+    });
 
   let categoriesWithImages: ({
     id: string;
@@ -63,13 +70,14 @@ export default async function AdminAboutPage({ searchParams }: Props) {
     console.error("[admin/about] Failed to load data:", error);
     loadError = true;
   }
+  const profileResult = await profilePromise;
 
   return (
     <div className="space-y-8">
       <PageHeader
         eyebrow="Content"
         title="About page"
-        description="Manage the gallery, certifications, and leadership shown on the About page."
+        description="Manage the gallery, certifications, leadership, and downloadable company profile shown on the About page."
       />
 
       {loadError && <p role="alert" className="text-sm text-red-400">Couldn&apos;t load About content. Please refresh the page.</p>}
@@ -77,6 +85,8 @@ export default async function AdminAboutPage({ searchParams }: Props) {
         categories={categoriesWithImages}
         certifications={certs}
         leadership={leaders}
+        companyProfile={profileResult.profile}
+        companyProfileLoadError={profileResult.error}
         readOnly={readOnly ?? false}
         tab={activeTab}
       />

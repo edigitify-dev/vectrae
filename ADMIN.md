@@ -9,7 +9,7 @@ An internal console at `/admin` for what the site collects and publishes:
 | Applications | `/admin/applications` | Career applications with downloadable CVs, hiring stage, interview notes |
 | Careers | `/admin/careers` | Job openings CMS: write, edit, publish, unpublish, delete. Publishing pushes straight to the careers page |
 | Blog | `/admin/blog` | Full CMS: write, edit, publish, unpublish, delete. Publishing pushes straight to the live site |
-| About | `/admin/about` | Gallery, certificates, and leadership. Add/edit members, upload or change photos, set display order, and choose the featured leader |
+| About | `/admin/about` | Gallery, certificates, leadership, and company profile. Add/edit members, upload or change photos, set display order, choose the featured leader, and replace the downloadable company profile PDF |
 | Settings | `/admin/settings` | Your account, password change, and (for owners) the list of admin users |
 
 ## Architecture
@@ -25,6 +25,8 @@ An internal console at `/admin` for what the site collects and publishes:
 ## Roles
 
 Leadership management is under **About page → Leadership**. Saved changes appear on the public `/about` page. Photos are public R2 objects; removing or replacing a photo changes the profile without deleting the stored object.
+
+The downloadable company profile is under **About page → Company Profile** (`/admin/about?tab=company-profile`). Admins can upload or replace a PDF up to 10 MB; editors can download the current file. The About page shows its download button after the first upload. The PDF is stored in the existing R2 bucket at `about/company-profile/company-profile.pdf`, and `/company-profile` serves the latest file as a download. This uses the existing R2 credentials and requires no database migration.
 
 For a new database, run `npm run db:setup-leadership` after the normal database setup. This applies the additive migration and imports the seven existing profiles only when the leadership table is empty. Existing members are preserved when the command is rerun.
 

@@ -1,7 +1,7 @@
 "use client";
 import { r2Asset } from "@/lib/site-images";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Building2,
@@ -222,7 +222,7 @@ function TimelineDot({ color }: { color: string }) {
   );
 }
 
-function Header() {
+function Header({ companyProfileDownload }: { companyProfileDownload?: ReactNode }) {
   return (
     <div className="max-w-md">
       {/* ambient glows */}
@@ -245,6 +245,7 @@ function Header() {
         that technology infrastructure can quietly power extraordinary
         businesses.
       </p>
+      {companyProfileDownload}
     </div>
   );
 }
@@ -470,7 +471,7 @@ function StatsStrip() {
   );
 }
 
-export default function AboutStory() {
+export default function AboutStory({ companyProfileDownload }: { companyProfileDownload?: ReactNode }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const dragStartX = useRef(0);
@@ -551,7 +552,7 @@ export default function AboutStory() {
                       <>
                         {i === 0 && (
                           <div className="pr-24">
-                            <Header />
+                            <Header companyProfileDownload={companyProfileDownload} />
                           </div>
                         )}
                         {yearLabel}
@@ -571,7 +572,7 @@ export default function AboutStory() {
 
         {/* ───────── Mobile / tablet: header + carousel ───────── */}
         <div className="lg:hidden">
-          <Header />
+          <Header companyProfileDownload={companyProfileDownload} />
 
           <div className="mt-10">
             <div
